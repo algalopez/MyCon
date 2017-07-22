@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.algalopez.mycon.R;
+import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
 
 import java.util.ArrayList;
 
@@ -19,10 +20,10 @@ import java.util.ArrayList;
 public class WifiFragment extends Fragment implements IWifiView {
 
 
-    private static final String LOGTAG = "WifiFragment";
+    //private static final String LOGTAG = "WifiFragment";
 
     private View mRootView;
-
+    private WifiPresenter mPresenter;
 
 
 
@@ -39,7 +40,10 @@ public class WifiFragment extends Fragment implements IWifiView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         mRootView = inflater.inflate(R.layout.fragment_wifi, container, false);
+        mPresenter = new WifiPresenter();
+
         return mRootView;
     }
 
@@ -48,8 +52,9 @@ public class WifiFragment extends Fragment implements IWifiView {
     public void onResume() {
         super.onResume();
 
-        test1();
+        mPresenter.attachView(this);
 
+        mPresenter.test1();
     }
 
 
@@ -57,6 +62,7 @@ public class WifiFragment extends Fragment implements IWifiView {
     public void onPause() {
         super.onPause();
 
+        mPresenter.detachView();
     }
 
 
@@ -80,7 +86,7 @@ public class WifiFragment extends Fragment implements IWifiView {
 
 
     @Override
-    public void showConnectedDevices(ArrayList<String> connectedDevices) {
+    public void showConnectedDevices(ArrayList<DeviceEntity> connectedDevices) {
 
 
         WifiAdapter connectedDevicesAdapter = new WifiAdapter(connectedDevices);
@@ -96,31 +102,6 @@ public class WifiFragment extends Fragment implements IWifiView {
         TextView wifiSSID = (TextView) mRootView.findViewById(R.id.fragment_wifi_ssid_tv);
         wifiSSID.setText(ssid);
     }
-
-
-
-    /* *********************************************************************************************
-     * TEST VIEW
-     * *********************************************************************************************
-     */
-
-
-    private void test1(){
-
-        showWifiInfo("NetName");
-
-
-        ArrayList<String> connectedDevices = new ArrayList<>();
-        connectedDevices.add("dev1");
-        connectedDevices.add("dev2");
-        connectedDevices.add("dev3");
-        connectedDevices.add("dev4");
-        showConnectedDevices(connectedDevices);
-
-
-
-    }
-
 
 
 }

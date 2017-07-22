@@ -6,6 +6,10 @@
 
     <string name="wifi_ssid">SSID</string>
     <string name="wifi_connectedDevice_ip">123.456.789</string>
+    <string name="wifi_connectedDevice_mac">A1:B2:C3:D4:E5:F6:G7:H8</string>
+    <string name="wifi_connectedDevice_name">Name</string>
+    <string name="wifi_connectedDevice_brand">Brand</string>
+
 
 
 </resources>

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.algalopez.mycon.R;
+import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
 
 import java.util.ArrayList;
 
@@ -21,7 +22,7 @@ class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.WifiAdapterViewHolder
 
     private static final String LOGTAG = "WifiAdapter";
 
-    private ArrayList<String> mData;
+    private ArrayList<DeviceEntity> mData;
 
 
     /* *********************************************************************************************
@@ -34,6 +35,9 @@ class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.WifiAdapterViewHolder
 
 
         private TextView connectedDevice_ip_tv;
+        private TextView connectedDevice_mac_tv;
+        private TextView connectedDevice_name_tv;
+        private TextView connectedDevice_brand_tv;
 
 
         /*
@@ -43,6 +47,9 @@ class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.WifiAdapterViewHolder
             super(itemView);
 
             connectedDevice_ip_tv = (TextView) itemView.findViewById(R.id.wifi_connected_device_item_ip);
+            connectedDevice_mac_tv = (TextView) itemView.findViewById(R.id.wifi_connected_device_item_mac);
+            connectedDevice_name_tv = (TextView) itemView.findViewById(R.id.wifi_connected_device_item_name);
+            connectedDevice_brand_tv = (TextView) itemView.findViewById(R.id.wifi_connected_device_item_brand);
 
             if (connectedDevice_ip_tv == null){
                 Log.e(LOGTAG, "WifiAdapterViewHolder: connectedDevice_ip_tv should't be null");
@@ -54,9 +61,12 @@ class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.WifiAdapterViewHolder
          * Bind the data to the view
          *
          */
-        void bind(String c){
+        void bind(DeviceEntity device){
 
-            connectedDevice_ip_tv.setText(c);
+            connectedDevice_ip_tv.setText(device.getIP());
+            connectedDevice_mac_tv.setText(device.getMAC());
+            connectedDevice_name_tv.setText(device.getName());
+            connectedDevice_brand_tv.setText(device.getBrand());
         }
     }
 
@@ -70,7 +80,7 @@ class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.WifiAdapterViewHolder
     /*
      * Constructor
      */
-    WifiAdapter(ArrayList<String> data){
+    WifiAdapter(ArrayList<DeviceEntity> data){
 
         this.mData = data;
     }
@@ -95,7 +105,7 @@ class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.WifiAdapterViewHolder
     @Override
     public void onBindViewHolder(WifiAdapterViewHolder holder, int position) {
 
-        String item = mData.get(position);
+        DeviceEntity item = mData.get(position);
         holder.bind(item);
     }
 
