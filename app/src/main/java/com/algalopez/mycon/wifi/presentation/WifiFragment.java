@@ -4,7 +4,9 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -14,13 +16,12 @@ import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
 
 import java.util.ArrayList;
 
-/**
- * A placeholder fragment containing a simple view.
- */
+
+
 public class WifiFragment extends Fragment implements IWifiView {
 
 
-    //private static final String LOGTAG = "WifiFragment";
+    private static final String LOGTAG = "WifiFragment";
 
     private View mRootView;
     private WifiPresenter mPresenter;
@@ -44,9 +45,25 @@ public class WifiFragment extends Fragment implements IWifiView {
         mRootView = inflater.inflate(R.layout.fragment_wifi, container, false);
         mPresenter = new WifiPresenter();
 
+        setHasOptionsMenu(true);
+
         return mRootView;
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.action_update) {
+            if (mPresenter!= null) {
+                mPresenter.test1();
+            }
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onResume() {
@@ -54,7 +71,7 @@ public class WifiFragment extends Fragment implements IWifiView {
 
         mPresenter.attachView(this);
 
-        mPresenter.test1();
+        //mPresenter.test1();
     }
 
 

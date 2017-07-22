@@ -20,6 +20,8 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/wifi_ssid"
+            android:textColor="@color/light_blue_900"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -28,8 +30,9 @@
 
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/wifi_connected_devices_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/wifi_connected_devices_rv"/>
+        tools:listitem="@layout/wifi_connected_device_item" />
 
 </LinearLayout>
