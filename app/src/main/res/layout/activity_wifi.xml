@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.algalopez.mycon.Wifi.Presentation.WifiActivity">
+    tools:context="com.algalopez.mycon.wifi.presentation.WifiActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

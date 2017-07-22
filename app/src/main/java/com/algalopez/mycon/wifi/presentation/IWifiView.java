@@ -1,4 +1,4 @@
-package com.algalopez.mycon.Wifi.Presentation;
+package com.algalopez.mycon.wifi.presentation;
 
 import java.util.ArrayList;
 
