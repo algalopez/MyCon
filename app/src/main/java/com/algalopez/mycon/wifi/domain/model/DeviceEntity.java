@@ -13,6 +13,12 @@ public class DeviceEntity {
     private String name;
     private String brand;
 
+    public DeviceEntity(){
+        this.IP = "";
+        this.MAC = "";
+        this.name = "";
+        this.brand = "";
+    }
 
     public String getIP() { return IP; }
 

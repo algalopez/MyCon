@@ -10,8 +10,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * AUTHOR:  Alvaro Garcia Lopez (algalopez)
@@ -43,7 +46,8 @@ public class WifiResponse implements IResponse {
      */
 
 
-    WifiResponse(){
+    public WifiResponse(){
+
         lastUpdate = new Date();
         wifiInformation = new WifiEntity();
         connectedDevices = new ArrayList<>();
@@ -85,9 +89,11 @@ public class WifiResponse implements IResponse {
     private static final String DEVICE_MAC = "DEVICE_MAC";
     private static final String DEVICE_BRAND = "DEVICE_BRAND";
     private static final String DEVICE_NAME = "DEVICE_NAME";
-
-
     private static final String CONNECTEDDEVICES = "ARRAY";
+
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", new Locale("uk"));
+    //private DateFormat df = DateFormat.getDateTimeInstance();
+
 
     @Override
     public String storeInString() {
@@ -96,7 +102,9 @@ public class WifiResponse implements IResponse {
         try {
 
             // Store response variables
-            json.put(LASTUPDATE, lastUpdate);
+            json.put(LASTUPDATE, sdf.format(lastUpdate));
+            //json.put(LASTUPDATE, df.format(lastUpdate));
+
 
             // Store Wifi variables
             json.put(WIFI_SSID, wifiInformation.getSSID());
@@ -119,21 +127,22 @@ public class WifiResponse implements IResponse {
             return "";
         }
 
+        //Log.d(LOGTAG, "storeInString: " + json.toString());
         return json.toString();
     }
 
 
     @Override
     public void restoreFromString(String s) {
-
+        //Log.d(LOGTAG, "restoreFromString: " + s);
         try {
             JSONObject json = new JSONObject(s);
 
             // Restore response variables
-            lastUpdate = (Date)json.get(LASTUPDATE);
+            lastUpdate = sdf.parse(json.optString(LASTUPDATE, ""));
 
             // Restore Wifi variables
-            wifiInformation.setSSID(json.getString(WIFI_SSID));
+            wifiInformation.setSSID(json.optString(WIFI_SSID, ""));
 
             // Restore device variables
             connectedDevices.clear();
@@ -142,15 +151,17 @@ public class WifiResponse implements IResponse {
             for(int i = 0; i < jsonArray.length(); i++){
                 jsonRow = jsonArray.getJSONObject(i);
                 DeviceEntity device = new DeviceEntity();
-                device.setIP(jsonRow.getString(DEVICE_IP));
-                device.setName(jsonRow.getString(DEVICE_NAME));
-                device.setBrand(jsonRow.getString(DEVICE_BRAND));
-                device.setMAC(jsonRow.getString(DEVICE_MAC));
+                device.setIP(jsonRow.optString(DEVICE_IP, ""));
+                device.setName(jsonRow.optString(DEVICE_NAME, ""));
+                device.setBrand(jsonRow.optString(DEVICE_BRAND, ""));
+                device.setMAC(jsonRow.optString(DEVICE_MAC, ""));
                 connectedDevices.add(device);
             }
 
         } catch (JSONException e) {
             Log.e(LOGTAG, "restoreFromString: Error restoring from string: " + e);
+        } catch (ParseException e2) {
+            Log.e(LOGTAG, "restoreFromString: Error parsing date: " + e2);
         }
     }
 }

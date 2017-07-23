@@ -10,17 +10,13 @@ public class WifiEntity {
 
     private String SSID;
 
+    public WifiEntity(){
 
-    public String getSSID() {
-        return SSID;
+        this.SSID = "";
     }
 
+    public String getSSID() { return SSID; }
 
-    public void setSSID(String SSID) {
-        this.SSID = SSID;
-    }
-
-
-
+    public void setSSID(String SSID) { this.SSID = SSID; }
 
 }

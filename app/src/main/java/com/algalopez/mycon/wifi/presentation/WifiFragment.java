@@ -22,6 +22,8 @@ public class WifiFragment extends Fragment implements IWifiView {
 
 
     private static final String LOGTAG = "WifiFragment";
+    private static final String SAVEDINSTANCE_KEY = "SAVEDINSTANCE";
+
 
     private View mRootView;
     private WifiPresenter mPresenter;
@@ -44,11 +46,16 @@ public class WifiFragment extends Fragment implements IWifiView {
         mRootView = inflater.inflate(R.layout.fragment_wifi, container, false);
         mPresenter = new WifiPresenter();
 
-        WifiAdapter connectedDevicesAdapter = new WifiAdapter(null);
+        if (savedInstanceState != null) {
+            Log.d(LOGTAG, "onCreateView: " + savedInstanceState.getString(SAVEDINSTANCE_KEY));
+            mPresenter.setState(savedInstanceState.getString(SAVEDINSTANCE_KEY));
+        }
 
-        RecyclerView connectedDevicesList = (RecyclerView) mRootView.findViewById(R.id.wifi_connected_devices_rv);
-        connectedDevicesList.setAdapter(connectedDevicesAdapter);
-        connectedDevicesList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+//        WifiAdapter connectedDevicesAdapter = new WifiAdapter(null);
+//
+//        RecyclerView connectedDevicesList = (RecyclerView) mRootView.findViewById(R.id.wifi_connected_devices_rv);
+//        connectedDevicesList.setAdapter(connectedDevicesAdapter);
+//        connectedDevicesList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
         setHasOptionsMenu(true);
 
@@ -74,7 +81,9 @@ public class WifiFragment extends Fragment implements IWifiView {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.d(LOGTAG, "onSaveInstanceState");
+        //Log.d(LOGTAG, "onSaveInstanceState: " + mPresenter.getState());
+
+        outState.putString(SAVEDINSTANCE_KEY, mPresenter.getState());
     }
 
 
@@ -125,9 +134,9 @@ public class WifiFragment extends Fragment implements IWifiView {
 
     @Override
     public void showWifiInfo(String ssid) {
+
         TextView wifiSSID = (TextView) mRootView.findViewById(R.id.fragment_wifi_ssid_tv);
         wifiSSID.setText(ssid);
     }
-
 
 }

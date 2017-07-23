@@ -16,22 +16,42 @@ class WifiPresenter {
 
 
     private IWifiView mView;
+    private WifiResponse mWifiResponse;
+
+
 
     WifiPresenter(){
 
+        mWifiResponse = new WifiResponse();
     }
-
 
 
     void attachView(IWifiView view){
 
         this.mView = view;
+        mView.showWifiInfo(mWifiResponse.getWifiInformation().getSSID());
+        mView.showConnectedDevices(mWifiResponse.getConnectedDevices());
     }
 
 
     void detachView(){
+
         this.mView = null;
     }
+
+
+    String getState(){
+
+        return mWifiResponse.storeInString();
+    }
+
+
+    void setState(String state){
+
+        mWifiResponse.restoreFromString(state);
+    }
+
+
 
 
     /* *********************************************************************************************
@@ -60,14 +80,13 @@ class WifiPresenter {
         ArrayList<DeviceEntity> connectedDevices = new ArrayList<>();
         connectedDevices.add(dev1); connectedDevices.add(dev2); connectedDevices.add(dev3); connectedDevices.add(dev4); connectedDevices.add(dev5);
 
-        WifiResponse wifiResponse = new WifiResponse();
-        wifiResponse.setWifiInformation(wifiInformation);
-        wifiResponse.setConnectedDevices(connectedDevices);
-        wifiResponse.setLastUpdate(new Date());
+        mWifiResponse.setWifiInformation(wifiInformation);
+        mWifiResponse.setConnectedDevices(connectedDevices);
+        mWifiResponse.setLastUpdate(new Date());
 
         if (this.mView!= null){
-            this.mView.showWifiInfo(wifiResponse.getWifiInformation().getSSID());
-            this.mView.showConnectedDevices(wifiResponse.getConnectedDevices());
+            this.mView.showWifiInfo(mWifiResponse.getWifiInformation().getSSID());
+            this.mView.showConnectedDevices(mWifiResponse.getConnectedDevices());
         }
 
     }
