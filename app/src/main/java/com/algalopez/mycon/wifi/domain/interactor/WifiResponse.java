@@ -87,7 +87,7 @@ public class WifiResponse implements IResponse {
     private static final String DEVICE_NAME = "DEVICE_NAME";
 
 
-    private static final String ARRAY = "ARRAY";
+    private static final String CONNECTEDDEVICES = "ARRAY";
 
     @Override
     public String storeInString() {
@@ -112,7 +112,7 @@ public class WifiResponse implements IResponse {
                 jsonRow.put(DEVICE_BRAND, device.getBrand());
                 jsonArray.put(jsonRow);
             }
-            json.put("connectedDevices", jsonArray);
+            json.put(CONNECTEDDEVICES, jsonArray);
 
         } catch (JSONException e) {
             Log.e(LOGTAG, "storeInString: Error storing in json string: " + e);
@@ -137,7 +137,7 @@ public class WifiResponse implements IResponse {
 
             // Restore device variables
             connectedDevices.clear();
-            JSONArray jsonArray = json.getJSONArray(ARRAY);
+            JSONArray jsonArray = json.getJSONArray(CONNECTEDDEVICES);
             JSONObject jsonRow;
             for(int i = 0; i < jsonArray.length(); i++){
                 jsonRow = jsonArray.getJSONObject(i);
