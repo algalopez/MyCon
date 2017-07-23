@@ -27,7 +27,6 @@ public class WifiFragment extends Fragment implements IWifiView {
     private WifiPresenter mPresenter;
 
 
-
     public WifiFragment() {
     }
 
@@ -44,6 +43,12 @@ public class WifiFragment extends Fragment implements IWifiView {
 
         mRootView = inflater.inflate(R.layout.fragment_wifi, container, false);
         mPresenter = new WifiPresenter();
+
+        WifiAdapter connectedDevicesAdapter = new WifiAdapter(null);
+
+        RecyclerView connectedDevicesList = (RecyclerView) mRootView.findViewById(R.id.wifi_connected_devices_rv);
+        connectedDevicesList.setAdapter(connectedDevicesAdapter);
+        connectedDevicesList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
         setHasOptionsMenu(true);
 
@@ -65,13 +70,19 @@ public class WifiFragment extends Fragment implements IWifiView {
         return super.onOptionsItemSelected(item);
     }
 
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(LOGTAG, "onSaveInstanceState");
+    }
+
+
     @Override
     public void onResume() {
         super.onResume();
 
         mPresenter.attachView(this);
-
-        //mPresenter.test1();
     }
 
 
@@ -81,7 +92,6 @@ public class WifiFragment extends Fragment implements IWifiView {
 
         mPresenter.detachView();
     }
-
 
 
     /* *********************************************************************************************
@@ -104,7 +114,6 @@ public class WifiFragment extends Fragment implements IWifiView {
 
     @Override
     public void showConnectedDevices(ArrayList<DeviceEntity> connectedDevices) {
-
 
         WifiAdapter connectedDevicesAdapter = new WifiAdapter(connectedDevices);
 

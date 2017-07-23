@@ -10,7 +10,8 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/listPreferredItemHeight">
+        android:layout_height="?attr/listPreferredItemHeight"
+        android:background="@color/light_blue_200">
 
         <TextView
             android:id="@+id/fragment_wifi_ssid_tv"
