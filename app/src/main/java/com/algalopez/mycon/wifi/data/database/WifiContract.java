@@ -1,4 +1,4 @@
-package com.algalopez.mycon.wifi.data.local.database;
+package com.algalopez.mycon.wifi.data.database;
 
 import android.provider.BaseColumns;
 
@@ -14,8 +14,13 @@ class WifiContract {
 
         final static String TABLE_NAME = "WIFI";
         final static String COLUMN_SSID = "SSID";
-        // final static String COLUMN_PASSWORD = "PASSWORD";
+        final static String COLUMN_PASSWORD = "PASSWORD";
         // final static String COLUMN_LASTUPDATED = "LASTUPDATED";
+
+        public static String[] getProjection() {
+
+            return new String[] {_ID, COLUMN_SSID, COLUMN_PASSWORD};
+        }
     }
 
 
@@ -25,6 +30,10 @@ class WifiContract {
         final static String COLUMN_MAC = "MAC";
         final static String COLUMN_NAME = "NAME";
         final static String COLUMN_BRAND = "BRAND";
+
+        public static String[] getProjection() {
+            return new String[] {_ID, COLUMN_MAC, COLUMN_NAME, COLUMN_BRAND};
+        }
     }
 
 
@@ -35,6 +44,9 @@ class WifiContract {
         final static String COLUMN_DEVICE = "DEVICE_FK";
         final static String COLUMN_IP = "IP";
 
+        public static String[] getProjection() {
+            return new String[] {COLUMN_WIFI, COLUMN_DEVICE, COLUMN_IP};
+        }
     }
 
 }

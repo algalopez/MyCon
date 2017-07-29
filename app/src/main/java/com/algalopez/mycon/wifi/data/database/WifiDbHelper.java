@@ -1,12 +1,12 @@
-package com.algalopez.mycon.wifi.data.local.database;
+package com.algalopez.mycon.wifi.data.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.algalopez.mycon.wifi.data.local.database.WifiContract.WifiEntry;
-import com.algalopez.mycon.wifi.data.local.database.WifiContract.DeviceEntry;
-import com.algalopez.mycon.wifi.data.local.database.WifiContract.WifiConnectDeviceEntry;
+import com.algalopez.mycon.wifi.data.database.WifiContract.WifiEntry;
+import com.algalopez.mycon.wifi.data.database.WifiContract.DeviceEntry;
+import com.algalopez.mycon.wifi.data.database.WifiContract.WifiConnectDeviceEntry;
 
 /**
  * AUTHOR:  Alvaro Garcia Lopez (algalopez)
@@ -30,7 +30,8 @@ public class WifiDbHelper extends SQLiteOpenHelper {
 
         final String SQL_CREATE_WIFI_TABLE = "CREATE TABLE " + WifiEntry.TABLE_NAME + " (" +
                 WifiEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                WifiEntry.COLUMN_SSID + " TEXT " +
+                WifiEntry.COLUMN_SSID + " TEXT, " +
+                WifiEntry.COLUMN_PASSWORD + " TEXT " +
                 ");";
 
         final String SQL_CREATE_DEVICE_TABLE = "CREATE TABLE " + DeviceEntry.TABLE_NAME + " (" +
@@ -49,11 +50,9 @@ public class WifiDbHelper extends SQLiteOpenHelper {
                     WifiConnectDeviceEntry.COLUMN_DEVICE +
                     "), " +
                 "FOREIGN KEY (" +
-                    WifiConnectDeviceEntry.COLUMN_WIFI + ") REFERENCES " + WifiEntry.TABLE_NAME + "(" + WifiEntry._ID + ")" +
-                    "), " +
+                    WifiConnectDeviceEntry.COLUMN_WIFI + ") REFERENCES " + WifiEntry.TABLE_NAME + "(" + WifiEntry._ID + "), " +
                 "FOREIGN KEY (" +
                     WifiConnectDeviceEntry.COLUMN_DEVICE + ") REFERENCES " + DeviceEntry.TABLE_NAME + "(" + DeviceEntry._ID + ")" +
-                    ")" +
                 ");";
 
         sqLiteDatabase.execSQL(SQL_CREATE_WIFI_TABLE);
