@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.algalopez.mycon.R;
+import com.algalopez.mycon.common.Executor;
 import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
 
 import java.util.ArrayList;
@@ -46,10 +47,10 @@ public class WifiFragment extends Fragment implements IWifiView {
         mRootView = inflater.inflate(R.layout.fragment_wifi, container, false);
         mPresenter = new WifiPresenter();
 
-        if (savedInstanceState != null) {
-            Log.d(LOGTAG, "onCreateView: " + savedInstanceState.getString(SAVEDINSTANCE_KEY));
-            mPresenter.setState(savedInstanceState.getString(SAVEDINSTANCE_KEY));
-        }
+//        if (savedInstanceState != null) {
+//            Log.d(LOGTAG, "onCreateView: " + savedInstanceState.getString(SAVEDINSTANCE_KEY));
+//            mPresenter.setState(savedInstanceState.getString(SAVEDINSTANCE_KEY));
+//        }
 
 //        WifiAdapter connectedDevicesAdapter = new WifiAdapter(null);
 //
@@ -69,7 +70,7 @@ public class WifiFragment extends Fragment implements IWifiView {
         int id = item.getItemId();
         if (id == R.id.action_update) {
             if (mPresenter!= null) {
-                mPresenter.test1();
+                mPresenter.updateWifi();
             }
             return true;
         }
@@ -83,7 +84,7 @@ public class WifiFragment extends Fragment implements IWifiView {
         super.onSaveInstanceState(outState);
         //Log.d(LOGTAG, "onSaveInstanceState: " + mPresenter.getState());
 
-        outState.putString(SAVEDINSTANCE_KEY, mPresenter.getState());
+        //outState.putString(SAVEDINSTANCE_KEY, mPresenter.getState());
     }
 
 
@@ -135,6 +136,7 @@ public class WifiFragment extends Fragment implements IWifiView {
     @Override
     public void showWifiInfo(String ssid) {
 
+        // Log.d(LOGTAG, "showWifiInfo: " + ssid);
         TextView wifiSSID = (TextView) mRootView.findViewById(R.id.fragment_wifi_ssid_tv);
         wifiSSID.setText(ssid);
     }

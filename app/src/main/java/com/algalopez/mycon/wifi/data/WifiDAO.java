@@ -1,5 +1,6 @@
 package com.algalopez.mycon.wifi.data;
 
+import com.algalopez.mycon.wifi.data.database.WifiRepository;
 import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
 import com.algalopez.mycon.wifi.domain.model.WifiEntity;
 
@@ -11,13 +12,18 @@ import com.algalopez.mycon.wifi.domain.model.WifiEntity;
 public class WifiDAO {
 
 
+    public WifiDAO(){
+
+    }
+
 
     public void setConnectedDevices(WifiEntity wifiEntity, DeviceEntity deviceEntity){
 
     }
 
 
-    public void getConnectedDevices(){
+    public void getConnectedDevices(WifiEntity wifiEntity){
+
 
     }
 

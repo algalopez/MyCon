@@ -1,36 +1,43 @@
 package com.algalopez.mycon.wifi.presentation;
 
-import com.algalopez.mycon.wifi.domain.interactor.WifiResponse;
-import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
-import com.algalopez.mycon.wifi.domain.model.WifiEntity;
+import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.Date;
+import com.algalopez.mycon.common.BaseActor;
+import com.algalopez.mycon.common.Executor;
+import com.algalopez.mycon.wifi.domain.interactor.WifiActor;
+import com.algalopez.mycon.wifi.domain.interactor.WifiResponse;
+
 
 /**
  * AUTHOR:  Alvaro Garcia Lopez (algalopez)
  * DATE:    7/22/17
  */
 
+
 class WifiPresenter {
+
+    private static final String LOGTAG = "WifiPresenter";
 
 
     private IWifiView mView;
+    private WifiActor mWifiActor;
     private WifiResponse mWifiResponse;
-
+    private Executor mExecutor;
 
 
     WifiPresenter(){
 
-        mWifiResponse = new WifiResponse();
+        mWifiActor = new WifiActor();
+        mExecutor = new Executor();
     }
 
 
     void attachView(IWifiView view){
 
         this.mView = view;
-        mView.showWifiInfo(mWifiResponse.getWifiInformation().getSSID());
-        mView.showConnectedDevices(mWifiResponse.getConnectedDevices());
+        if (mWifiResponse == null){
+            getWifi();
+        }
     }
 
 
@@ -52,43 +59,67 @@ class WifiPresenter {
     }
 
 
-
-
     /* *********************************************************************************************
-     * TESTS
+     * DOMAIN ACTIONS
      * *********************************************************************************************
      */
 
 
-    void test1() {
+    void getWifi(){
 
-        WifiEntity wifiInformation = new WifiEntity();
+        mWifiActor.subscribe(getClass().getSimpleName(), wifiCallback, mExecutor);
+        mExecutor.executeInSingleThread(mWifiActor);
+    }
 
-        wifiInformation.setSSID("WIFI_SSID");
 
-        DeviceEntity dev1 = new DeviceEntity();
-        DeviceEntity dev2 = new DeviceEntity();
-        DeviceEntity dev3 = new DeviceEntity();
-        DeviceEntity dev4 = new DeviceEntity();
-        DeviceEntity dev5 = new DeviceEntity();
-
-        dev1.setIP("IP1"); dev2.setIP("IP2"); dev3.setIP("IP3"); dev4.setIP("IP4"); dev5.setIP("IP5");
-        dev1.setMAC("MAC1"); dev2.setMAC("MAC2"); dev3.setMAC("MAC3"); dev4.setMAC("MAC4"); dev5.setMAC("MAC5");
-        dev1.setName("Name1"); dev2.setName("Name2"); dev3.setName("Name3"); dev4.setName("Name4"); dev5.setName("Name5");
-        dev1.setBrand("Brand1"); dev2.setBrand("Brand2"); dev3.setBrand("Brand3"); dev4.setBrand("Brand4"); dev5.setBrand("Brand5");
-
-        ArrayList<DeviceEntity> connectedDevices = new ArrayList<>();
-        connectedDevices.add(dev1); connectedDevices.add(dev2); connectedDevices.add(dev3); connectedDevices.add(dev4); connectedDevices.add(dev5);
-
-        mWifiResponse.setWifiInformation(wifiInformation);
-        mWifiResponse.setConnectedDevices(connectedDevices);
-        mWifiResponse.setLastUpdate(new Date());
-
-        if (this.mView!= null){
-            this.mView.showWifiInfo(mWifiResponse.getWifiInformation().getSSID());
-            this.mView.showConnectedDevices(mWifiResponse.getConnectedDevices());
-        }
+    void updateWifi(){
 
     }
+
+
+    /* *********************************************************************************************
+     * VIEW ACTIONS
+     * *********************************************************************************************
+     */
+
+
+
+
+
+    /* *********************************************************************************************
+     * CALLBACKS
+     * *********************************************************************************************
+     */
+
+
+    private BaseActor.BaseCallback<WifiResponse> wifiCallback = new BaseActor.BaseCallback<WifiResponse>() {
+
+
+        @Override
+        public void onSuccess(String actorName, WifiResponse data) {
+            Log.d(LOGTAG, "onSuccess: " + actorName);
+
+            mWifiResponse = data;
+
+            mView.showWifiInfo(data.getWifiInformation().getSSID());
+
+            mView.showConnectedDevices(data.getConnectedDevices());
+        }
+
+
+        @Override
+        public void onDataChanged(String actorName, WifiResponse data) {
+            Log.d(LOGTAG, "onDataChanged: " + actorName);
+        }
+
+
+        @Override
+        public void onError(String actorName, String message) {
+            Log.d(LOGTAG, "onError: " + actorName);
+        }
+
+    };
+
+
 
 }
