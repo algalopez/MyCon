@@ -14,6 +14,21 @@ public abstract class BaseActor<R> implements Runnable{
     private Executor mExecutor;
 
 
+    /* *********************************************************************************************
+     * USE CASE LOGIC
+     * *********************************************************************************************
+     */
+
+
+    public abstract void run();
+
+
+    /* *********************************************************************************************
+     * SUBSCRIBERS
+     * *********************************************************************************************
+     */
+
+
     public void subscribe(String className, BaseCallback<R> callback, Executor executor){
 
         this.mExecutor = executor;
@@ -25,12 +40,17 @@ public abstract class BaseActor<R> implements Runnable{
         bSubscriptions.put(className, callback);
     }
 
+
     public void unSubscribe(String className){
+
         bSubscriptions.remove(className);
     }
 
 
-    public abstract void run();
+    /* *********************************************************************************************
+     * SUBSCRIBERS NOTIFICATION
+     * *********************************************************************************************
+     */
 
 
     protected void notifySuccess(final String actorName, final R data){
@@ -69,6 +89,12 @@ public abstract class BaseActor<R> implements Runnable{
             }
         });
     }
+
+
+    /* *********************************************************************************************
+     * CALLBACK INTERFACE
+     * *********************************************************************************************
+     */
 
 
     public interface BaseCallback<R>{

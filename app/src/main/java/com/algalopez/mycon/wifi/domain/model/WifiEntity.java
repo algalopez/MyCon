@@ -8,12 +8,18 @@ package com.algalopez.mycon.wifi.domain.model;
 public class WifiEntity {
 
 
+    private Long ID;
     private String SSID;
 
     public WifiEntity(){
 
+        this.ID = -1L;
         this.SSID = "";
     }
+
+    public Long getID() { return ID; }
+
+    public void setID(Long ID) { this.ID = ID; }
 
     public String getSSID() { return SSID; }
 

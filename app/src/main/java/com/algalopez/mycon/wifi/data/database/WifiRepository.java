@@ -44,7 +44,7 @@ public class WifiRepository {
      * @param id Wifi network id
      * @return ContentValues with wifi network data
      */
-    ContentValues queryWifi(Long id){
+    public ContentValues queryWifi(Long id){
 
         SQLiteDatabase database;
         ContentValues values = new ContentValues();
@@ -227,7 +227,6 @@ public class WifiRepository {
      * DEVICE
      * *********************************************************************************************
      */
-
 
 
     public ContentValues queryDevice(Long id){

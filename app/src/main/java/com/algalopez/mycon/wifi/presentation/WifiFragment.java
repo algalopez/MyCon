@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.algalopez.mycon.R;
-import com.algalopez.mycon.common.Executor;
 import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
 
 import java.util.ArrayList;

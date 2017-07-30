@@ -7,14 +7,14 @@ import android.provider.BaseColumns;
  * DATE:    7/23/17
  */
 
-class WifiContract {
+public class WifiContract {
 
 
-    final static class WifiEntry implements BaseColumns {
+    public final static class WifiEntry implements BaseColumns {
 
-        final static String TABLE_NAME = "WIFI";
-        final static String COLUMN_SSID = "SSID";
-        final static String COLUMN_PASSWORD = "PASSWORD";
+        public final static String TABLE_NAME = "WIFI";
+        public final static String COLUMN_SSID = "SSID";
+        public final static String COLUMN_PASSWORD = "PASSWORD";
         // final static String COLUMN_LASTUPDATED = "LASTUPDATED";
 
         public static String[] getProjection() {
@@ -24,12 +24,12 @@ class WifiContract {
     }
 
 
-    final static class DeviceEntry implements BaseColumns {
+    public final static class DeviceEntry implements BaseColumns {
 
-        final static String TABLE_NAME = "DEVICE";
-        final static String COLUMN_MAC = "MAC";
-        final static String COLUMN_NAME = "NAME";
-        final static String COLUMN_BRAND = "BRAND";
+        public final static String TABLE_NAME = "DEVICE";
+        public final static String COLUMN_MAC = "MAC";
+        public final static String COLUMN_NAME = "NAME";
+        public final static String COLUMN_BRAND = "BRAND";
 
         public static String[] getProjection() {
             return new String[] {_ID, COLUMN_MAC, COLUMN_NAME, COLUMN_BRAND};
@@ -37,12 +37,12 @@ class WifiContract {
     }
 
 
-    final static class WifiConnectDeviceEntry implements BaseColumns {
+    public final static class WifiConnectDeviceEntry implements BaseColumns {
 
-        final static String TABLE_NAME = "WIFI_CONNECT_DEVICE";
-        final static String COLUMN_WIFI = "WIFI_FK";
-        final static String COLUMN_DEVICE = "DEVICE_FK";
-        final static String COLUMN_IP = "IP";
+        public final static String TABLE_NAME = "WIFI_CONNECT_DEVICE";
+        public final static String COLUMN_WIFI = "WIFI_FK";
+        public final static String COLUMN_DEVICE = "DEVICE_FK";
+        public final static String COLUMN_IP = "IP";
 
         public static String[] getProjection() {
             return new String[] {COLUMN_WIFI, COLUMN_DEVICE, COLUMN_IP};

@@ -8,17 +8,23 @@ package com.algalopez.mycon.wifi.domain.model;
 public class DeviceEntity {
 
 
+    private Long ID;
     private String IP;
     private String MAC;
     private String name;
     private String brand;
 
     public DeviceEntity(){
+        this.ID = -1L;
         this.IP = "";
         this.MAC = "";
         this.name = "";
         this.brand = "";
     }
+
+    public Long getID() { return ID; }
+
+    public void setID(Long ID) { this.ID = ID; }
 
     public String getIP() { return IP; }
 
