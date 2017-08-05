@@ -16,7 +16,7 @@ import com.algalopez.mycon.wifi.data.database.WifiContract.WifiConnectDeviceEntr
 public class WifiDbHelper extends SQLiteOpenHelper {
 
 
-    private final static int DATABASE_VERSION = 1;
+    private final static int DATABASE_VERSION = 2;
     private final static String DATABASE_NAME = "wifi.db";
 
 
@@ -31,7 +31,8 @@ public class WifiDbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_WIFI_TABLE = "CREATE TABLE " + WifiEntry.TABLE_NAME + " (" +
                 WifiEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 WifiEntry.COLUMN_SSID + " TEXT, " +
-                WifiEntry.COLUMN_PASSWORD + " TEXT " +
+                WifiEntry.COLUMN_PASSWORD + " TEXT, " +
+                WifiEntry.COLUMN_LASTUPDATED + " INTEGER " +
                 ");";
 
         final String SQL_CREATE_DEVICE_TABLE = "CREATE TABLE " + DeviceEntry.TABLE_NAME + " (" +

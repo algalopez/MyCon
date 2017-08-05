@@ -21,10 +21,10 @@ import java.util.Locale;
  * DATE:    7/22/17
  */
 
-public class WifiResponse implements IResponse {
+public class GetWifiResponse implements IResponse {
 
 
-    private static final String LOGTAG = "WifiResponse";
+    private static final String LOGTAG = "GetWifiResponse";
 
 
     /* *********************************************************************************************
@@ -46,7 +46,7 @@ public class WifiResponse implements IResponse {
      */
 
 
-    public WifiResponse(){
+    public GetWifiResponse(){
 
         lastUpdate = new Date();
         wifiInformation = new WifiEntity();

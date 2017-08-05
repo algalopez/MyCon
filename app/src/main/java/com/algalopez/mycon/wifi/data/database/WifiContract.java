@@ -15,11 +15,11 @@ public class WifiContract {
         public final static String TABLE_NAME = "WIFI";
         public final static String COLUMN_SSID = "SSID";
         public final static String COLUMN_PASSWORD = "PASSWORD";
-        // final static String COLUMN_LASTUPDATED = "LASTUPDATED";
+        public final static String COLUMN_LASTUPDATED = "LASTUPDATED";
 
         public static String[] getProjection() {
 
-            return new String[] {_ID, COLUMN_SSID, COLUMN_PASSWORD};
+            return new String[] {_ID, COLUMN_SSID, COLUMN_PASSWORD, COLUMN_LASTUPDATED};
         }
     }
 

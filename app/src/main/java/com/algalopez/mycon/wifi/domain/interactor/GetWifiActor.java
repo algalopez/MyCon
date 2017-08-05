@@ -11,13 +11,13 @@ import java.util.ArrayList;
  * DATE:    7/22/17
  */
 
-public class WifiActor extends BaseActor<WifiResponse> {
+public class GetWifiActor extends BaseActor<GetWifiResponse> {
 
     private final String mActorName;
-    private WifiResponse mData;
+    private GetWifiResponse mData;
 
-    public WifiActor(){
-        this.mData = new WifiResponse();
+    public GetWifiActor(){
+        this.mData = new GetWifiResponse();
         this.mActorName = getClass().getSimpleName();
     }
 

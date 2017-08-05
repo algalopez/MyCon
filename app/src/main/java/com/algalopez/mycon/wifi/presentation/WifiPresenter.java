@@ -4,8 +4,8 @@ import android.util.Log;
 
 import com.algalopez.mycon.common.BaseActor;
 import com.algalopez.mycon.common.Executor;
-import com.algalopez.mycon.wifi.domain.interactor.WifiActor;
-import com.algalopez.mycon.wifi.domain.interactor.WifiResponse;
+import com.algalopez.mycon.wifi.domain.interactor.GetWifiActor;
+import com.algalopez.mycon.wifi.domain.interactor.GetWifiResponse;
 
 
 /**
@@ -20,14 +20,14 @@ class WifiPresenter {
 
 
     private IWifiView mView;
-    private WifiActor mWifiActor;
-    private WifiResponse mWifiResponse;
+    private GetWifiActor mGetWifiActor;
+    private GetWifiResponse mGetWifiResponse;
     private Executor mExecutor;
 
 
     WifiPresenter(){
 
-        mWifiActor = new WifiActor();
+        mGetWifiActor = new GetWifiActor();
         mExecutor = new Executor();
     }
 
@@ -35,7 +35,7 @@ class WifiPresenter {
     void attachView(IWifiView view){
 
         this.mView = view;
-        if (mWifiResponse == null){
+        if (mGetWifiResponse == null){
             getWifi();
         }
     }
@@ -49,13 +49,13 @@ class WifiPresenter {
 
     String getState(){
 
-        return mWifiResponse.storeInString();
+        return mGetWifiResponse.storeInString();
     }
 
 
     void setState(String state){
 
-        mWifiResponse.restoreFromString(state);
+        mGetWifiResponse.restoreFromString(state);
     }
 
 
@@ -67,8 +67,8 @@ class WifiPresenter {
 
     void getWifi(){
 
-        mWifiActor.subscribe(getClass().getSimpleName(), wifiCallback, mExecutor);
-        mExecutor.executeInSingleThread(mWifiActor);
+        mGetWifiActor.subscribe(getClass().getSimpleName(), wifiCallback, mExecutor);
+        mExecutor.executeInSingleThread(mGetWifiActor);
     }
 
 
@@ -92,14 +92,14 @@ class WifiPresenter {
      */
 
 
-    private BaseActor.BaseCallback<WifiResponse> wifiCallback = new BaseActor.BaseCallback<WifiResponse>() {
+    private BaseActor.BaseCallback<GetWifiResponse> wifiCallback = new BaseActor.BaseCallback<GetWifiResponse>() {
 
 
         @Override
-        public void onSuccess(String actorName, WifiResponse data) {
+        public void onSuccess(String actorName, GetWifiResponse data) {
             Log.d(LOGTAG, "onSuccess: " + actorName);
 
-            mWifiResponse = data;
+            mGetWifiResponse = data;
 
             mView.showWifiInfo(data.getWifiInformation().getSSID());
 
@@ -108,7 +108,7 @@ class WifiPresenter {
 
 
         @Override
-        public void onDataChanged(String actorName, WifiResponse data) {
+        public void onDataChanged(String actorName, GetWifiResponse data) {
             Log.d(LOGTAG, "onDataChanged: " + actorName);
         }
 

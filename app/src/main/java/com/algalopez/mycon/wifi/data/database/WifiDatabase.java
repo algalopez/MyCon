@@ -19,14 +19,14 @@ import java.util.ArrayList;
  */
 
 
-public class WifiRepository {
+public class WifiDatabase implements IWifiDatabase{
 
-    private static final String LOGTAG = "WifiRepository";
+    private static final String LOGTAG = "WifiDatabase";
 
     private WifiDbHelper mDbHelper;
 
 
-    public WifiRepository(Context context){
+    public WifiDatabase(Context context){
 
         mDbHelper = new WifiDbHelper(context);
     }
@@ -39,20 +39,16 @@ public class WifiRepository {
 
 
     /**
-     * Query Wifi network by ID
+     * Query Wifi network by ID.
      *
      * @param id Wifi network id
      * @return ContentValues with wifi network data
      */
+    @Override
     public ContentValues queryWifi(Long id){
 
         SQLiteDatabase database;
         ContentValues values = new ContentValues();
-
-        // Check Params
-        if (id == null) {
-            return values;
-        }
 
         database = mDbHelper.getReadableDatabase();
 
@@ -66,6 +62,7 @@ public class WifiRepository {
             values.put(WifiEntry._ID, c.getString(c.getColumnIndex(WifiEntry._ID)));
             values.put(WifiEntry.COLUMN_SSID, c.getString(c.getColumnIndex(WifiEntry.COLUMN_SSID)));
             values.put(WifiEntry.COLUMN_PASSWORD, c.getString(c.getColumnIndex(WifiEntry.COLUMN_PASSWORD)));
+            values.put(WifiEntry.COLUMN_LASTUPDATED, c.getLong(c.getColumnIndex(WifiEntry.COLUMN_LASTUPDATED)));
         }
 
         c.close();
@@ -76,37 +73,19 @@ public class WifiRepository {
 
 
     /**
-     * Insert a new Wifi if it doesn't exist
+     * Insert a new wifi into the database
      *
-     * @param SSID Wifi Network SSID
-     * @param password Wifi network password
-     * @return ID of the Wifi network or -1 if error
+     * @param values ContentValues
+     * @return new wifi id or -1 if error
      */
-    public Long insertWifi(String SSID, String password){
+    @Override
+    public Long insertWifi(ContentValues values) {
 
         Long rowID;
         SQLiteDatabase database;
 
-        // 1.- Check params
-        if (SSID == null) {
-            return -1L;
-        }
-
-        // 2.- Check if the Wifi Network is already in database
-        Long wifiID = getWifiIDBySSID(SSID);
-        if (wifiID >= 0){
-            Log.d(LOGTAG, "insertWifi: Wifi network already exist");
-            return -1L;
-        }
-
-        // 3.- Insert a new Wifi Network into the database
         database = mDbHelper.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(WifiEntry.COLUMN_SSID, SSID);
-        values.put(WifiEntry.COLUMN_PASSWORD, password);
         rowID = database.insert(WifiEntry.TABLE_NAME, null, values);
-
         database.close();
 
         return rowID;
@@ -119,7 +98,8 @@ public class WifiRepository {
      * @param id Wifi network id
      * @return Number of rows affected
      */
-    public Integer deleteWifi(Long id){
+    @Override
+    public int deleteWifi(Long id){
 
         SQLiteDatabase database;
         String whereClause = WifiEntry._ID + " = ?";
@@ -137,51 +117,31 @@ public class WifiRepository {
     }
 
 
+
     /**
      * Update Wifi network data if it exists
      *
-     * @param id Wifi network id
-     * @param SSID Wifi network SSID
-     * @param password Wifi network password
-     * @return number of rows affected
+     * @param values ContentValues
+     * @return number of rows affected by update
      */
-    public int updateWifi(Long id, String SSID, String password){
+    @Override
+    public int updateWifi(ContentValues values) {
 
-        int rowsAffected = 0;
+        int rowsAffected;
 
-        // 1.- Check params
-        if (SSID == null || id == null) {
-            return rowsAffected;
-        }
-
-        // 2.- Check if the Wifi Network is already in database
-        Long wifiID = getWifiIDBySSID(SSID);
-        if (wifiID < 0) {
-            Log.d(LOGTAG, "updateWifi: Wifi network doesn't exist");
-            return rowsAffected;
-        }
-
-        if (!wifiID.equals(id)){
-            Log.e(LOGTAG, "updateWifi: ID is different in database");
-            return rowsAffected;
-        }
+        Long wifiID = values.getAsLong(WifiEntry._ID);
 
         SQLiteDatabase database;
         String whereClause = WifiEntry._ID + " = ?";
-        String[] whereArgs = new String[] {id.toString()};
+        String[] whereArgs = new String[] {wifiID.toString()};
         database = mDbHelper.getWritableDatabase();
 
-        // Update Wifi in database
-        ContentValues values = new ContentValues();
-        values.put(WifiEntry.COLUMN_SSID, SSID);
-        values.put(WifiEntry.COLUMN_PASSWORD, password);
         rowsAffected = database.update(WifiEntry.TABLE_NAME, values, whereClause, whereArgs);
+        database.close();
 
         if (rowsAffected > 1){
             Log.d(LOGTAG, "updateWifi: More than one row affected");
         }
-
-        database.close();
 
         return rowsAffected;
     }
@@ -193,15 +153,11 @@ public class WifiRepository {
      * @param SSID Wifi Network SSID
      * @return Wifi network id
      */
+    @Override
     public Long getWifiIDBySSID(String SSID){
 
         SQLiteDatabase database;
         Long id = -1L;
-
-        // Check Params
-        if (SSID == null) {
-            return -1L;
-        }
 
         database = mDbHelper.getReadableDatabase();
 
@@ -223,12 +179,50 @@ public class WifiRepository {
     }
 
 
+    /**
+     *
+     * @return -
+     */
+    @Override
+    public ArrayList<ContentValues> queryAllWifi() {
+
+        ArrayList<ContentValues> wifiList = new ArrayList<>();
+        SQLiteDatabase database = mDbHelper.getReadableDatabase();
+        ContentValues wifiValues;
+
+        String[] projection = WifiEntry.getProjection();
+        Cursor c = database.query(WifiEntry.TABLE_NAME, projection, null, null, null, null, null);
+
+
+        if (c.moveToFirst()){
+            do {
+                wifiValues = new ContentValues();
+                wifiValues.put(WifiEntry._ID, c.getLong(c.getColumnIndex(WifiEntry._ID)));
+                wifiValues.put(WifiEntry.COLUMN_SSID, c.getString(c.getColumnIndex(WifiEntry.COLUMN_SSID)));
+                wifiValues.put(WifiEntry.COLUMN_PASSWORD, c.getString(c.getColumnIndex(WifiEntry.COLUMN_PASSWORD)));
+                wifiValues.put(WifiEntry.COLUMN_LASTUPDATED, c.getLong(c.getColumnIndex(WifiEntry.COLUMN_LASTUPDATED)));
+                wifiList.add(wifiValues);
+            } while (c.moveToNext());
+        }
+        c.close();
+        database.close();
+
+        return wifiList;
+    }
+
+
     /* *********************************************************************************************
      * DEVICE
      * *********************************************************************************************
      */
 
 
+    /**
+     *
+     * @param id -
+     * @return -
+     */
+    @Override
     public ContentValues queryDevice(Long id){
 
         SQLiteDatabase database;
@@ -255,34 +249,27 @@ public class WifiRepository {
     }
 
 
-    public Long insertDevice(String MAC, String brand, String name){
+    /**
+     *
+     *
+     * @param values -
+     * @return -
+     */
+    @Override
+    public Long insertDevice(ContentValues values){
 
         Long rowID;
         SQLiteDatabase database;
 
-        // 1.- Check params
-        if (MAC == null) {
-            return -1L;
-        }
-
-        Long deviceID = getDeviceIDByMAC(MAC);
-        if (deviceID >= 0){
-            Log.d(LOGTAG, "insertDevice: Device already exist");
-            return -1L;
-        }
-
         database = mDbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(DeviceEntry.COLUMN_MAC, MAC);
-        values.put(DeviceEntry.COLUMN_BRAND, brand);
-        values.put(DeviceEntry.COLUMN_NAME, name);
         rowID = database.insert(DeviceEntry.TABLE_NAME, null, values);
-
         database.close();
+
         return rowID;
     }
 
 
+    @Override
     public Integer deleteDevice(Long id){
 
         SQLiteDatabase database;
@@ -301,26 +288,22 @@ public class WifiRepository {
     }
 
 
-    public Integer updateDevice(Long id, String MAC, String brand, String name){
+    /**
+     *
+     * @param values -
+     * @return -
+     */
+    @Override
+    public int updateDevice(ContentValues values){
 
+        Long deviceID = values.getAsLong(DeviceEntry._ID);
 
         int rowsAffected;
         String whereClause = DeviceEntry._ID + " = ?";
-        String[] whereArgs = new String[] {id.toString()};
+        String[] whereArgs = new String[] {deviceID.toString()};
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
 
-
-        // Update Wifi in database
-        ContentValues values = new ContentValues();
-        values.put(DeviceEntry.COLUMN_MAC, MAC);
-        values.put(DeviceEntry.COLUMN_BRAND, brand);
-        values.put(DeviceEntry.COLUMN_NAME, name);
         rowsAffected = database.update(DeviceEntry.TABLE_NAME, values, whereClause, whereArgs);
-
-        if (rowsAffected > 1){
-            Log.d(LOGTAG, "updateDevice: More than one row affected");
-        }
-
         database.close();
 
         return rowsAffected;
@@ -333,15 +316,11 @@ public class WifiRepository {
      * @param MAC Device MAC address
      * @return device ID
      */
+    @Override
     public Long getDeviceIDByMAC(String MAC) {
 
         SQLiteDatabase database;
         Long id = -1L;
-
-        // Check Params
-        if (MAC == null) {
-            return -1L;
-        }
 
         database = mDbHelper.getReadableDatabase();
 
@@ -361,14 +340,72 @@ public class WifiRepository {
     }
 
 
+    /**
+     *
+     * @return -
+     */
+    @Override
+    public ArrayList<ContentValues> queryAllDevice() {
+
+        ArrayList<ContentValues> deviceList = new ArrayList<>();
+        SQLiteDatabase database = mDbHelper.getReadableDatabase();
+        ContentValues deviceValues;
+
+        String[] projection = WifiEntry.getProjection();
+        Cursor c = database.query(DeviceEntry.TABLE_NAME, projection, null, null, null, null, null);
+
+
+        if (c.moveToFirst()){
+            do {
+                deviceValues = new ContentValues();
+                deviceValues.put(DeviceEntry._ID, c.getLong(c.getColumnIndex(DeviceEntry._ID)));
+                deviceValues.put(DeviceEntry.COLUMN_MAC, c.getString(c.getColumnIndex(DeviceEntry.COLUMN_MAC)));
+                deviceValues.put(DeviceEntry.COLUMN_NAME, c.getString(c.getColumnIndex(DeviceEntry.COLUMN_NAME)));
+                deviceValues.put(DeviceEntry.COLUMN_BRAND, c.getString(c.getColumnIndex(DeviceEntry.COLUMN_BRAND)));
+                deviceList.add(deviceValues);
+            } while (c.moveToNext());
+        }
+        c.close();
+        database.close();
+
+        return deviceList;
+    }
+
+
+    /**
+     *
+     * @return -
+     */
+    @Override
+    public int deleteAllDevice() {
+
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+        int removedRows;
+
+        removedRows = database.delete(DeviceEntry.TABLE_NAME, null, null);
+        database.close();
+
+        return removedRows;
+    }
+
+
     /* *********************************************************************************************
      * CONNECTED DEVICES
      * *********************************************************************************************
      */
 
 
-    public void addConnection(Long wifiID, Long deviceID, String ip){
+    /**
+     *
+     * @param values -
+     */
+    @Override
+    public void insertConnection(ContentValues values){
+
         SQLiteDatabase database;
+        Long wifiID = values.getAsLong(WifiConnectDeviceEntry.COLUMN_WIFI);
+        Long deviceID = values.getAsLong(WifiConnectDeviceEntry.COLUMN_DEVICE);
 
         database = mDbHelper.getWritableDatabase();
         int removedRows;
@@ -377,33 +414,24 @@ public class WifiRepository {
         String whereClause = WifiConnectDeviceEntry.COLUMN_WIFI + " = ? AND " + WifiConnectDeviceEntry.COLUMN_DEVICE + " = ?";
         String[] whereArgs = new String[]{wifiID.toString(), deviceID.toString()};
         removedRows = database.delete(WifiConnectDeviceEntry.TABLE_NAME, whereClause, whereArgs);
-        Log.d(LOGTAG, "addConnection: removed " + removedRows + " rows");
 
-        ContentValues values = new ContentValues();
-        values.put(WifiConnectDeviceEntry.COLUMN_WIFI, wifiID);
-        values.put(WifiConnectDeviceEntry.COLUMN_DEVICE, deviceID);
-        values.put(WifiConnectDeviceEntry.COLUMN_IP, ip);
+        if(removedRows > 0){
+
+            Log.d(LOGTAG, "addConnection: Removed " + removedRows + " rows");
+        }
+
         database.insert(WifiConnectDeviceEntry.TABLE_NAME, null, values);
 
         database.close();
     }
 
 
-    public int removeAll(){
-
-        SQLiteDatabase database = mDbHelper.getWritableDatabase();
-
-        int removedRows = 0;
-
-        removedRows += database.delete(WifiConnectDeviceEntry.TABLE_NAME, null, null);
-        removedRows += database.delete(WifiEntry.TABLE_NAME, null, null);
-        removedRows += database.delete(DeviceEntry.TABLE_NAME, null, null);
-        database.close();
-
-        return removedRows;
-
-    }
-
+    /**
+     *
+     * @param wifiID -
+     * @return -
+     */
+    @Override
     public ArrayList<ContentValues> queryWifiConnections(Long wifiID){
 
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
@@ -432,5 +460,51 @@ public class WifiRepository {
         database.close();
 
         return ret;
+    }
+
+
+    /**
+     *
+     * @param wifiID -
+     * @return -
+     */
+    @Override
+    public int deleteAllConnectedDevices(Long wifiID) {
+
+        String whereClause = WifiConnectDeviceEntry.COLUMN_WIFI + " = ?";
+        String[] whereArgs = new String[] { wifiID.toString() };
+
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+        int removedRows = database.delete(WifiConnectDeviceEntry.TABLE_NAME, whereClause, whereArgs);
+        database.close();
+
+        return removedRows;
+    }
+
+
+    /* *********************************************************************************************
+     * ALL
+     * *********************************************************************************************
+     */
+
+
+    /**
+     *
+     * @return -
+     */
+    @Override
+    public int deleteAll(){
+
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+        int removedRows = 0;
+
+        removedRows += database.delete(WifiConnectDeviceEntry.TABLE_NAME, null, null);
+        removedRows += database.delete(WifiEntry.TABLE_NAME, null, null);
+        removedRows += database.delete(DeviceEntry.TABLE_NAME, null, null);
+        database.close();
+
+        return removedRows;
     }
 }
