@@ -1,11 +1,13 @@
 package com.algalopez.mycon.wifi.data;
 
 import android.content.ContentValues;
+import android.content.Context;
 
-import com.algalopez.mycon.wifi.data.database.IWifiDatabase;
-import com.algalopez.mycon.wifi.data.database.WifiContract.WifiEntry;
-import com.algalopez.mycon.wifi.data.database.WifiContract.DeviceEntry;
-import com.algalopez.mycon.wifi.data.database.WifiContract.WifiConnectDeviceEntry;
+import com.algalopez.mycon.wifi.data.storage.IWifiStorage;
+import com.algalopez.mycon.wifi.data.storage.database.WifiContract.WifiEntry;
+import com.algalopez.mycon.wifi.data.storage.database.WifiContract.DeviceEntry;
+import com.algalopez.mycon.wifi.data.storage.database.WifiContract.WifiConnectDeviceEntry;
+import com.algalopez.mycon.wifi.data.storage.database.WifiDatabase;
 import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
 import com.algalopez.mycon.wifi.domain.model.WifiEntity;
 
@@ -23,13 +25,13 @@ public class WifiDbRepo implements IWifiDbRepo {
 
     private static final String LOGTAG = "WifiDbRepo";
 
-    private IWifiDatabase mDatabase;
+    private IWifiStorage mDatabase;
 
-    public WifiDbRepo(IWifiDatabase database){
 
-        this.mDatabase = database;
+    public WifiDbRepo(Context context){
+
+        this.mDatabase = new WifiDatabase(context);
     }
-
 
 
     /* *********************************************************************************************

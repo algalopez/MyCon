@@ -1,4 +1,4 @@
-package com.algalopez.mycon.wifi.data.database;
+package com.algalopez.mycon.wifi.data.storage.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,9 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.algalopez.mycon.wifi.data.database.WifiContract.WifiEntry;
-import com.algalopez.mycon.wifi.data.database.WifiContract.DeviceEntry;
-import com.algalopez.mycon.wifi.data.database.WifiContract.WifiConnectDeviceEntry;
+import com.algalopez.mycon.wifi.data.storage.database.WifiContract.WifiEntry;
+import com.algalopez.mycon.wifi.data.storage.database.WifiContract.DeviceEntry;
+import com.algalopez.mycon.wifi.data.storage.database.WifiContract.WifiConnectDeviceEntry;
+import com.algalopez.mycon.wifi.data.storage.IWifiStorage;
 
 import java.util.ArrayList;
 
@@ -19,7 +20,7 @@ import java.util.ArrayList;
  */
 
 
-public class WifiDatabase implements IWifiDatabase{
+public class WifiDatabase implements IWifiStorage {
 
     private static final String LOGTAG = "WifiDatabase";
 

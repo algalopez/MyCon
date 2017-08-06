@@ -1,15 +1,17 @@
-package com.algalopez.mycon.wifi.data.manager;
+package com.algalopez.mycon.wifi.data;
+
+import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
+import com.algalopez.mycon.wifi.domain.model.WifiEntity;
 
 import java.net.InetAddress;
+import java.util.ArrayList;
 
 /**
  * AUTHOR:  Alvaro Garcia Lopez (algalopez)
  * DATE:    8/5/17
  */
 
-public interface IWifiManager {
-
-
+public interface IWifiManagerRepo {
 
 
     /* *********************************************************************************************
@@ -20,45 +22,18 @@ public interface IWifiManager {
 
     boolean isWifiConnected();
 
-    String getSSID();
-
-    String getBSSID();
-
-    String getIpAddress();
-
-    boolean getHiddenSSID();
-
-    int getRSSI();
-
-    int getFrequency();
-
-    int getLinkSpeed();
-
-    int getNetworkId();
-
-    int getNetmask();
-
-    int getServerAddress();
-
-    String getDNS1();
-
-    String getDNS2();
+    WifiEntity getWifi();
 
 
     /* *********************************************************************************************
-     * CONNECTED DEVICES
+     * DEVICE
      * *********************************************************************************************
      */
 
 
-    boolean isReachable(InetAddress addr);
+    DeviceEntity getDevice(String addrStr);
 
-    String getMAC(InetAddress addr);
-
-    String getName(InetAddress addr);
-
-    String getBrand(InetAddress addr);
-
+    //ArrayList<DeviceEntity> getAllDevices();
 
 
 }

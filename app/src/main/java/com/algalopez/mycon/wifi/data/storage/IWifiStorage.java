@@ -1,4 +1,4 @@
-package com.algalopez.mycon.wifi.data.database;
+package com.algalopez.mycon.wifi.data.storage;
 
 import android.content.ContentValues;
 
@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * DATE:    8/5/17
  */
 
-public interface IWifiDatabase {
+public interface IWifiStorage {
 
 
     /* *********************************************************************************************

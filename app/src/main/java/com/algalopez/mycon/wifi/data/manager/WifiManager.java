@@ -210,12 +210,14 @@ public class WifiManager implements IWifiManager{
 
     @Override
     public String getName(InetAddress addr){
+
        return "Fake Name";
     }
 
 
     @Override
     public String getBrand(InetAddress addr){
+
         return "Fake Brand";
     }
 

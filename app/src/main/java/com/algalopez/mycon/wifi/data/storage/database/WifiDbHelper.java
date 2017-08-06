@@ -1,12 +1,12 @@
-package com.algalopez.mycon.wifi.data.database;
+package com.algalopez.mycon.wifi.data.storage.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.algalopez.mycon.wifi.data.database.WifiContract.WifiEntry;
-import com.algalopez.mycon.wifi.data.database.WifiContract.DeviceEntry;
-import com.algalopez.mycon.wifi.data.database.WifiContract.WifiConnectDeviceEntry;
+import com.algalopez.mycon.wifi.data.storage.database.WifiContract.WifiEntry;
+import com.algalopez.mycon.wifi.data.storage.database.WifiContract.DeviceEntry;
+import com.algalopez.mycon.wifi.data.storage.database.WifiContract.WifiConnectDeviceEntry;
 
 /**
  * AUTHOR:  Alvaro Garcia Lopez (algalopez)
