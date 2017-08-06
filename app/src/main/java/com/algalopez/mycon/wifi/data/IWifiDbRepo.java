@@ -33,6 +33,8 @@ public interface IWifiDbRepo {
 
     int removeAll();
 
+    Long getWifiIDBySSID(String SSID);
+
 
     /* *********************************************************************************************
      * DEVICE
@@ -52,6 +54,8 @@ public interface IWifiDbRepo {
 
     int removeAllDevices();
 
+    Long getDeviceIDByMAC(String Mac);
+
 
     /* *********************************************************************************************
      * CONNECTED DEVICES
@@ -63,6 +67,6 @@ public interface IWifiDbRepo {
 
     int removeConnectedDevices(Long wifiID);
 
-
+    int storeConnectedDevices(Long wifiID, ArrayList<DeviceEntity> deviceEntities);
 
 }

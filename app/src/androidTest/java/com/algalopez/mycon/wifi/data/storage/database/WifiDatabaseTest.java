@@ -1,4 +1,4 @@
-package com.algalopez.mycon.wifi.data.database;
+package com.algalopez.mycon.wifi.data.storage.database;
 
 import android.content.ContentValues;
 import android.support.test.InstrumentationRegistry;

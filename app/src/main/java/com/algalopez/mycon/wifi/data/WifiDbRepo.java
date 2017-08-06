@@ -64,7 +64,7 @@ public class WifiDbRepo implements IWifiDbRepo {
     public Long storeWifi(WifiEntity newWifiEntity) {
 
         ContentValues values = new ContentValues();
-        values.put(WifiEntry._ID, newWifiEntity.getID());
+        //values.put(WifiEntry._ID, newWifiEntity.getID());
         values.put(WifiEntry.COLUMN_SSID, newWifiEntity.getSSID());
         values.put(WifiEntry.COLUMN_PASSWORD, newWifiEntity.getPassword());
         values.put(WifiEntry.COLUMN_LASTUPDATED, newWifiEntity.getLastUpdated().getTime());
@@ -120,6 +120,12 @@ public class WifiDbRepo implements IWifiDbRepo {
         return mDatabase.deleteAll();
     }
 
+    @Override
+    public Long getWifiIDBySSID(String SSID) {
+
+        return mDatabase.getWifiIDBySSID(SSID);
+    }
+
 
     /* *********************************************************************************************
      * DEVICE
@@ -151,7 +157,7 @@ public class WifiDbRepo implements IWifiDbRepo {
     public Long storeDevice(DeviceEntity newDeviceEntity) {
 
         ContentValues values = new ContentValues();
-        values.put(DeviceEntry._ID, newDeviceEntity.getID());
+        //values.put(DeviceEntry._ID, newDeviceEntity.getID());
         values.put(DeviceEntry.COLUMN_MAC, newDeviceEntity.getMAC());
         values.put(DeviceEntry.COLUMN_NAME, newDeviceEntity.getName());
         values.put(DeviceEntry.COLUMN_BRAND, newDeviceEntity.getBrand());
@@ -207,6 +213,13 @@ public class WifiDbRepo implements IWifiDbRepo {
     }
 
 
+    @Override
+    public Long getDeviceIDByMAC(String Mac) {
+
+        return mDatabase.getDeviceIDByMAC(Mac);
+    }
+
+
     /* *********************************************************************************************
      * CONNECTED DEVICES
      * *********************************************************************************************
@@ -244,5 +257,21 @@ public class WifiDbRepo implements IWifiDbRepo {
     public int removeConnectedDevices(Long wifiID) {
 
         return mDatabase.deleteAllConnectedDevices(wifiID);
+    }
+
+
+    @Override
+    public int storeConnectedDevices(Long wifiID, ArrayList<DeviceEntity> deviceEntities) {
+
+        ContentValues values;
+        for (DeviceEntity deviceEntity: deviceEntities){
+            values = new ContentValues();
+            values.put(WifiConnectDeviceEntry.COLUMN_IP, wifiID);
+            values.put(WifiConnectDeviceEntry.COLUMN_DEVICE, deviceEntity.getIP());
+            values.put(WifiConnectDeviceEntry.COLUMN_IP, deviceEntity.getIP());
+            mDatabase.insertConnection(values);
+        }
+
+        return 0;
     }
 }

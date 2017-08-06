@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +11,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.algalopez.mycon.R;
+import com.algalopez.mycon.common.Executor;
+import com.algalopez.mycon.wifi.data.IWifiDbRepo;
+import com.algalopez.mycon.wifi.data.IWifiManagerRepo;
+import com.algalopez.mycon.wifi.data.WifiDbRepo;
+import com.algalopez.mycon.wifi.data.WifiManagerRepo;
+import com.algalopez.mycon.wifi.data.storage.IWifiStorage;
+import com.algalopez.mycon.wifi.data.storage.database.WifiDatabase;
+import com.algalopez.mycon.wifi.data.manager.IWifiManager;
+import com.algalopez.mycon.wifi.data.manager.WifiManager;
+import com.algalopez.mycon.wifi.domain.interactor.UpdateWifiActor;
 import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
 
 import java.util.ArrayList;
@@ -26,7 +35,18 @@ public class WifiFragment extends Fragment implements IWifiView {
 
 
     private View mRootView;
+
+    // Presenter
     private WifiPresenter mPresenter;
+
+    // Stored data
+    private IWifiDbRepo mWifiDbRepo;
+
+    // new data
+    private IWifiManagerRepo mWifiManagerRepo;
+
+    // Executor
+    Executor mExecutor;
 
 
     public WifiFragment() {
@@ -44,7 +64,12 @@ public class WifiFragment extends Fragment implements IWifiView {
                              Bundle savedInstanceState) {
 
         mRootView = inflater.inflate(R.layout.fragment_wifi, container, false);
-        mPresenter = new WifiPresenter();
+
+        mExecutor = new Executor();
+        mWifiDbRepo = new WifiDbRepo(getContext());
+        mWifiManagerRepo = new WifiManagerRepo(getContext());
+        mPresenter = new WifiPresenter(mExecutor, mWifiDbRepo, mWifiManagerRepo);
+
 
 //        if (savedInstanceState != null) {
 //            Log.d(LOGTAG, "onCreateView: " + savedInstanceState.getString(SAVEDINSTANCE_KEY));
@@ -69,7 +94,9 @@ public class WifiFragment extends Fragment implements IWifiView {
         int id = item.getItemId();
         if (id == R.id.action_update) {
             if (mPresenter!= null) {
+
                 mPresenter.updateWifi();
+
             }
             return true;
         }

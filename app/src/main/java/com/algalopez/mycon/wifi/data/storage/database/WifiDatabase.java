@@ -163,7 +163,7 @@ public class WifiDatabase implements IWifiStorage {
         database = mDbHelper.getReadableDatabase();
 
         String[] projection = WifiEntry.getProjection();
-        String selection = WifiEntry.COLUMN_SSID + " = ?";
+        String selection = WifiEntry.COLUMN_SSID + " = ? ";
         String[] selectionArgs = new String[] { SSID };
         Cursor c = database.query(WifiEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
 
@@ -173,6 +173,17 @@ public class WifiDatabase implements IWifiStorage {
 
             id = c.getLong(c.getColumnIndex(WifiEntry._ID));
         }
+
+//        if (c.moveToFirst()){
+//            int i = 0;
+//            do {
+//
+//                Log.d(LOGTAG, i + " id " + c.getLong(c.getColumnIndex(WifiEntry._ID)));
+//                Log.d(LOGTAG, i + " ssid " + c.getString(c.getColumnIndex(WifiEntry.COLUMN_SSID)));
+//                Log.d(LOGTAG, i + " pass " + c.getString(c.getColumnIndex(WifiEntry.COLUMN_PASSWORD)));
+//                i += 1;
+//            } while (c.moveToNext());
+//        }
 
         c.close();
         database.close();

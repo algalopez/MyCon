@@ -4,8 +4,11 @@ import android.util.Log;
 
 import com.algalopez.mycon.common.BaseActor;
 import com.algalopez.mycon.common.Executor;
+import com.algalopez.mycon.wifi.data.IWifiDbRepo;
+import com.algalopez.mycon.wifi.data.IWifiManagerRepo;
 import com.algalopez.mycon.wifi.domain.interactor.GetWifiActor;
-import com.algalopez.mycon.wifi.domain.interactor.GetWifiResponse;
+import com.algalopez.mycon.wifi.domain.interactor.UpdateWifiActor;
+import com.algalopez.mycon.wifi.domain.response.WifiResponse;
 
 
 /**
@@ -20,22 +23,29 @@ class WifiPresenter {
 
 
     private IWifiView mView;
-    private GetWifiActor mGetWifiActor;
-    private GetWifiResponse mGetWifiResponse;
     private Executor mExecutor;
 
+    private IWifiDbRepo mWifiDbRepo;
+    private IWifiManagerRepo mWifiManagerRepo;
 
-    WifiPresenter(){
+    private GetWifiActor mGetWifiActor;
+    private UpdateWifiActor mUpdateWifiActor;
 
-        mGetWifiActor = new GetWifiActor();
-        mExecutor = new Executor();
+    private WifiResponse mWifiResponse;
+
+
+    WifiPresenter(Executor executor, IWifiDbRepo wifiDbRepo, IWifiManagerRepo wifiManagerRepo){
+
+        mExecutor = executor;
+        this.mWifiDbRepo = wifiDbRepo;
+        this.mWifiManagerRepo = wifiManagerRepo;
     }
 
 
     void attachView(IWifiView view){
 
         this.mView = view;
-        if (mGetWifiResponse == null){
+        if (mWifiResponse == null){
             getWifi();
         }
     }
@@ -49,13 +59,13 @@ class WifiPresenter {
 
     String getState(){
 
-        return mGetWifiResponse.storeInString();
+        return mWifiResponse.storeInString();
     }
 
 
     void setState(String state){
 
-        mGetWifiResponse.restoreFromString(state);
+        mWifiResponse.restoreFromString(state);
     }
 
 
@@ -65,15 +75,43 @@ class WifiPresenter {
      */
 
 
-    void getWifi(){
+    private void getWifi(){
 
-        mGetWifiActor.subscribe(getClass().getSimpleName(), wifiCallback, mExecutor);
+        // Create interactor if it doesn't exist
+        if (mGetWifiActor == null) {
+            mGetWifiActor = new GetWifiActor(mExecutor, mWifiDbRepo, mWifiManagerRepo);
+        }
+
+        // If interactor is already running, then show error
+        if (mGetWifiActor.isRunning()){
+            Log.d(LOGTAG, "GetWifiActor is already running");
+            mView.showError("Already running");
+            return;
+        }
+
+        // Subscribe and execute interactor
+        mGetWifiActor.subscribe(getClass().getSimpleName(), wifiResponseCallback);
         mExecutor.executeInSingleThread(mGetWifiActor);
     }
 
 
     void updateWifi(){
 
+        // Create interactor if it doesn't exist
+        if (mUpdateWifiActor == null) {
+            mUpdateWifiActor = new UpdateWifiActor(mExecutor, mWifiDbRepo, mWifiManagerRepo);
+        }
+
+        // If interactor is already running, then show error
+        if (mUpdateWifiActor.isRunning()){
+            Log.d(LOGTAG, "UpdateWifiActor is already running");
+            mView.showError("Already running");
+            return;
+        }
+
+        // Subscribe and execute interactor
+        mUpdateWifiActor.subscribe(getClass().getSimpleName(), wifiResponseCallback);
+        mExecutor.executeInSingleThread(mUpdateWifiActor);
     }
 
 
@@ -92,14 +130,13 @@ class WifiPresenter {
      */
 
 
-    private BaseActor.BaseCallback<GetWifiResponse> wifiCallback = new BaseActor.BaseCallback<GetWifiResponse>() {
-
+    private BaseActor.BaseCallback<WifiResponse> wifiResponseCallback = new BaseActor.BaseCallback<WifiResponse>() {
 
         @Override
-        public void onSuccess(String actorName, GetWifiResponse data) {
+        public void onSuccess(String actorName, WifiResponse data) {
             Log.d(LOGTAG, "onSuccess: " + actorName);
 
-            mGetWifiResponse = data;
+            mWifiResponse = data;
 
             mView.showWifiInfo(data.getWifiInformation().getSSID());
 
@@ -108,18 +145,17 @@ class WifiPresenter {
 
 
         @Override
-        public void onDataChanged(String actorName, GetWifiResponse data) {
+        public void onDataChanged(String actorName, WifiResponse data) {
             Log.d(LOGTAG, "onDataChanged: " + actorName);
         }
 
 
         @Override
-        public void onError(String actorName, String message) {
+        public void onError(String actorName, WifiResponse data) {
             Log.d(LOGTAG, "onError: " + actorName);
         }
 
     };
-
 
 
 }

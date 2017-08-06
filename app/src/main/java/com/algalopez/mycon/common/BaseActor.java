@@ -13,6 +13,12 @@ public abstract class BaseActor<R> implements Runnable{
     private HashMap<String, BaseCallback<R>> bSubscriptions;
     private Executor mExecutor;
 
+    private boolean mRunning = false;
+
+    public BaseActor(Executor executor) {
+        this.mExecutor = executor;
+    }
+
 
     /* *********************************************************************************************
      * USE CASE LOGIC
@@ -29,9 +35,7 @@ public abstract class BaseActor<R> implements Runnable{
      */
 
 
-    public void subscribe(String className, BaseCallback<R> callback, Executor executor){
-
-        this.mExecutor = executor;
+    public void subscribe(String className, BaseCallback<R> callback){
 
         if (bSubscriptions == null){
             bSubscriptions = new HashMap<>();
@@ -65,13 +69,13 @@ public abstract class BaseActor<R> implements Runnable{
     }
 
 
-    protected void notifyError(final String actorName, final String message){
+    protected void notifyError(final String actorName, final R data){
 
         mExecutor.executeInMainThread(new Runnable() {
             @Override
             public void run() {
                 for (String key : bSubscriptions.keySet()) {
-                    bSubscriptions.get(key).onError(actorName, message);
+                    bSubscriptions.get(key).onError(actorName, data);
                 }
             }
         });
@@ -91,6 +95,22 @@ public abstract class BaseActor<R> implements Runnable{
     }
 
 
+
+    /* *********************************************************************************************
+     * STATE
+     * *********************************************************************************************
+     */
+
+    protected void setRunning(boolean isRunning){
+        mRunning = isRunning;
+    }
+
+
+    public boolean isRunning(){
+        return mRunning;
+    }
+
+
     /* *********************************************************************************************
      * CALLBACK INTERFACE
      * *********************************************************************************************
@@ -100,7 +120,7 @@ public abstract class BaseActor<R> implements Runnable{
     public interface BaseCallback<R>{
 
         void onSuccess(String actorName, R data);
-        void onError(String actorName, String message);
+        void onError(String actorName, R data);
         void onDataChanged(String actorName, R data);
     }
 

@@ -1,8 +1,8 @@
-package com.algalopez.mycon.wifi.domain.interactor;
+package com.algalopez.mycon.wifi.domain.response;
 
 import android.util.Log;
 
-import com.algalopez.mycon.common.IResponse;
+import com.algalopez.mycon.common.BaseResponse;
 import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
 import com.algalopez.mycon.wifi.domain.model.WifiEntity;
 
@@ -10,10 +10,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -21,19 +19,20 @@ import java.util.Locale;
  * DATE:    7/22/17
  */
 
-public class GetWifiResponse implements IResponse {
+public class WifiResponse extends BaseResponse {
 
 
-    private static final String LOGTAG = "GetWifiResponse";
+    private static final String LOGTAG = "WifiResponse";
 
+    public static final int ERROR_WIFI_NOT_CONNECTED = 1;
+    public static final int ERROR_INVALID_WIFI = 2;
+    public static final int ERROR_NEW_WIFI = 3;
 
     /* *********************************************************************************************
      * VARIABLES
      * *********************************************************************************************
      */
 
-
-    private Date lastUpdate;
 
     private WifiEntity wifiInformation;
 
@@ -46,11 +45,13 @@ public class GetWifiResponse implements IResponse {
      */
 
 
-    public GetWifiResponse(){
+    public WifiResponse(){
 
-        lastUpdate = new Date();
         wifiInformation = new WifiEntity();
         connectedDevices = new ArrayList<>();
+
+        setProgress(0);
+        setState(OK);
     }
 
 
@@ -59,10 +60,6 @@ public class GetWifiResponse implements IResponse {
      * *********************************************************************************************
      */
 
-
-    public Date getLastUpdate() { return lastUpdate; }
-
-    public void setLastUpdate(Date lastUpdate) { this.lastUpdate = lastUpdate; }
 
     public WifiEntity getWifiInformation() { return wifiInformation; }
 
@@ -75,6 +72,8 @@ public class GetWifiResponse implements IResponse {
     public void addConnectedDevice(DeviceEntity device){ this.connectedDevices.add((device)); }
 
     public void removeConnectedDevice(DeviceEntity device){ this.connectedDevices.remove(device); }
+
+
 
 
     /* *********************************************************************************************
@@ -95,16 +94,14 @@ public class GetWifiResponse implements IResponse {
     //private DateFormat df = DateFormat.getDateTimeInstance();
 
 
+
+
+
     @Override
     public String storeInString() {
 
         JSONObject json = new JSONObject();
         try {
-
-            // Store response variables
-            json.put(LASTUPDATE, sdf.format(lastUpdate));
-            //json.put(LASTUPDATE, df.format(lastUpdate));
-
 
             // Store Wifi variables
             json.put(WIFI_SSID, wifiInformation.getSSID());
@@ -138,9 +135,6 @@ public class GetWifiResponse implements IResponse {
         try {
             JSONObject json = new JSONObject(s);
 
-            // Restore response variables
-            lastUpdate = sdf.parse(json.optString(LASTUPDATE, ""));
-
             // Restore Wifi variables
             wifiInformation.setSSID(json.optString(WIFI_SSID, ""));
 
@@ -160,8 +154,8 @@ public class GetWifiResponse implements IResponse {
 
         } catch (JSONException e) {
             Log.e(LOGTAG, "restoreFromString: Error restoring from string: " + e);
-        } catch (ParseException e2) {
-            Log.e(LOGTAG, "restoreFromString: Error parsing date: " + e2);
         }
     }
+
+
 }

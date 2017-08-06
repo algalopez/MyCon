@@ -6,28 +6,32 @@ import com.algalopez.mycon.common.BaseActor;
 import com.algalopez.mycon.common.Executor;
 import com.algalopez.mycon.wifi.data.IWifiDbRepo;
 import com.algalopez.mycon.wifi.data.IWifiManagerRepo;
+import com.algalopez.mycon.wifi.data.manager.WifiManager;
 import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
 import com.algalopez.mycon.wifi.domain.model.WifiEntity;
 import com.algalopez.mycon.wifi.domain.response.WifiResponse;
 import com.algalopez.mycon.wifi.domain.utils.WifiUtils;
 
+import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * AUTHOR:  Alvaro Garcia Lopez (algalopez)
- * DATE:    7/22/17
+ * DATE:    8/5/17
  */
 
-public class GetWifiActor extends BaseActor<WifiResponse> {
+public class UpdateWifiActor extends BaseActor<WifiResponse> {
 
-    private static final String LOGTAG = "GetWifiActor";
+    private static final String LOGTAG = "UpdateWifiActor";
 
     private final String mActorName;
     private IWifiDbRepo mWifiDbRepo;
     private IWifiManagerRepo mWifiManagerRepo;
     private WifiResponse mData;
 
-    public GetWifiActor(Executor executor, IWifiDbRepo wifiDbRepo, IWifiManagerRepo wifiManagerRepo){
+
+    public UpdateWifiActor(Executor executor, IWifiDbRepo wifiDbRepo, IWifiManagerRepo wifiManagerRepo){
 
         super(executor);
 
@@ -36,6 +40,7 @@ public class GetWifiActor extends BaseActor<WifiResponse> {
         this.mWifiManagerRepo = wifiManagerRepo;
         this.mData = new WifiResponse();
     }
+
 
     @Override
     public void run() {
@@ -54,10 +59,6 @@ public class GetWifiActor extends BaseActor<WifiResponse> {
         WifiEntity wifiEntity = mWifiManagerRepo.getWifi();
         mData.setWifiInformation(wifiEntity);
 
-        // Get wifi ID by SSID
-        Long wifiID = mWifiDbRepo.getWifiIDBySSID(wifiEntity.getSSID());
-        Log.d(LOGTAG, "wifiID is " + wifiID);
-
         // Check if wifi is giving IPv4 addresses
         if (!WifiUtils.isValidIP4(wifiEntity)){
             mData.setState(WifiResponse.ERROR_INVALID_WIFI);
@@ -66,21 +67,42 @@ public class GetWifiActor extends BaseActor<WifiResponse> {
             return;
         }
 
-        // If wifi doesn't exist in database, then add it
+        // Insert or upload wifi in database
+        Long wifiID = mWifiDbRepo.getWifiIDBySSID(wifiEntity.getSSID());
         if (wifiID < 0) {
             wifiID = mWifiDbRepo.storeWifi(wifiEntity);
-            mData.setState(WifiResponse.ERROR_NEW_WIFI);
-            notifyError(mActorName, mData);
-            setRunning(false);
+        } else {
+            wifiEntity.setID(wifiID);
+            mWifiDbRepo.updateWifi(wifiEntity);
         }
 
-        // Get connected devices from database
-        ArrayList<DeviceEntity> deviceEntities = mWifiDbRepo.getConnectedDevices(wifiID);
-        mData.setConnectedDevices(deviceEntities);
+        // Look for connected devices
+        String prefixIPStr = "192.168.1.";
+        DeviceEntity deviceEntity;
+        for (int j = 1; j < 256; j++) {
+            deviceEntity = mWifiManagerRepo.getDevice(prefixIPStr + j);
+            if (deviceEntity != null){
+                mData.addConnectedDevice(deviceEntity);
+            }
+        }
+
+        // Store devices but not update its values
+        ArrayList<DeviceEntity> deviceEntities = mData.getConnectedDevices();
+        for (DeviceEntity dev: deviceEntities){
+
+            Long deviceID = mWifiDbRepo.getDeviceIDByMAC(dev.getMAC());
+            if (deviceID < 0){
+                deviceID = mWifiDbRepo.storeDevice(dev);
+            }
+
+            dev.setID(deviceID);
+        }
+
+        // Store connected devices
+        mWifiDbRepo.storeConnectedDevices(wifiID, deviceEntities);
 
         notifySuccess(mActorName, mData);
 
         setRunning(false);
     }
-
 }
