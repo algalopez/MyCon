@@ -236,7 +236,7 @@ public class WifiDbRepo implements IWifiDbRepo {
         for (ContentValues values: valuesList){
             newEntity = new DeviceEntity();
             newEntity.setIP(values.getAsString(WifiConnectDeviceEntry.COLUMN_IP));
-            newEntity.setID(values.getAsLong(WifiConnectDeviceEntry._ID));
+            newEntity.setID(values.getAsLong(WifiConnectDeviceEntry.COLUMN_DEVICE));
             connectedDevices.add(newEntity);
         }
 
@@ -266,8 +266,8 @@ public class WifiDbRepo implements IWifiDbRepo {
         ContentValues values;
         for (DeviceEntity deviceEntity: deviceEntities){
             values = new ContentValues();
-            values.put(WifiConnectDeviceEntry.COLUMN_IP, wifiID);
-            values.put(WifiConnectDeviceEntry.COLUMN_DEVICE, deviceEntity.getIP());
+            values.put(WifiConnectDeviceEntry.COLUMN_WIFI, wifiID);
+            values.put(WifiConnectDeviceEntry.COLUMN_DEVICE, deviceEntity.getID());
             values.put(WifiConnectDeviceEntry.COLUMN_IP, deviceEntity.getIP());
             mDatabase.insertConnection(values);
         }

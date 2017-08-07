@@ -27,10 +27,11 @@ public class ArpInfo {
 
     private boolean isArpRead = false;
 
+    private HashMap<String, ArpEntity> mIpArpMapping;
 
-    private String fullArp;
-
-    private HashMap<String, ArpEntity> ipArpMapping;
+    public ArpInfo(){
+        mIpArpMapping = new HashMap<>();
+    }
 
 
     public boolean readArp(){
@@ -61,7 +62,7 @@ public class ArpInfo {
                     arpEntity.setHWAddress(splitted[COLUMN_HWADDRESS]);
                     arpEntity.setMask(splitted[COLUMN_MASK]);
                     arpEntity.setDevice(splitted[COLUMN_DEVICE]);
-                    ipArpMapping.put(splitted[COLUMN_IP], arpEntity);
+                    mIpArpMapping.put(splitted[COLUMN_IP], arpEntity);
                 }
             }
 
@@ -87,8 +88,8 @@ public class ArpInfo {
             readArp();
         }
 
-        if (ipArpMapping.containsKey(ip)) {
-            return ipArpMapping.get(ip).getHWAddress();
+        if (mIpArpMapping.containsKey(ip)) {
+            return mIpArpMapping.get(ip).getHWAddress();
         }
 
         return "";

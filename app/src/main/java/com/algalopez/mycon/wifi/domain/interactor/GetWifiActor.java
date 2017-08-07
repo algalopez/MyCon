@@ -61,12 +61,12 @@ public class GetWifiActor extends BaseActor<WifiResponse> {
         Log.d(LOGTAG, "wifiID is " + wifiID);
 
         // Check if wifi is giving IPv4 addresses
-        if (!WifiUtils.isValidIP4(wifiEntity)){
-            mData.setState(WifiResponse.ERROR_INVALID_WIFI);
-            notifyError(mActorName, mData);
-            setRunning(false);
-            return;
-        }
+//        if (!WifiUtils.isValidIP4(wifiEntity)){
+//            mData.setState(WifiResponse.ERROR_INVALID_WIFI);
+//            notifyError(mActorName, mData);
+//            setRunning(false);
+//            return;
+//        }
 
         // If wifi doesn't exist in database, then add it
         if (wifiID < 0) {
@@ -76,6 +76,8 @@ public class GetWifiActor extends BaseActor<WifiResponse> {
             setRunning(false);
             return;
         }
+
+        wifiEntity.setID(wifiID);
 
         // Get connected devices from database
         ArrayList<DeviceEntity> deviceEntities = mWifiDbRepo.getConnectedDevices(wifiID);

@@ -55,16 +55,15 @@ public class WifiManager implements IWifiManager{
     public boolean isWifiConnected(){
 
         if (mWifimanager.isWifiEnabled()){
-            Log.d(LOGTAG, "wifi is enabled");
+            //Log.d(LOGTAG, "wifi is enabled");
             mWifiInfo = mWifimanager.getConnectionInfo();
             mDhcpInfo = mWifimanager.getDhcpInfo();
 
             if (mWifiInfo.getSupplicantState() == SupplicantState.COMPLETED && mWifiInfo.getNetworkId() >= 0) {
 
-                Log.d(LOGTAG, "Wifi is connected");
+                //Log.d(LOGTAG, "Wifi is connected");
                 return true;
             }
-            Log.d(LOGTAG, "isWifiConnected: Supplicant state is " + mWifiInfo.getSupplicantState().toString());
         }
 
         return false;
