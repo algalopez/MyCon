@@ -33,11 +33,4 @@ public class WifiManagerTest {
     }
 
 
-    @Test
-    public void testTest() throws Exception {
-
-        mWifiManager.test();
-
-
-    }
 }

@@ -80,6 +80,8 @@ public class UpdateWifiActor extends BaseActor<WifiResponse> {
         String prefixIPStr = "192.168.1.";
         DeviceEntity deviceEntity;
         for (int j = 1; j < 256; j++) {
+            mData.setProgress(j*100/255);
+            notifyDataChange(mActorName, mData);
             deviceEntity = mWifiManagerRepo.getDevice(prefixIPStr + j);
             if (deviceEntity != null){
                 mData.addConnectedDevice(deviceEntity);

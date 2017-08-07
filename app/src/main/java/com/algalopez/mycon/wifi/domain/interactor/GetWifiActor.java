@@ -42,6 +42,8 @@ public class GetWifiActor extends BaseActor<WifiResponse> {
 
         setRunning(true);
 
+        Log.d(LOGTAG, "GetWifiActor running");
+
         // Check if it's connected to a wifi
         if (!mWifiManagerRepo.isWifiConnected()){
             mData.setState(WifiResponse.ERROR_WIFI_NOT_CONNECTED);
@@ -72,6 +74,7 @@ public class GetWifiActor extends BaseActor<WifiResponse> {
             mData.setState(WifiResponse.ERROR_NEW_WIFI);
             notifyError(mActorName, mData);
             setRunning(false);
+            return;
         }
 
         // Get connected devices from database

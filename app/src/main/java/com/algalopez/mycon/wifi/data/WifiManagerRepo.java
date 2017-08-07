@@ -48,7 +48,7 @@ public class WifiManagerRepo implements IWifiManagerRepo {
         wifiEntity.setSSID(mWifiManager.getSSID());
         wifiEntity.setLastUpdated(new Date());
 
-        return null;
+        return wifiEntity;
     }
 
 

@@ -146,7 +146,7 @@ class WifiPresenter {
 
         @Override
         public void onDataChanged(String actorName, WifiResponse data) {
-            Log.d(LOGTAG, "onDataChanged: " + actorName);
+            Log.d(LOGTAG, "onDataChanged: " + actorName + " [progress: " + data.getProgress() + "]");
         }
 
 

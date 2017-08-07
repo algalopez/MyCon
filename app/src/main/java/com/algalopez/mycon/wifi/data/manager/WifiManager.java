@@ -7,6 +7,8 @@ import android.net.wifi.WifiInfo;
 import android.util.Log;
 
 
+import com.algalopez.mycon.wifi.data.manager.arp.ArpInfo;
+
 import java.net.InetAddress;
 import java.util.Locale;
 
@@ -32,12 +34,15 @@ public class WifiManager implements IWifiManager{
     private WifiInfo mWifiInfo;
     private DhcpInfo mDhcpInfo;
 
+    private ArpInfo mArpInfo;
 
     public WifiManager(Context context){
 
         mWifimanager = (android.net.wifi.WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         mWifiInfo = mWifimanager.getConnectionInfo();
         mDhcpInfo = mWifimanager.getDhcpInfo();
+
+        mArpInfo = new ArpInfo();
     }
 
 
@@ -54,7 +59,8 @@ public class WifiManager implements IWifiManager{
             mWifiInfo = mWifimanager.getConnectionInfo();
             mDhcpInfo = mWifimanager.getDhcpInfo();
 
-            if (mWifiInfo.getSupplicantState() == SupplicantState.COMPLETED && mWifiInfo.getNetworkId() >= 0){
+            if (mWifiInfo.getSupplicantState() == SupplicantState.COMPLETED && mWifiInfo.getNetworkId() >= 0) {
+
                 Log.d(LOGTAG, "Wifi is connected");
                 return true;
             }
@@ -204,7 +210,9 @@ public class WifiManager implements IWifiManager{
     @Override
     public String getMAC(InetAddress addr){
 
-        return "Fake Mac";
+        Log.d(LOGTAG, "getting MAC from ip: " + addr.getHostName());
+
+        return mArpInfo.getMacFromArp(addr.getHostName());
     }
 
 
