@@ -37,6 +37,10 @@ public class GetWifiActor extends BaseActor<WifiResponse> {
         this.mData = new WifiResponse();
     }
 
+
+    /**
+     *
+     */
     @Override
     public void run() {
 

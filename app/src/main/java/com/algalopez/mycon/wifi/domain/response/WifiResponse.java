@@ -28,6 +28,7 @@ public class WifiResponse extends BaseResponse {
     public static final int ERROR_INVALID_WIFI = 2;
     public static final int ERROR_NEW_WIFI = 3;
 
+
     /* *********************************************************************************************
      * VARIABLES
      * *********************************************************************************************

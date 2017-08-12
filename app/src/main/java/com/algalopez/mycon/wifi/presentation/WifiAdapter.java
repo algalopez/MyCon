@@ -93,7 +93,7 @@ class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.WifiAdapterViewHolder
     @Override
     public WifiAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.wifi_connected_device_item, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.device_item, parent, false);
         return new WifiAdapterViewHolder(itemView);
     }
 

@@ -34,6 +34,6 @@
         android:id="@+id/wifi_connected_devices_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/wifi_connected_device_item" />
+        tools:listitem="@layout/device_item" />
 
 </LinearLayout>
