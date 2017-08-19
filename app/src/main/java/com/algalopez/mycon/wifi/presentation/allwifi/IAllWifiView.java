@@ -1,18 +1,19 @@
-package com.algalopez.mycon.wifi.presentation.detailwifi;
+package com.algalopez.mycon.wifi.presentation.allwifi;
 
 import com.algalopez.mycon.wifi.domain.model.WifiEntity;
+
+import java.util.ArrayList;
 
 /**
  * AUTHOR:  Alvaro Garcia Lopez (algalopez)
  * DATE:    8/19/17
  */
 
-interface IDetailWifiView {
+interface IAllWifiView {
 
     void showProgress(int percentage);
 
     void showError(String message);
 
-    void showWifiInfo(WifiEntity wifiEntity);
-
+    void showAllWifi(ArrayList<WifiEntity> wifiEntities);
 }

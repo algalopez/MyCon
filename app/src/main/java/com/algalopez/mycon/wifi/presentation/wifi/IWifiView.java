@@ -10,9 +10,7 @@ import java.util.ArrayList;
  * DATE:    7/22/17
  */
 
-public interface IWifiView {
-
-
+interface IWifiView {
 
     void showProgress(int percentage);
 
