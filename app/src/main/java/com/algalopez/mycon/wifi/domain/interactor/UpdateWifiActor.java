@@ -47,6 +47,8 @@ public class UpdateWifiActor extends BaseActor<WifiResponse> {
 
         setRunning(true);
 
+        Log.d(LOGTAG, "UpdateWifiActor running");
+
         // Check if it's connected to a wifi
         if (!mWifiManagerRepo.isWifiConnected()){
             mData.setState(WifiResponse.ERROR_WIFI_NOT_CONNECTED);

@@ -6,7 +6,7 @@ import com.algalopez.mycon.common.BaseActor;
 import com.algalopez.mycon.common.Executor;
 import com.algalopez.mycon.wifi.data.IWifiDbRepo;
 import com.algalopez.mycon.wifi.data.IWifiManagerRepo;
-import com.algalopez.mycon.wifi.domain.interactor.GetWifiActor;
+import com.algalopez.mycon.wifi.domain.interactor.GetCurrentWifiActor;
 import com.algalopez.mycon.wifi.domain.interactor.UpdateWifiActor;
 import com.algalopez.mycon.wifi.domain.response.WifiResponse;
 
@@ -28,7 +28,7 @@ class WifiPresenter {
     private IWifiDbRepo mWifiDbRepo;
     private IWifiManagerRepo mWifiManagerRepo;
 
-    private GetWifiActor mGetWifiActor;
+    private GetCurrentWifiActor mGetCurrentWifiActor;
     private UpdateWifiActor mUpdateWifiActor;
 
     private WifiResponse mWifiResponse;
@@ -78,20 +78,20 @@ class WifiPresenter {
     private void getWifi(){
 
         // Create interactor if it doesn't exist
-        if (mGetWifiActor == null) {
-            mGetWifiActor = new GetWifiActor(mExecutor, mWifiDbRepo, mWifiManagerRepo);
+        if (mGetCurrentWifiActor == null) {
+            mGetCurrentWifiActor = new GetCurrentWifiActor(mExecutor, mWifiDbRepo, mWifiManagerRepo);
         }
 
         // If interactor is already running, then show error
-        if (mGetWifiActor.isRunning()){
-            Log.d(LOGTAG, "GetWifiActor is already running");
+        if (mGetCurrentWifiActor.isRunning()){
+            Log.d(LOGTAG, "GetCurrentWifiActor is already running");
             mView.showError("Already running");
             return;
         }
 
         // Subscribe and execute interactor
-        mGetWifiActor.subscribe(getClass().getSimpleName(), wifiResponseCallback);
-        mExecutor.executeInSingleThread(mGetWifiActor);
+        mGetCurrentWifiActor.subscribe(getClass().getSimpleName(), wifiResponseCallback);
+        mExecutor.executeInSingleThread(mGetCurrentWifiActor);
     }
 
 

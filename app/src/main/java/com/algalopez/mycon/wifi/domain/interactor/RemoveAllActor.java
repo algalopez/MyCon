@@ -5,53 +5,45 @@ import android.util.Log;
 import com.algalopez.mycon.common.BaseActor;
 import com.algalopez.mycon.common.Executor;
 import com.algalopez.mycon.wifi.data.IWifiDbRepo;
-import com.algalopez.mycon.wifi.domain.model.WifiEntity;
-import com.algalopez.mycon.wifi.domain.response.AllWifiResponse;
-
-import java.util.ArrayList;
+import com.algalopez.mycon.wifi.domain.response.RemoveResponse;
 
 /**
  * AUTHOR:  Alvaro Garcia Lopez (algalopez)
  * DATE:    8/7/17
  */
 
-public class GetAllWifiActor extends BaseActor<AllWifiResponse> {
+public class RemoveAllActor extends BaseActor<RemoveResponse> {
 
-
-    private static final String LOGTAG = "GetAllWifiActor";
+    private static final String LOGTAG = "RemoveAllActor";
 
     private final String mActorName;
     private IWifiDbRepo mWifiDbRepo;
-    private AllWifiResponse mData;
+    private RemoveResponse mData;
 
-    public GetAllWifiActor(Executor executor, IWifiDbRepo wifiDbRepo){
+
+    public RemoveAllActor(Executor executor, IWifiDbRepo wifiDbRepo){
 
         super(executor);
 
         this.mActorName = getClass().getSimpleName();
         this.mWifiDbRepo = wifiDbRepo;
-        this.mData = new AllWifiResponse();
+        this.mData = new RemoveResponse();
     }
 
 
-    /**
-     *
-     */
     @Override
     public void run() {
 
         setRunning(true);
 
-        Log.d(LOGTAG, "GetAllWifiActor running");
+        Log.d(LOGTAG, "RemoveAllActor running");
 
-        ArrayList<WifiEntity> wifiEntities = mWifiDbRepo.getAllWifi();
-
-        mData.setAllWifi(wifiEntities);
+        int removedRows = mWifiDbRepo.removeAll();
+        mData.setRemovedRows(removedRows);
 
         notifySuccess(mActorName, mData);
 
         setRunning(false);
-
     }
 
 }

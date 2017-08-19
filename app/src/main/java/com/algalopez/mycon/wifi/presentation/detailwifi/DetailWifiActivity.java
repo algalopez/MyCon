@@ -45,6 +45,7 @@ public class DetailWifiActivity extends AppCompatActivity implements DetailWifiF
         return super.onOptionsItemSelected(item);
     }
 
+
     /* *********************************************************************************************
      * FRAGMENT INTERACTION
      * *********************************************************************************************

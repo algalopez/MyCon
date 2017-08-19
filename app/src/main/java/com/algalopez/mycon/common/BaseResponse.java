@@ -8,7 +8,7 @@ package com.algalopez.mycon.common;
 public abstract class BaseResponse {
 
 
-    public static final int OK = 0;
+    protected static final int OK = 0;
 
     private int state;
 
