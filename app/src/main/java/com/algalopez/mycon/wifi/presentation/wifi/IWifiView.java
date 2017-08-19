@@ -1,6 +1,7 @@
-package com.algalopez.mycon.wifi.presentation;
+package com.algalopez.mycon.wifi.presentation.wifi;
 
 import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
+import com.algalopez.mycon.wifi.domain.model.WifiEntity;
 
 import java.util.ArrayList;
 
@@ -19,7 +20,7 @@ public interface IWifiView {
 
     void showConnectedDevices(ArrayList<DeviceEntity> connectedDevices);
 
-    void showWifiInfo(String WifiSSID);
+    void showWifiInfo(WifiEntity wifiEntity);
 
 
 }

@@ -7,64 +7,65 @@
     android:layout_height="?attr/listPreferredItemHeight"
     android:gravity="center_vertical"
     android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp">
+    android:layout_marginEnd="8dp"
+    android:id="@+id/device_item">
 
 
     <!-- TOP LEFT -->
     <TextView
-        android:id="@+id/wifi_connected_device_item_ip"
+        android:id="@+id/device_item_ip"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
         android:gravity="start"
-        android:text="@string/wifi_connectedDevice_ip"
+        android:text="@string/device_ip_ex"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/wifi_connected_device_item_mac"
-        app:layout_constraintEnd_toStartOf="@+id/wifi_connected_device_item_name"
+        app:layout_constraintBottom_toTopOf="@+id/device_item_mac"
+        app:layout_constraintEnd_toStartOf="@+id/device_item_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <!-- TOP RIGHT -->
     <TextView
-        android:id="@+id/wifi_connected_device_item_name"
+        android:id="@+id/device_item_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="end"
-        android:text="@string/wifi_connectedDevice_name"
+        android:text="@string/device_name"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/wifi_connected_device_item_brand"
+        app:layout_constraintBottom_toTopOf="@+id/device_item_brand"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/wifi_connected_device_item_ip"
+        app:layout_constraintStart_toEndOf="@+id/device_item_ip"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <!-- BOTTOM LEFT -->
     <TextView
-        android:id="@+id/wifi_connected_device_item_mac"
+        android:id="@+id/device_item_mac"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="start"
-        android:text="@string/wifi_connectedDevice_mac"
+        android:text="@string/device_mac_ex"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/wifi_connected_device_item_brand"
+        app:layout_constraintEnd_toStartOf="@+id/device_item_brand"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wifi_connected_device_item_ip" />
+        app:layout_constraintTop_toBottomOf="@+id/device_item_ip" />
 
 
     <!-- BOTTOM RIGHT -->
     <TextView
-        android:id="@+id/wifi_connected_device_item_brand"
+        android:id="@+id/device_item_brand"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="end"
-        android:text="@string/wifi_connectedDevice_brand"
+        android:text="@string/device_brand"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/wifi_connected_device_item_mac"
-        app:layout_constraintTop_toBottomOf="@+id/wifi_connected_device_item_name" />
+        app:layout_constraintStart_toEndOf="@+id/device_item_mac"
+        app:layout_constraintTop_toBottomOf="@+id/device_item_name" />
 
 
 </android.support.constraint.ConstraintLayout>

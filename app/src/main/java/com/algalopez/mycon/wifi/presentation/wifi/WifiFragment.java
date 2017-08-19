@@ -1,9 +1,12 @@
-package com.algalopez.mycon.wifi.presentation;
+package com.algalopez.mycon.wifi.presentation.wifi;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,12 +19,9 @@ import com.algalopez.mycon.wifi.data.IWifiDbRepo;
 import com.algalopez.mycon.wifi.data.IWifiManagerRepo;
 import com.algalopez.mycon.wifi.data.WifiDbRepo;
 import com.algalopez.mycon.wifi.data.WifiManagerRepo;
-import com.algalopez.mycon.wifi.data.storage.IWifiStorage;
-import com.algalopez.mycon.wifi.data.storage.database.WifiDatabase;
-import com.algalopez.mycon.wifi.data.manager.IWifiManager;
-import com.algalopez.mycon.wifi.data.manager.WifiManager;
-import com.algalopez.mycon.wifi.domain.interactor.UpdateWifiActor;
 import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
+import com.algalopez.mycon.wifi.domain.model.WifiEntity;
+import com.algalopez.mycon.wifi.presentation.detailwifi.DetailWifiActivity;
 
 import java.util.ArrayList;
 
@@ -31,8 +31,6 @@ public class WifiFragment extends Fragment implements IWifiView {
 
 
     private static final String LOGTAG = "WifiFragment";
-    private static final String SAVEDINSTANCE_KEY = "SAVEDINSTANCE";
-
 
     private View mRootView;
 
@@ -48,6 +46,7 @@ public class WifiFragment extends Fragment implements IWifiView {
     // Executor
     Executor mExecutor;
 
+    OnFragmentInteractionListener mFragmentListener;
 
     public WifiFragment() {
     }
@@ -69,18 +68,6 @@ public class WifiFragment extends Fragment implements IWifiView {
         mWifiDbRepo = new WifiDbRepo(getContext());
         mWifiManagerRepo = new WifiManagerRepo(getContext());
         mPresenter = new WifiPresenter(mExecutor, mWifiDbRepo, mWifiManagerRepo);
-
-
-//        if (savedInstanceState != null) {
-//            Log.d(LOGTAG, "onCreateView: " + savedInstanceState.getString(SAVEDINSTANCE_KEY));
-//            mPresenter.setState(savedInstanceState.getString(SAVEDINSTANCE_KEY));
-//        }
-
-//        WifiAdapter connectedDevicesAdapter = new WifiAdapter(null);
-//
-//        RecyclerView connectedDevicesList = (RecyclerView) mRootView.findViewById(R.id.wifi_connected_devices_rv);
-//        connectedDevicesList.setAdapter(connectedDevicesAdapter);
-//        connectedDevicesList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
         setHasOptionsMenu(true);
 
@@ -108,7 +95,6 @@ public class WifiFragment extends Fragment implements IWifiView {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        //Log.d(LOGTAG, "onSaveInstanceState: " + mPresenter.getState());
 
         //outState.putString(SAVEDINSTANCE_KEY, mPresenter.getState());
     }
@@ -128,6 +114,52 @@ public class WifiFragment extends Fragment implements IWifiView {
 
         mPresenter.detachView();
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            mFragmentListener = (OnFragmentInteractionListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnHeadlineSelectedListener");
+        }
+
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        mFragmentListener = null;
+    }
+
+
+    /* *********************************************************************************************
+     * LISTENERS
+     * *********************************************************************************************
+     */
+
+
+    View.OnClickListener onWifiClickListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View view) {
+            Log.d(LOGTAG, "Wifi clicked");
+            mFragmentListener.onWifiSelected(null);
+        }
+    };
+
+
+    WifiAdapter.RecyclerListener onItemClickListener = new WifiAdapter.RecyclerListener() {
+
+        @Override
+        public void OnItemClickListener(DeviceEntity deviceEntity) {
+            Log.d(LOGTAG, "Item with id " + deviceEntity.getID() + " clicked");
+
+        }
+    };
 
 
     /* *********************************************************************************************
@@ -151,7 +183,7 @@ public class WifiFragment extends Fragment implements IWifiView {
     @Override
     public void showConnectedDevices(ArrayList<DeviceEntity> connectedDevices) {
 
-        WifiAdapter connectedDevicesAdapter = new WifiAdapter(connectedDevices);
+        WifiAdapter connectedDevicesAdapter = new WifiAdapter(connectedDevices, onItemClickListener);
 
         RecyclerView connectedDevicesList = (RecyclerView) mRootView.findViewById(R.id.wifi_connected_devices_rv);
         connectedDevicesList.setAdapter(connectedDevicesAdapter);
@@ -160,11 +192,30 @@ public class WifiFragment extends Fragment implements IWifiView {
 
 
     @Override
-    public void showWifiInfo(String ssid) {
+    public void showWifiInfo(WifiEntity wifiEntity) {
 
-        // Log.d(LOGTAG, "showWifiInfo: " + ssid);
         TextView wifiSSID = (TextView) mRootView.findViewById(R.id.fragment_wifi_ssid_tv);
-        wifiSSID.setText(ssid);
+        wifiSSID.setText(wifiEntity.getSSID());
+
+        wifiSSID.setOnClickListener(onWifiClickListener);
     }
 
+
+    /* *********************************************************************************************
+     * ACTIVITY CALLBACK
+     * *********************************************************************************************
+     */
+
+
+    interface OnFragmentInteractionListener {
+
+
+        void onWifiSelected(WifiEntity wifiEntity);
+
+        void onDeviceSelected(DeviceEntity deviceEntity);
+
+
+    }
 }
+
+

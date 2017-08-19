@@ -1,4 +1,4 @@
-package com.algalopez.mycon.wifi.presentation;
+package com.algalopez.mycon.wifi.presentation.wifi;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,6 +24,8 @@ class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.WifiAdapterViewHolder
 
     private ArrayList<DeviceEntity> mData;
 
+    private RecyclerListener mListener;
+
 
     /* *********************************************************************************************
      * VIEWHOLDER PATTERN
@@ -32,7 +34,6 @@ class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.WifiAdapterViewHolder
 
 
     static class WifiAdapterViewHolder extends RecyclerView.ViewHolder{
-
 
         private TextView connectedDevice_ip_tv;
         private TextView connectedDevice_mac_tv;
@@ -44,12 +45,13 @@ class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.WifiAdapterViewHolder
          * Constructor
          */
         WifiAdapterViewHolder(View itemView){
+
             super(itemView);
 
-            connectedDevice_ip_tv = (TextView) itemView.findViewById(R.id.wifi_connected_device_item_ip);
-            connectedDevice_mac_tv = (TextView) itemView.findViewById(R.id.wifi_connected_device_item_mac);
-            connectedDevice_name_tv = (TextView) itemView.findViewById(R.id.wifi_connected_device_item_name);
-            connectedDevice_brand_tv = (TextView) itemView.findViewById(R.id.wifi_connected_device_item_brand);
+            connectedDevice_ip_tv = (TextView) itemView.findViewById(R.id.device_item_ip);
+            connectedDevice_mac_tv = (TextView) itemView.findViewById(R.id.device_item_mac);
+            connectedDevice_name_tv = (TextView) itemView.findViewById(R.id.device_item_name);
+            connectedDevice_brand_tv = (TextView) itemView.findViewById(R.id.device_item_brand);
 
             if (connectedDevice_ip_tv == null){
                 Log.e(LOGTAG, "WifiAdapterViewHolder: connectedDevice_ip_tv should't be null");
@@ -57,18 +59,31 @@ class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.WifiAdapterViewHolder
         }
 
 
-        /**
+        /*
          * Bind the data to the view
-         *
          */
-        void bind(DeviceEntity device){
+        void bind(final DeviceEntity device){
 
             connectedDevice_ip_tv.setText(device.getIP());
             connectedDevice_mac_tv.setText(device.getMAC());
             connectedDevice_name_tv.setText(device.getName());
             connectedDevice_brand_tv.setText(device.getBrand());
+
         }
+
     }
+
+
+    /* *********************************************************************************************
+     * LSITENERS
+     * *********************************************************************************************
+     */
+
+
+    interface RecyclerListener{
+        void OnItemClickListener(DeviceEntity deviceEntity);
+    }
+
 
 
     /* *********************************************************************************************
@@ -86,6 +101,13 @@ class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.WifiAdapterViewHolder
     }
 
 
+    WifiAdapter(ArrayList<DeviceEntity> data, RecyclerListener listener){
+
+        this.mData = data;
+        this.mListener = listener;
+    }
+
+
     /**
      * Called by RecyclerView to create the viewholder
      *
@@ -94,6 +116,7 @@ class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.WifiAdapterViewHolder
     public WifiAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.device_item, parent, false);
+        //itemView.setOnClickListener();
         return new WifiAdapterViewHolder(itemView);
     }
 
@@ -105,8 +128,17 @@ class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.WifiAdapterViewHolder
     @Override
     public void onBindViewHolder(WifiAdapterViewHolder holder, int position) {
 
-        DeviceEntity item = mData.get(position);
+        final DeviceEntity item = mData.get(position);
         holder.bind(item);
+
+
+        // Set Listeners
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.OnItemClickListener(item);
+            }
+        });
     }
 
 
@@ -123,5 +155,8 @@ class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.WifiAdapterViewHolder
             return 0;
         }
     }
+
+
+
 
 }

@@ -73,6 +73,7 @@ public class WifiManager implements IWifiManager{
     @Override
     public String getSSID(){
 
+        // Log.d(LOGTAG, "SSID: " + mWifiInfo.getSSID());
         return mWifiInfo.getSSID();
     }
 

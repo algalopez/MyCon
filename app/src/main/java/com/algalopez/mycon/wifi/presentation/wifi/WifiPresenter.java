@@ -1,4 +1,4 @@
-package com.algalopez.mycon.wifi.presentation;
+package com.algalopez.mycon.wifi.presentation.wifi;
 
 import android.util.Log;
 
@@ -138,7 +138,7 @@ class WifiPresenter {
 
             mWifiResponse = data;
 
-            mView.showWifiInfo(data.getWifiInformation().getSSID());
+            mView.showWifiInfo(data.getWifiInformation());
 
             mView.showConnectedDevices(data.getConnectedDevices());
         }

@@ -1,10 +1,12 @@
 package com.algalopez.mycon.wifi.presentation.detailwifi;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -30,6 +32,8 @@ public class DetailWifiFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    private View mRootView;
+
     public DetailWifiFragment() {
         // Required empty public constructor
     }
@@ -52,6 +56,7 @@ public class DetailWifiFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,13 +64,32 @@ public class DetailWifiFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail_wifi, container, false);
+
+        mRootView = inflater.inflate(R.layout.fragment_detail_wifi, container, false);
+
+        setHasOptionsMenu(true);
+
+        return mRootView;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.action_update) {
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -78,6 +102,7 @@ public class DetailWifiFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -85,6 +110,7 @@ public class DetailWifiFragment extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }
     }
+
 
     @Override
     public void onDetach() {

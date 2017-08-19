@@ -79,7 +79,7 @@ public class UpdateWifiActor extends BaseActor<WifiResponse> {
         // Look for connected devices
         String prefixIPStr = "192.168.1.";
         DeviceEntity deviceEntity;
-        for (int j = 1; j < 60; j++) {
+        for (int j = 1; j < 30; j++) {
             mData.setProgress(j*100/255);
             notifyDataChange(mActorName, mData);
             deviceEntity = mWifiManagerRepo.getDevice(prefixIPStr + j);

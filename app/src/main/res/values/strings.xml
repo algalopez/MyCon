@@ -7,14 +7,35 @@
     <string name="action_update">Update</string>
     <string name="action_about">About</string>
 
-
+    <!-- WIFI -->
     <string name="wifi_ssid">SSID</string>
-    <string name="wifi_connectedDevice_ip">123.456.789</string>
-    <string name="wifi_connectedDevice_mac">A1:B2:C3:D4:E5:F6:G7:H8</string>
-    <string name="wifi_connectedDevice_name">Name</string>
-    <string name="wifi_connectedDevice_brand">Brand</string>
+    <string name="wifi_netmask">Netmask</string>
+    <string name="wifi_bssid">BSSID</string>
+    <string name="wifi_password">Password</string>
+    <string name="wifi_rssi">RSSI</string>
+    <string name="wifi_frequency">Frequency</string>
+    <string name="wifi_linkSpeed">Link Speed</string>
+    <string name="wifi_networkId">Network ID</string>
+    <string name="wifi_serverAddress">Server Address</string>
+    <string name="wifi_networkDns1">DNS 1</string>
+    <string name="wifi_networkDns2">DNS 2</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="device_name">Name</string>
+    <string name="device_brand">Brand</string>
+    <string name="device_ip">Brand</string>
+    <string name="device_mac">Brand</string>
+    <string name="device_ip_ex">123.456.789</string>
+    <string name="device_mac_ex">A1:B2:C3:D4:E5:F6:G7:H8</string>
+
+
+    <string name="wifi_update_message">asd</string>
+
+
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
