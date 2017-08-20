@@ -3,9 +3,13 @@
 
 
     <dimen name="fragment_margin">8dp</dimen>
-    <dimen name="item_separation">20dp</dimen>
-    <dimen name="item_height">32dp</dimen>
-    <dimen name="item_res_margin">16dp</dimen>
+    <dimen name="item_margin">4dp</dimen>
+
+    <dimen name="detail_line_space">20dp</dimen>
+    <dimen name="detail_line_height">32dp</dimen>
+    <dimen name="detail_line_indentation">16dp</dimen>
+
+
 
 
 </resources>

@@ -19,6 +19,7 @@
     <string name="wifi_serverAddress">Server Address</string>
     <string name="wifi_networkDns1">DNS 1</string>
     <string name="wifi_networkDns2">DNS 2</string>
+    <string name="wifi_lastupdate">Last update</string>
 
     <string name="device_name">Name</string>
     <string name="device_brand">Brand</string>
@@ -37,6 +38,7 @@
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="image_description">Image description</string>
 
 
 </resources>

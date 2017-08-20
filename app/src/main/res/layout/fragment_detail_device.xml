@@ -16,7 +16,7 @@
     <TextView
         android:id="@+id/detail_device_ip_tv"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:gravity="center_vertical"
         android:text="@string/device_ip"
         android:textStyle="bold" />
@@ -24,19 +24,19 @@
     <TextView
         android:id="@+id/detail_device_ip_res_tv"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
-        android:layout_marginStart="@dimen/item_res_margin"
+        android:layout_height="@dimen/detail_line_height"
+        android:layout_marginStart="@dimen/detail_line_indentation"
         android:gravity="center_vertical"
         android:text="@string/device_ip" />
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_separation" />
+        android:layout_height="@dimen/detail_line_space" />
 
     <!-- NAME -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:gravity="center_vertical"
         android:text="@string/device_name"
         android:textStyle="bold"
@@ -44,20 +44,20 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:gravity="center_vertical"
         android:text="@string/device_name"
         android:id="@+id/detail_device_name_res_tv"
-        android:layout_marginStart="@dimen/item_res_margin"/>
+        android:layout_marginStart="@dimen/detail_line_indentation"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_separation" />
+        android:layout_height="@dimen/detail_line_space" />
 
     <!-- BRAND -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:gravity="center_vertical"
         android:text="@string/device_brand"
         android:textStyle="bold"
@@ -65,20 +65,20 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:gravity="center_vertical"
         android:text="@string/device_brand"
         android:id="@+id/detail_device_brand_res_tv"
-        android:layout_marginStart="@dimen/item_res_margin"/>
+        android:layout_marginStart="@dimen/detail_line_indentation"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_separation" />
+        android:layout_height="@dimen/detail_line_space" />
 
     <!-- MAC -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:gravity="center_vertical"
         android:text="@string/device_mac"
         android:textStyle="bold"
@@ -86,11 +86,11 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:gravity="center_vertical"
         android:text="@string/device_mac"
         android:id="@+id/detail_device_mac_res_tv"
-        android:layout_marginStart="@dimen/item_res_margin"/>
+        android:layout_marginStart="@dimen/detail_line_indentation"/>
 
 </LinearLayout>
 </ScrollView>

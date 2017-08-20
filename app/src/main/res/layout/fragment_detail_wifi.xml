@@ -19,27 +19,27 @@
     <!-- SSID -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:id="@+id/detail_wifi_ssid_tv"
         android:text="@string/wifi_ssid"
         android:textStyle="bold" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:id="@+id/detail_wifi_ssid_res_tv"
         android:text="@string/wifi_ssid"
         android:gravity="center_vertical"
-        android:layout_marginStart="@dimen/item_res_margin"/>
+        android:layout_marginStart="@dimen/detail_line_indentation"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_separation" />
+        android:layout_height="@dimen/detail_line_space" />
 
     <!-- PASSWORD -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:id="@+id/detail_wifi_password_tv"
         android:text="@string/wifi_password"
         android:textStyle="bold"
@@ -47,20 +47,20 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:id="@+id/detail_wifi_password_res_tv"
         android:text="@string/wifi_password"
         android:gravity="center_vertical"
-        android:layout_marginStart="@dimen/item_res_margin"/>
+        android:layout_marginStart="@dimen/detail_line_indentation"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_separation" />
+        android:layout_height="@dimen/detail_line_space" />
 
     <!-- NETMASK -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:id="@+id/detail_wifi_netmask_tv"
         android:text="@string/wifi_netmask"
         android:textStyle="bold"
@@ -68,20 +68,20 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:id="@+id/detail_wifi_netmask_res_tv"
         android:text="@string/wifi_netmask"
         android:gravity="center_vertical"
-        android:layout_marginStart="@dimen/item_res_margin"/>
+        android:layout_marginStart="@dimen/detail_line_indentation"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_separation" />
+        android:layout_height="@dimen/detail_line_space" />
 
     <!-- BSSID -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:id="@+id/detail_wifi_bssid_tv"
         android:text="@string/wifi_bssid"
         android:textStyle="bold"
@@ -89,20 +89,20 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:id="@+id/detail_wifi_bssid_res_tv"
         android:text="@string/wifi_bssid"
         android:gravity="center_vertical"
-        android:layout_marginStart="@dimen/item_res_margin"/>
+        android:layout_marginStart="@dimen/detail_line_indentation"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_separation" />
+        android:layout_height="@dimen/detail_line_space" />
 
     <!-- RSSI -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:id="@+id/detail_wifi_rssi_tv"
         android:text="@string/wifi_rssi"
         android:textStyle="bold"
@@ -110,20 +110,20 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:id="@+id/detail_wifi_rssi_res_tv"
         android:text="@string/wifi_rssi"
         android:gravity="center_vertical"
-        android:layout_marginStart="@dimen/item_res_margin"/>
+        android:layout_marginStart="@dimen/detail_line_indentation"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_separation" />
+        android:layout_height="@dimen/detail_line_space" />
 
     <!-- FREQUENCY -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:id="@+id/detail_wifi_frequency_tv"
         android:text="@string/wifi_frequency"
         android:textStyle="bold"
@@ -131,20 +131,20 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:id="@+id/detail_wifi_frequency_res_tv"
         android:text="@string/wifi_frequency"
         android:gravity="center_vertical"
-        android:layout_marginStart="@dimen/item_res_margin"/>
+        android:layout_marginStart="@dimen/detail_line_indentation"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_separation" />
+        android:layout_height="@dimen/detail_line_space" />
 
     <!-- LINK SPEED -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:id="@+id/detail_wifi_linkspeed_tv"
         android:text="@string/wifi_linkSpeed"
         android:textStyle="bold"
@@ -152,20 +152,20 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:id="@+id/detail_wifi_linkspeed_res_tv"
         android:text="@string/wifi_linkSpeed"
         android:gravity="center_vertical"
-        android:layout_marginStart="@dimen/item_res_margin"/>
+        android:layout_marginStart="@dimen/detail_line_indentation"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_separation" />
+        android:layout_height="@dimen/detail_line_space" />
 
     <!-- NETWORK ID -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:id="@+id/detail_wifi_networkid_tv"
         android:text="@string/wifi_networkId"
         android:textStyle="bold"
@@ -173,20 +173,20 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:id="@+id/detail_wifi_networkid_res_tv"
         android:text="@string/wifi_networkId"
         android:gravity="center_vertical"
-        android:layout_marginStart="@dimen/item_res_margin"/>
+        android:layout_marginStart="@dimen/detail_line_indentation"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_separation" />
+        android:layout_height="@dimen/detail_line_space" />
 
     <!-- SERVER ADDRESS -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:id="@+id/detail_wifi_serveraddress_tv"
         android:text="@string/wifi_serverAddress"
         android:textStyle="bold"
@@ -194,20 +194,20 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:id="@+id/detail_wifi_serveraddress_res_tv"
         android:text="@string/wifi_serverAddress"
         android:gravity="center_vertical"
-        android:layout_marginStart="@dimen/item_res_margin"/>
+        android:layout_marginStart="@dimen/detail_line_indentation"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_separation" />
+        android:layout_height="@dimen/detail_line_space" />
 
     <!-- NETWORK DNS 1 -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:id="@+id/detail_wifi_networkdns1_tv"
         android:text="@string/wifi_networkDns1"
         android:textStyle="bold"
@@ -215,20 +215,20 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:id="@+id/detail_wifi_networkdns1_res_tv"
         android:text="@string/wifi_networkDns1"
         android:gravity="center_vertical"
-        android:layout_marginStart="@dimen/item_res_margin"/>
+        android:layout_marginStart="@dimen/detail_line_indentation"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_separation" />
+        android:layout_height="@dimen/detail_line_space" />
 
     <!-- NETWORK DNS 2 -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:id="@+id/detail_wifi_networkdns2_tv"
         android:text="@string/wifi_networkDns2"
         android:textStyle="bold"
@@ -236,11 +236,11 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/detail_line_height"
         android:id="@+id/detail_wifi_networkdns2_res_tv"
         android:text="@string/wifi_networkDns2"
         android:gravity="center_vertical"
-        android:layout_marginStart="@dimen/item_res_margin"/>
+        android:layout_marginStart="@dimen/detail_line_indentation"/>
 
 
 

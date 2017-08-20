@@ -4,10 +4,13 @@
     android:layout_height="match_parent"
     tools:context="com.algalopez.mycon.wifi.presentation.allwifi.AllWifiFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <ListView
+        android:id="@+id/allwifi_list_lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:divider="@color/light_blue_50"
+        android:dividerHeight="1dp"
+        tools:listitem="@layout/item_wifi" />
 
 </FrameLayout>
