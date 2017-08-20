@@ -7,8 +7,13 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.algalopez.mycon.R;
+import com.algalopez.mycon.common.Executor;
+import com.algalopez.mycon.wifi.data.IWifiDbRepo;
+import com.algalopez.mycon.wifi.data.WifiDbRepo;
 import com.algalopez.mycon.wifi.domain.model.WifiEntity;
 
 import java.util.ArrayList;
@@ -18,6 +23,10 @@ public class AllWifiFragment extends Fragment implements IAllWifiView {
 
 
     private View mRootView;
+    private AllWifiAdapter mAdapter;
+    private AllWifiPresenter mPresenter;
+    private Executor mExecutor;
+    private IWifiDbRepo mWifiDbRepo;
 
     private OnFragmentInteractionListener mListener;
 
@@ -56,6 +65,13 @@ public class AllWifiFragment extends Fragment implements IAllWifiView {
                              Bundle savedInstanceState) {
 
         mRootView = inflater.inflate(R.layout.fragment_all_wifi, container, false);
+        mExecutor = new Executor();
+        mWifiDbRepo = new WifiDbRepo(getContext());
+        mAdapter = new AllWifiAdapter(getContext());
+        mPresenter = new AllWifiPresenter(mExecutor, mWifiDbRepo);
+
+        ListView listView = (ListView) mRootView.findViewById(R.id.allwifi_list_lv);
+        listView.setAdapter(mAdapter);
 
         setHasOptionsMenu(true);
 
@@ -67,6 +83,22 @@ public class AllWifiFragment extends Fragment implements IAllWifiView {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mPresenter.attachView(this);
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        mPresenter.detachView();
     }
 
 
@@ -110,18 +142,21 @@ public class AllWifiFragment extends Fragment implements IAllWifiView {
     @Override
     public void showProgress(int percentage) {
 
+        Toast.makeText(getContext(), percentage + "%", Toast.LENGTH_SHORT).show();
     }
 
 
     @Override
     public void showError(String message) {
 
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
 
     @Override
     public void showAllWifi(ArrayList<WifiEntity> wifiEntities) {
 
+        mAdapter.setData(wifiEntities);
     }
 
 
