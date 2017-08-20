@@ -19,185 +19,228 @@
     <!-- SSID -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/item_height"
+        android:id="@+id/detail_wifi_ssid_tv"
         android:text="@string/wifi_ssid"
-        android:textAlignment="center"
         android:textStyle="bold" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/wifi_ssid" />
+        android:layout_height="@dimen/item_height"
+        android:id="@+id/detail_wifi_ssid_res_tv"
+        android:text="@string/wifi_ssid"
+        android:gravity="center_vertical"
+        android:layout_marginStart="@dimen/item_res_margin"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/fragment_margin" />
+        android:layout_height="@dimen/item_separation" />
 
     <!-- PASSWORD -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/item_height"
+        android:id="@+id/detail_wifi_password_tv"
         android:text="@string/wifi_password"
-        android:textAlignment="center"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:gravity="center_vertical"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/wifi_password" />
+        android:layout_height="@dimen/item_height"
+        android:id="@+id/detail_wifi_password_res_tv"
+        android:text="@string/wifi_password"
+        android:gravity="center_vertical"
+        android:layout_marginStart="@dimen/item_res_margin"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/fragment_margin" />
+        android:layout_height="@dimen/item_separation" />
 
     <!-- NETMASK -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/item_height"
+        android:id="@+id/detail_wifi_netmask_tv"
         android:text="@string/wifi_netmask"
-        android:textAlignment="center"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:gravity="center_vertical"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/wifi_netmask" />
+        android:layout_height="@dimen/item_height"
+        android:id="@+id/detail_wifi_netmask_res_tv"
+        android:text="@string/wifi_netmask"
+        android:gravity="center_vertical"
+        android:layout_marginStart="@dimen/item_res_margin"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/fragment_margin" />
+        android:layout_height="@dimen/item_separation" />
 
     <!-- BSSID -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/item_height"
+        android:id="@+id/detail_wifi_bssid_tv"
         android:text="@string/wifi_bssid"
-        android:textAlignment="center"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:gravity="center_vertical"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/wifi_bssid" />
+        android:layout_height="@dimen/item_height"
+        android:id="@+id/detail_wifi_bssid_res_tv"
+        android:text="@string/wifi_bssid"
+        android:gravity="center_vertical"
+        android:layout_marginStart="@dimen/item_res_margin"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/fragment_margin" />
+        android:layout_height="@dimen/item_separation" />
 
     <!-- RSSI -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/item_height"
+        android:id="@+id/detail_wifi_rssi_tv"
         android:text="@string/wifi_rssi"
-        android:textAlignment="center"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:gravity="center_vertical"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/wifi_rssi" />
+        android:layout_height="@dimen/item_height"
+        android:id="@+id/detail_wifi_rssi_res_tv"
+        android:text="@string/wifi_rssi"
+        android:gravity="center_vertical"
+        android:layout_marginStart="@dimen/item_res_margin"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/fragment_margin" />
+        android:layout_height="@dimen/item_separation" />
 
     <!-- FREQUENCY -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/item_height"
+        android:id="@+id/detail_wifi_frequency_tv"
         android:text="@string/wifi_frequency"
-        android:textAlignment="center"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:gravity="center_vertical"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/wifi_frequency" />
+        android:layout_height="@dimen/item_height"
+        android:id="@+id/detail_wifi_frequency_res_tv"
+        android:text="@string/wifi_frequency"
+        android:gravity="center_vertical"
+        android:layout_marginStart="@dimen/item_res_margin"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/fragment_margin" />
+        android:layout_height="@dimen/item_separation" />
 
     <!-- LINK SPEED -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/item_height"
+        android:id="@+id/detail_wifi_linkspeed_tv"
         android:text="@string/wifi_linkSpeed"
-        android:textAlignment="center"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:gravity="center_vertical"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/wifi_linkSpeed" />
+        android:layout_height="@dimen/item_height"
+        android:id="@+id/detail_wifi_linkspeed_res_tv"
+        android:text="@string/wifi_linkSpeed"
+        android:gravity="center_vertical"
+        android:layout_marginStart="@dimen/item_res_margin"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/fragment_margin" />
+        android:layout_height="@dimen/item_separation" />
 
     <!-- NETWORK ID -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/item_height"
+        android:id="@+id/detail_wifi_networkid_tv"
         android:text="@string/wifi_networkId"
-        android:textAlignment="center"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:gravity="center_vertical"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/wifi_networkId" />
+        android:layout_height="@dimen/item_height"
+        android:id="@+id/detail_wifi_networkid_res_tv"
+        android:text="@string/wifi_networkId"
+        android:gravity="center_vertical"
+        android:layout_marginStart="@dimen/item_res_margin"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/fragment_margin" />
+        android:layout_height="@dimen/item_separation" />
 
     <!-- SERVER ADDRESS -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/item_height"
+        android:id="@+id/detail_wifi_serveraddress_tv"
         android:text="@string/wifi_serverAddress"
-        android:textAlignment="center"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:gravity="center_vertical"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/wifi_serverAddress" />
+        android:layout_height="@dimen/item_height"
+        android:id="@+id/detail_wifi_serveraddress_res_tv"
+        android:text="@string/wifi_serverAddress"
+        android:gravity="center_vertical"
+        android:layout_marginStart="@dimen/item_res_margin"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/fragment_margin" />
+        android:layout_height="@dimen/item_separation" />
 
     <!-- NETWORK DNS 1 -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/item_height"
+        android:id="@+id/detail_wifi_networkdns1_tv"
         android:text="@string/wifi_networkDns1"
-        android:textAlignment="center"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:gravity="center_vertical"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/wifi_networkDns1" />
+        android:layout_height="@dimen/item_height"
+        android:id="@+id/detail_wifi_networkdns1_res_tv"
+        android:text="@string/wifi_networkDns1"
+        android:gravity="center_vertical"
+        android:layout_marginStart="@dimen/item_res_margin"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/fragment_margin" />
+        android:layout_height="@dimen/item_separation" />
 
     <!-- NETWORK DNS 2 -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/item_height"
+        android:id="@+id/detail_wifi_networkdns2_tv"
         android:text="@string/wifi_networkDns2"
-        android:textAlignment="center"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:gravity="center_vertical"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/wifi_networkDns2" />
+        android:layout_height="@dimen/item_height"
+        android:id="@+id/detail_wifi_networkdns2_res_tv"
+        android:text="@string/wifi_networkDns2"
+        android:gravity="center_vertical"
+        android:layout_marginStart="@dimen/item_res_margin"/>
 
 
 

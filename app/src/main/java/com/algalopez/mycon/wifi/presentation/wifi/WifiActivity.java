@@ -66,8 +66,10 @@ public class WifiActivity extends AppCompatActivity implements WifiFragment.OnFr
         startActivity(intent);
     }
 
+
     @Override
     public void onDeviceSelected(DeviceEntity deviceEntity) {
 
+        Log.d(LOGTAG, "onDeviceSelected ");
     }
 }

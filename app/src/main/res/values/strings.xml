@@ -22,13 +22,13 @@
 
     <string name="device_name">Name</string>
     <string name="device_brand">Brand</string>
-    <string name="device_ip">Brand</string>
-    <string name="device_mac">Brand</string>
+    <string name="device_ip">Ip</string>
+    <string name="device_mac">MAC</string>
     <string name="device_ip_ex">123.456.789</string>
     <string name="device_mac_ex">A1:B2:C3:D4:E5:F6:G7:H8</string>
 
 
-    <string name="wifi_update_message">asd</string>
+    <string name="wifi_update_message">Update</string>
 
 
     <string name="ok">OK</string>

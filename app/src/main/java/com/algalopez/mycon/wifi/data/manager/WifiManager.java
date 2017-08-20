@@ -20,8 +20,6 @@ import java.util.Locale;
 
 
 // TODO: Add network to get device info from mac vendors;
-// TODO: Add arp to get mac address from arp tables in device;
-// TODO: Make IPv6compliant;
 // TODO: Check or REMOVE ips and dns formatting;
 
 
@@ -141,9 +139,9 @@ public class WifiManager implements IWifiManager{
 
 
     @Override
-    public int getServerAddress(){
+    public String getServerAddress(){
 
-        return mDhcpInfo.serverAddress;
+        return "";
     }
 
 
@@ -219,14 +217,14 @@ public class WifiManager implements IWifiManager{
     @Override
     public String getName(InetAddress addr){
 
-       return "Fake Name";
+       return "";
     }
 
 
     @Override
     public String getBrand(InetAddress addr){
 
-        return "Fake Brand";
+        return "";
     }
 
 

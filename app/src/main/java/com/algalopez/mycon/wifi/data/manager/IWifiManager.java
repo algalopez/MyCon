@@ -38,7 +38,7 @@ public interface IWifiManager {
 
     int getNetmask();
 
-    int getServerAddress();
+    String getServerAddress();
 
     String getDNS1();
 

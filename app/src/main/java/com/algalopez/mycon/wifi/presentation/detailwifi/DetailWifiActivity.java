@@ -9,7 +9,7 @@ import android.view.MenuItem;
 
 import com.algalopez.mycon.R;
 
-public class DetailWifiActivity extends AppCompatActivity implements DetailWifiFragment.OnFragmentInteractionListener{
+public class DetailWifiActivity extends AppCompatActivity{
 
 
     @Override
@@ -17,8 +17,8 @@ public class DetailWifiActivity extends AppCompatActivity implements DetailWifiF
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_detail_wifi);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.wifi_toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.detailwifi_toolbar);
+//        setSupportActionBar(toolbar);
     }
 
 
@@ -52,8 +52,5 @@ public class DetailWifiActivity extends AppCompatActivity implements DetailWifiF
      */
 
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
 
-    }
 }

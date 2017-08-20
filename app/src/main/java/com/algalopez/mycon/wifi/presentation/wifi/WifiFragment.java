@@ -48,6 +48,14 @@ public class WifiFragment extends Fragment implements IWifiView {
 
     OnFragmentInteractionListener mFragmentListener;
 
+
+
+    /* *********************************************************************************************
+     * CONSTRUCTION
+     * *********************************************************************************************
+     */
+
+
     public WifiFragment() {
     }
 

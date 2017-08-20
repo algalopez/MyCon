@@ -1,13 +1,96 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/fragment_margin"
     tools:context="com.algalopez.mycon.wifi.presentation.detaildevice.DetailDeviceFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
+    <!-- IP -->
+    <TextView
+        android:id="@+id/detail_device_ip_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:gravity="center_vertical"
+        android:text="@string/device_ip"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/detail_device_ip_res_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:layout_marginStart="@dimen/item_res_margin"
+        android:gravity="center_vertical"
+        android:text="@string/device_ip" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_separation" />
+
+    <!-- NAME -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="@dimen/item_height"
+        android:gravity="center_vertical"
+        android:text="@string/device_name"
+        android:textStyle="bold"
+        android:id="@+id/detail_device_name_tv"/>
 
-</FrameLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:gravity="center_vertical"
+        android:text="@string/device_name"
+        android:id="@+id/detail_device_name_res_tv"
+        android:layout_marginStart="@dimen/item_res_margin"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_separation" />
+
+    <!-- BRAND -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:gravity="center_vertical"
+        android:text="@string/device_brand"
+        android:textStyle="bold"
+        android:id="@+id/detail_device_brand_tv"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:gravity="center_vertical"
+        android:text="@string/device_brand"
+        android:id="@+id/detail_device_brand_res_tv"
+        android:layout_marginStart="@dimen/item_res_margin"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_separation" />
+
+    <!-- MAC -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:gravity="center_vertical"
+        android:text="@string/device_mac"
+        android:textStyle="bold"
+        android:id="@+id/detail_device_mac_tv"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:gravity="center_vertical"
+        android:text="@string/device_mac"
+        android:id="@+id/detail_device_mac_res_tv"
+        android:layout_marginStart="@dimen/item_res_margin"/>
+
+</LinearLayout>
+</ScrollView>

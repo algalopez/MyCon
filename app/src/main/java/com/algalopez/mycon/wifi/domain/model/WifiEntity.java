@@ -16,6 +16,13 @@ public class WifiEntity {
     private String SSID;
     private Date lastUpdated;
     private String password;
+    private String netmask;
+    private String BSSID;
+    private int RSSI;
+    private int frequency;
+    private int linkSpeed;
+    private int networkID;
+    private String serverAddress;
 
     public WifiEntity(){
 
@@ -41,5 +48,31 @@ public class WifiEntity {
 
     public void setPassword(String password) { this.password = password; }
 
+    public String getNetmask() { return netmask; }
 
+    public void setNetmask(String netmask) { this.netmask = netmask; }
+
+    public String getBSSID() { return BSSID; }
+
+    public void setBSSID(String BSSID) { this.BSSID = BSSID; }
+
+    public int getRSSI() { return RSSI; }
+
+    public void setRSSI(int RSSI) { this.RSSI = RSSI; }
+
+    public int getFrequency() { return frequency; }
+
+    public void setFrequency(int frequency) { this.frequency = frequency; }
+
+    public int getLinkSpeed() { return linkSpeed; }
+
+    public void setLinkSpeed(int linkSpeed) { this.linkSpeed = linkSpeed; }
+
+    public int getNetworkID() { return networkID; }
+
+    public void setNetworkID(int networkID) { this.networkID = networkID; }
+
+    public String getServerAddress() { return serverAddress; }
+
+    public void setServerAddress(String serverAddress) { this.serverAddress = serverAddress; }
 }

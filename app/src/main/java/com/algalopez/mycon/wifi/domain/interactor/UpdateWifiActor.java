@@ -6,7 +6,6 @@ import com.algalopez.mycon.common.BaseActor;
 import com.algalopez.mycon.common.Executor;
 import com.algalopez.mycon.wifi.data.IWifiDbRepo;
 import com.algalopez.mycon.wifi.data.IWifiManagerRepo;
-import com.algalopez.mycon.wifi.data.manager.WifiManager;
 import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
 import com.algalopez.mycon.wifi.domain.model.WifiEntity;
 import com.algalopez.mycon.wifi.domain.response.WifiResponse;
