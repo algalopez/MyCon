@@ -26,8 +26,6 @@ public interface IWifiManager {
 
     String getIpAddress();
 
-    boolean getHiddenSSID();
-
     int getRSSI();
 
     int getFrequency();
@@ -36,7 +34,7 @@ public interface IWifiManager {
 
     int getNetworkId();
 
-    int getNetmask();
+    String getNetmask();
 
     String getServerAddress();
 

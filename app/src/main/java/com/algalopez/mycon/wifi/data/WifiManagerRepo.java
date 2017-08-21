@@ -9,7 +9,6 @@ import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
 import com.algalopez.mycon.wifi.domain.model.WifiEntity;
 
 import java.net.InetAddress;
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -48,6 +47,16 @@ public class WifiManagerRepo implements IWifiManagerRepo {
         wifiEntity.setSSID(mWifiManager.getSSID());
         wifiEntity.setLastUpdated(new Date());
 
+        wifiEntity.setNetmask(mWifiManager.getNetmask());
+        wifiEntity.setBSSID(mWifiManager.getBSSID());
+        wifiEntity.setRSSI(mWifiManager.getRSSI());
+        wifiEntity.setFrequency(mWifiManager.getFrequency());
+        wifiEntity.setLinkSpeed(mWifiManager.getLinkSpeed());
+        wifiEntity.setNetworkID(mWifiManager.getNetworkId());
+        wifiEntity.setServerAddress(mWifiManager.getServerAddress());
+        wifiEntity.setDns1(mWifiManager.getDNS1());
+        wifiEntity.setDns2(mWifiManager.getDNS2());
+
         return wifiEntity;
     }
 
@@ -81,13 +90,6 @@ public class WifiManagerRepo implements IWifiManagerRepo {
         }
         return null;
     }
-
-
-//    @Override
-//    public ArrayList<DeviceEntity> getAllDevices() {
-//        return null;
-//    }
-
 
 
 }

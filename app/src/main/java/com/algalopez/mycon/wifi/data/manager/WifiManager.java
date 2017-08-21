@@ -96,11 +96,11 @@ public class WifiManager implements IWifiManager{
     }
 
 
-    @Override
-    public boolean getHiddenSSID(){
-
-        return mWifiInfo.getHiddenSSID();
-    }
+//    @Override
+//    public boolean getHiddenSSID(){
+//
+//        return mWifiInfo.getHiddenSSID();
+//    }
 
 
     @Override
@@ -132,9 +132,9 @@ public class WifiManager implements IWifiManager{
 
 
     @Override
-    public int getNetmask(){
+    public String getNetmask(){
 
-        return mDhcpInfo.netmask;
+        return String.valueOf(mDhcpInfo.netmask);
     }
 
 
