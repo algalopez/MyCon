@@ -64,6 +64,15 @@ public class WifiDatabase implements IWifiStorage {
             values.put(WifiEntry.COLUMN_SSID, c.getString(c.getColumnIndex(WifiEntry.COLUMN_SSID)));
             values.put(WifiEntry.COLUMN_PASSWORD, c.getString(c.getColumnIndex(WifiEntry.COLUMN_PASSWORD)));
             values.put(WifiEntry.COLUMN_LASTUPDATED, c.getLong(c.getColumnIndex(WifiEntry.COLUMN_LASTUPDATED)));
+            values.put(WifiEntry.COLUMN_NETMASK, c.getString(c.getColumnIndex(WifiEntry.COLUMN_NETMASK)));
+            values.put(WifiEntry.COLUMN_BSSID, c.getString(c.getColumnIndex(WifiEntry.COLUMN_BSSID)));
+            values.put(WifiEntry.COLUMN_RSSI, c.getLong(c.getColumnIndex(WifiEntry.COLUMN_RSSI)));
+            values.put(WifiEntry.COLUMN_FREQUENCY, c.getLong(c.getColumnIndex(WifiEntry.COLUMN_FREQUENCY)));
+            values.put(WifiEntry.COLUMN_LINKSPEED, c.getLong(c.getColumnIndex(WifiEntry.COLUMN_LINKSPEED)));
+            values.put(WifiEntry.COLUMN_NETWORKID, c.getLong(c.getColumnIndex(WifiEntry.COLUMN_NETWORKID)));
+            values.put(WifiEntry.COLUMN_SERVERADDRESS, c.getString(c.getColumnIndex(WifiEntry.COLUMN_SERVERADDRESS)));
+            values.put(WifiEntry.COLUMN_DNS1, c.getString(c.getColumnIndex(WifiEntry.COLUMN_DNS1)));
+            values.put(WifiEntry.COLUMN_DNS2, c.getString(c.getColumnIndex(WifiEntry.COLUMN_DNS2)));
         }
 
         c.close();
@@ -174,17 +183,6 @@ public class WifiDatabase implements IWifiStorage {
             id = c.getLong(c.getColumnIndex(WifiEntry._ID));
         }
 
-//        if (c.moveToFirst()){
-//            int i = 0;
-//            do {
-//
-//                Log.d(LOGTAG, i + " id " + c.getLong(c.getColumnIndex(WifiEntry._ID)));
-//                Log.d(LOGTAG, i + " ssid " + c.getString(c.getColumnIndex(WifiEntry.COLUMN_SSID)));
-//                Log.d(LOGTAG, i + " pass " + c.getString(c.getColumnIndex(WifiEntry.COLUMN_PASSWORD)));
-//                i += 1;
-//            } while (c.moveToNext());
-//        }
-
         c.close();
         database.close();
         return id;
@@ -213,6 +211,15 @@ public class WifiDatabase implements IWifiStorage {
                 wifiValues.put(WifiEntry.COLUMN_SSID, c.getString(c.getColumnIndex(WifiEntry.COLUMN_SSID)));
                 wifiValues.put(WifiEntry.COLUMN_PASSWORD, c.getString(c.getColumnIndex(WifiEntry.COLUMN_PASSWORD)));
                 wifiValues.put(WifiEntry.COLUMN_LASTUPDATED, c.getLong(c.getColumnIndex(WifiEntry.COLUMN_LASTUPDATED)));
+                wifiValues.put(WifiEntry.COLUMN_NETMASK, c.getString(c.getColumnIndex(WifiEntry.COLUMN_NETMASK)));
+                wifiValues.put(WifiEntry.COLUMN_BSSID, c.getString(c.getColumnIndex(WifiEntry.COLUMN_BSSID)));
+                wifiValues.put(WifiEntry.COLUMN_RSSI, c.getLong(c.getColumnIndex(WifiEntry.COLUMN_RSSI)));
+                wifiValues.put(WifiEntry.COLUMN_FREQUENCY, c.getLong(c.getColumnIndex(WifiEntry.COLUMN_FREQUENCY)));
+                wifiValues.put(WifiEntry.COLUMN_LINKSPEED, c.getLong(c.getColumnIndex(WifiEntry.COLUMN_LINKSPEED)));
+                wifiValues.put(WifiEntry.COLUMN_NETWORKID, c.getLong(c.getColumnIndex(WifiEntry.COLUMN_NETWORKID)));
+                wifiValues.put(WifiEntry.COLUMN_SERVERADDRESS, c.getString(c.getColumnIndex(WifiEntry.COLUMN_SERVERADDRESS)));
+                wifiValues.put(WifiEntry.COLUMN_DNS1, c.getString(c.getColumnIndex(WifiEntry.COLUMN_DNS1)));
+                wifiValues.put(WifiEntry.COLUMN_DNS2, c.getString(c.getColumnIndex(WifiEntry.COLUMN_DNS2)));
                 wifiList.add(wifiValues);
             } while (c.moveToNext());
         }

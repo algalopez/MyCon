@@ -13,14 +13,14 @@ import com.algalopez.mycon.wifi.data.storage.database.WifiContract.WifiConnectDe
  * DATE:    7/23/17
  */
 
-public class WifiDbHelper extends SQLiteOpenHelper {
+class WifiDbHelper extends SQLiteOpenHelper {
 
 
-    private final static int DATABASE_VERSION = 2;
+    private final static int DATABASE_VERSION = 3;
     private final static String DATABASE_NAME = "wifi.db";
 
 
-    public WifiDbHelper(Context context) {
+    WifiDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -32,7 +32,16 @@ public class WifiDbHelper extends SQLiteOpenHelper {
                 WifiEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 WifiEntry.COLUMN_SSID + " TEXT, " +
                 WifiEntry.COLUMN_PASSWORD + " TEXT, " +
-                WifiEntry.COLUMN_LASTUPDATED + " INTEGER " +
+                WifiEntry.COLUMN_LASTUPDATED + " INTEGER, " +
+                WifiEntry.COLUMN_NETMASK + " TEXT, " +
+                WifiEntry.COLUMN_BSSID + " TEXT, " +
+                WifiEntry.COLUMN_RSSI + " INTEGER, " +
+                WifiEntry.COLUMN_FREQUENCY + " INTEGER, " +
+                WifiEntry.COLUMN_LINKSPEED + " INTEGER, " +
+                WifiEntry.COLUMN_NETWORKID + " INTEGER, " +
+                WifiEntry.COLUMN_SERVERADDRESS + " TEXT, " +
+                WifiEntry.COLUMN_DNS1 + " TEXT, " +
+                WifiEntry.COLUMN_DNS2 + " TEXT " +
                 ");";
 
         final String SQL_CREATE_DEVICE_TABLE = "CREATE TABLE " + DeviceEntry.TABLE_NAME + " (" +

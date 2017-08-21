@@ -23,7 +23,7 @@ import java.util.Date;
 
 public class WifiDbRepo implements IWifiDbRepo {
 
-    private static final String LOGTAG = "WifiDbRepo";
+    //private static final String LOGTAG = "WifiDbRepo";
 
     private IWifiStorage mDatabase;
 
@@ -55,6 +55,16 @@ public class WifiDbRepo implements IWifiDbRepo {
         newEntity.setSSID(values.getAsString(WifiEntry.COLUMN_SSID));
         newEntity.setPassword(values.getAsString(WifiEntry.COLUMN_PASSWORD));
         newEntity.setLastUpdated(new Date(values.getAsLong(WifiEntry.COLUMN_LASTUPDATED)));
+
+        newEntity.setNetmask(values.getAsString(WifiEntry.COLUMN_NETMASK));
+        newEntity.setBSSID(values.getAsString(WifiEntry.COLUMN_BSSID));
+        newEntity.setRSSI(values.getAsInteger(WifiEntry.COLUMN_RSSI));
+        newEntity.setFrequency(values.getAsInteger(WifiEntry.COLUMN_FREQUENCY));
+        newEntity.setLinkSpeed(values.getAsInteger(WifiEntry.COLUMN_LINKSPEED));
+        newEntity.setNetworkID(values.getAsInteger(WifiEntry.COLUMN_NETWORKID));
+        newEntity.setServerAddress(values.getAsString(WifiEntry.COLUMN_SERVERADDRESS));
+        newEntity.setDns1(values.getAsString(WifiEntry.COLUMN_DNS1));
+        newEntity.setDns2(values.getAsString(WifiEntry.COLUMN_DNS2));
 
         return newEntity;
     }
@@ -89,6 +99,16 @@ public class WifiDbRepo implements IWifiDbRepo {
         values.put(WifiEntry.COLUMN_PASSWORD, newWifiEntity.getPassword());
         values.put(WifiEntry.COLUMN_LASTUPDATED, newWifiEntity.getLastUpdated().getTime());
 
+        values.put(WifiEntry.COLUMN_NETMASK, newWifiEntity.getNetmask());
+        values.put(WifiEntry.COLUMN_BSSID, newWifiEntity.getBSSID());
+        values.put(WifiEntry.COLUMN_RSSI, newWifiEntity.getRSSI());
+        values.put(WifiEntry.COLUMN_FREQUENCY, newWifiEntity.getFrequency());
+        values.put(WifiEntry.COLUMN_LINKSPEED, newWifiEntity.getLinkSpeed());
+        values.put(WifiEntry.COLUMN_NETWORKID, newWifiEntity.getNetworkID());
+        values.put(WifiEntry.COLUMN_SERVERADDRESS, newWifiEntity.getServerAddress());
+        values.put(WifiEntry.COLUMN_DNS1, newWifiEntity.getDns1());
+        values.put(WifiEntry.COLUMN_DNS2, newWifiEntity.getDns2());
+
         return mDatabase.updateWifi(values);
     }
 
@@ -107,6 +127,16 @@ public class WifiDbRepo implements IWifiDbRepo {
             wifiEntity.setPassword(values.getAsString(WifiEntry.COLUMN_PASSWORD));
             Date lastUpdate = new Date(values.getAsLong(WifiEntry.COLUMN_LASTUPDATED));
             wifiEntity.setLastUpdated(lastUpdate);
+
+            wifiEntity.setNetmask(values.getAsString(WifiEntry.COLUMN_NETMASK));
+            wifiEntity.setBSSID(values.getAsString(WifiEntry.COLUMN_BSSID));
+            wifiEntity.setRSSI(values.getAsInteger(WifiEntry.COLUMN_RSSI));
+            wifiEntity.setFrequency(values.getAsInteger(WifiEntry.COLUMN_FREQUENCY));
+            wifiEntity.setLinkSpeed(values.getAsInteger(WifiEntry.COLUMN_LINKSPEED));
+            wifiEntity.setNetworkID(values.getAsInteger(WifiEntry.COLUMN_NETWORKID));
+            wifiEntity.setServerAddress(values.getAsString(WifiEntry.COLUMN_SERVERADDRESS));
+            wifiEntity.setDns1(values.getAsString(WifiEntry.COLUMN_DNS1));
+            wifiEntity.setDns2(values.getAsString(WifiEntry.COLUMN_DNS2));
             wifiEntityList.add(wifiEntity);
         }
 
