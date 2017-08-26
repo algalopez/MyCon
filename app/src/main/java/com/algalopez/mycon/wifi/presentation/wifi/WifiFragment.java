@@ -87,14 +87,14 @@ public class WifiFragment extends Fragment implements IWifiView {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        if (id == R.id.action_update) {
-            if (mPresenter!= null) {
-
-                mPresenter.updateWifi();
-
-            }
-            return true;
-        }
+//        if (id == R.id.action_update) {
+//            if (mPresenter!= null) {
+//
+//                mPresenter.updateWifi();
+//
+//            }
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }

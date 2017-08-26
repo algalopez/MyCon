@@ -1,16 +1,20 @@
 package com.algalopez.mycon.wifi.presentation.wifi;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.algalopez.mycon.R;
+import com.algalopez.mycon.about.AboutActivity;
 import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
 import com.algalopez.mycon.wifi.domain.model.WifiEntity;
+import com.algalopez.mycon.wifi.presentation.allwifi.AllWifiActivity;
 import com.algalopez.mycon.wifi.presentation.detailwifi.DetailWifiActivity;
 
 public class WifiActivity extends AppCompatActivity implements WifiFragment.OnFragmentInteractionListener {
@@ -37,13 +41,18 @@ public class WifiActivity extends AppCompatActivity implements WifiFragment.OnFr
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_about) {
+
+            Intent intentAbout = new Intent(this, AboutActivity.class);
+            startActivity(intentAbout);
+            return true;
+        } else if (id == R.id.action_record) {
+
+            Intent intentRecord = new Intent(this, AllWifiActivity.class);
+            startActivity(intentRecord);
             return true;
         }
 

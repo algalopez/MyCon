@@ -62,6 +62,7 @@ public class AllWifiResponse extends BaseResponse {
 
     @Override
     public String storeInString() {
+
         return null;
     }
 

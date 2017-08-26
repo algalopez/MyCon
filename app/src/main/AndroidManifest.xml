@@ -23,8 +23,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".wifi.presentation.detailwifi.DetailWifiActivity" />
-        <activity android:name=".wifi.presentation.allwifi.AllWifiActivity" />
-        <activity android:name=".wifi.presentation.detaildevice.DetailDeviceActivity"></activity>
+        <activity
+            android:name=".wifi.presentation.allwifi.AllWifiActivity"
+            android:parentActivityName=".wifi.presentation.wifi.WifiActivity" />
+        <activity android:name=".wifi.presentation.detaildevice.DetailDeviceActivity" />
+        <activity android:name=".about.AboutActivity"
+            android:parentActivityName=".wifi.presentation.wifi.WifiActivity" />
     </application>
 
 </manifest>
