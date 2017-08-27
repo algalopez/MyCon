@@ -135,7 +135,37 @@ public class WifiFragment extends Fragment implements IWifiView {
      * *********************************************************************************************
      */
 
+    private ImageButton.OnClickListener getOnRefreshListener(){
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(LOGTAG, "Refresh clicked");
+            }
+        };
+    }
 
+
+    private OnClickWifiListener getOnWifiDetailListener(WifiEntity wifiEntity){
+        return new OnClickWifiListener(wifiEntity) {
+            @Override
+            public void onClick(View view) {
+                Log.d(LOGTAG, "Wifi clicked (new)");
+                mFragmentListener.onWifiSelected(this.mWifiEntity);
+            }
+        };
+    }
+
+
+    private WifiAdapter.RecyclerListener getOnDeviceDetailListener() {
+
+        return new WifiAdapter.RecyclerListener() {
+            @Override
+            public void OnItemClickListener(DeviceEntity deviceEntity) {
+                Log.d(LOGTAG, "Item with id " + deviceEntity.getID() + " clicked");
+                mFragmentListener.onDeviceSelected(deviceEntity);
+            }
+        };
+    }
 
     /* *********************************************************************************************
      * VIEW INTERFACE
@@ -159,15 +189,7 @@ public class WifiFragment extends Fragment implements IWifiView {
     public void showConnectedDevices(ArrayList<DeviceEntity> connectedDevices) {
 
         // Set ietm listeners
-        WifiAdapter.RecyclerListener onItemClickListener = new WifiAdapter.RecyclerListener() {
-
-            @Override
-            public void OnItemClickListener(DeviceEntity deviceEntity) {
-                Log.d(LOGTAG, "Item with id " + deviceEntity.getID() + " clicked");
-
-            }
-        };
-        WifiAdapter connectedDevicesAdapter = new WifiAdapter(connectedDevices, onItemClickListener);
+        WifiAdapter connectedDevicesAdapter = new WifiAdapter(connectedDevices, getOnDeviceDetailListener());
 
         RecyclerView connectedDevicesList = (RecyclerView) mRootView.findViewById(R.id.wifi_connected_devices_rv);
         connectedDevicesList.setAdapter(connectedDevicesAdapter);
@@ -182,24 +204,10 @@ public class WifiFragment extends Fragment implements IWifiView {
         wifiSSID.setText(wifiEntity.getSSID());
 
         // Set listener to wifi details
-        OnClickWifiListener onClickWifiListener = new OnClickWifiListener(wifiEntity) {
-            @Override
-            public void onClick(View view) {
-                Log.d(LOGTAG, "Wifi clicked (new)");
-                mFragmentListener.onWifiSelected(this.mWifiEntity);
-            }
-        };
-        mRootView.findViewById(R.id.fragment_wifi_details_ib).setOnClickListener(onClickWifiListener);
+        mRootView.findViewById(R.id.fragment_wifi_details_ib).setOnClickListener(getOnWifiDetailListener(wifiEntity));
 
         // Set listener to update button
-        ImageButton.OnClickListener onRefreshListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(LOGTAG, "Refresh clicked");
-            }
-        };
-        mRootView.findViewById(R.id.fragment_wifi_refresh_ib).setOnClickListener(onRefreshListener);
-
+        mRootView.findViewById(R.id.fragment_wifi_refresh_ib).setOnClickListener(getOnRefreshListener());
     }
 
 
