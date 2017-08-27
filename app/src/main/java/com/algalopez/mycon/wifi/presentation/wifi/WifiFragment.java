@@ -1,16 +1,15 @@
 package com.algalopez.mycon.wifi.presentation.wifi;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.algalopez.mycon.R;
@@ -21,7 +20,6 @@ import com.algalopez.mycon.wifi.data.WifiDbRepo;
 import com.algalopez.mycon.wifi.data.WifiManagerRepo;
 import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
 import com.algalopez.mycon.wifi.domain.model.WifiEntity;
-import com.algalopez.mycon.wifi.presentation.detailwifi.DetailWifiActivity;
 
 import java.util.ArrayList;
 
@@ -77,26 +75,12 @@ public class WifiFragment extends Fragment implements IWifiView {
         mWifiManagerRepo = new WifiManagerRepo(getContext());
         mPresenter = new WifiPresenter(mExecutor, mWifiDbRepo, mWifiManagerRepo);
 
-        setHasOptionsMenu(true);
+//        ImageButton refreshButton = (ImageButton) mRootView.findViewById(R.id.fragment_wifi_refresh_ib);
+//        refreshButton.setOnClickListener(onRefreshListener);
+//        ImageButton wifiDetailsButton = (ImageButton) mRootView.findViewById(R.id.fragment_wifi_details_ib);
+//        wifiDetailsButton.setOnClickListener(onWifiClickListener);
 
         return mRootView;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-//        if (id == R.id.action_update) {
-//            if (mPresenter!= null) {
-//
-//                mPresenter.updateWifi();
-//
-//            }
-//            return true;
-//        }
-
-        return super.onOptionsItemSelected(item);
     }
 
 
@@ -123,6 +107,7 @@ public class WifiFragment extends Fragment implements IWifiView {
         mPresenter.detachView();
     }
 
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -135,6 +120,7 @@ public class WifiFragment extends Fragment implements IWifiView {
         }
 
     }
+
 
     @Override
     public void onDetach() {
@@ -149,25 +135,6 @@ public class WifiFragment extends Fragment implements IWifiView {
      * *********************************************************************************************
      */
 
-
-    View.OnClickListener onWifiClickListener = new View.OnClickListener() {
-
-        @Override
-        public void onClick(View view) {
-            Log.d(LOGTAG, "Wifi clicked");
-            mFragmentListener.onWifiSelected(null);
-        }
-    };
-
-
-    WifiAdapter.RecyclerListener onItemClickListener = new WifiAdapter.RecyclerListener() {
-
-        @Override
-        public void OnItemClickListener(DeviceEntity deviceEntity) {
-            Log.d(LOGTAG, "Item with id " + deviceEntity.getID() + " clicked");
-
-        }
-    };
 
 
     /* *********************************************************************************************
@@ -191,6 +158,15 @@ public class WifiFragment extends Fragment implements IWifiView {
     @Override
     public void showConnectedDevices(ArrayList<DeviceEntity> connectedDevices) {
 
+        // Set ietm listeners
+        WifiAdapter.RecyclerListener onItemClickListener = new WifiAdapter.RecyclerListener() {
+
+            @Override
+            public void OnItemClickListener(DeviceEntity deviceEntity) {
+                Log.d(LOGTAG, "Item with id " + deviceEntity.getID() + " clicked");
+
+            }
+        };
         WifiAdapter connectedDevicesAdapter = new WifiAdapter(connectedDevices, onItemClickListener);
 
         RecyclerView connectedDevicesList = (RecyclerView) mRootView.findViewById(R.id.wifi_connected_devices_rv);
@@ -205,7 +181,25 @@ public class WifiFragment extends Fragment implements IWifiView {
         TextView wifiSSID = (TextView) mRootView.findViewById(R.id.fragment_wifi_ssid_tv);
         wifiSSID.setText(wifiEntity.getSSID());
 
-        wifiSSID.setOnClickListener(onWifiClickListener);
+        // Set listener to wifi details
+        OnClickWifiListener onClickWifiListener = new OnClickWifiListener(wifiEntity) {
+            @Override
+            public void onClick(View view) {
+                Log.d(LOGTAG, "Wifi clicked (new)");
+                mFragmentListener.onWifiSelected(this.mWifiEntity);
+            }
+        };
+        mRootView.findViewById(R.id.fragment_wifi_details_ib).setOnClickListener(onClickWifiListener);
+
+        // Set listener to update button
+        ImageButton.OnClickListener onRefreshListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(LOGTAG, "Refresh clicked");
+            }
+        };
+        mRootView.findViewById(R.id.fragment_wifi_refresh_ib).setOnClickListener(onRefreshListener);
+
     }
 
 
@@ -217,12 +211,27 @@ public class WifiFragment extends Fragment implements IWifiView {
 
     interface OnFragmentInteractionListener {
 
-
         void onWifiSelected(WifiEntity wifiEntity);
 
         void onDeviceSelected(DeviceEntity deviceEntity);
+    }
 
 
+    /* *********************************************************************************************
+     * OTHERS
+     * *********************************************************************************************
+     */
+
+
+    private abstract class OnClickWifiListener implements ImageButton.OnClickListener{
+
+        protected WifiEntity mWifiEntity;
+
+        private OnClickWifiListener(WifiEntity wifiEntity){
+            this.mWifiEntity = wifiEntity;
+        }
+
+        abstract public void onClick(View view);
     }
 }
 

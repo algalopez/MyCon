@@ -18,5 +18,10 @@ public class WifiUtils {
     }
 
 
+    public static String removeDoubleQuotes(String s){
+        s = s.replaceFirst("^\"", ""); // ^ Beginning of the line
+        s = s.replaceFirst("\"$", ""); // $ End of the line
+        return s;
+    }
 
 }

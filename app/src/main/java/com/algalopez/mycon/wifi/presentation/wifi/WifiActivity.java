@@ -16,6 +16,7 @@ import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
 import com.algalopez.mycon.wifi.domain.model.WifiEntity;
 import com.algalopez.mycon.wifi.presentation.allwifi.AllWifiActivity;
 import com.algalopez.mycon.wifi.presentation.detailwifi.DetailWifiActivity;
+import com.algalopez.mycon.wifi.presentation.detailwifi.DetailWifiFragment;
 
 public class WifiActivity extends AppCompatActivity implements WifiFragment.OnFragmentInteractionListener {
 
@@ -72,6 +73,7 @@ public class WifiActivity extends AppCompatActivity implements WifiFragment.OnFr
         Log.d(LOGTAG, "onWifiSelected ");
 
         Intent intent = new Intent(this, DetailWifiActivity.class);
+        intent.putExtra(DetailWifiFragment.ARG_WIFIID, wifiEntity.getID());
         startActivity(intent);
     }
 

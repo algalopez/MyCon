@@ -7,6 +7,7 @@ import com.algalopez.mycon.wifi.data.manager.IWifiManager;
 import com.algalopez.mycon.wifi.data.manager.WifiManager;
 import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
 import com.algalopez.mycon.wifi.domain.model.WifiEntity;
+import com.algalopez.mycon.wifi.domain.utils.WifiUtils;
 
 import java.net.InetAddress;
 import java.util.Date;
@@ -44,7 +45,7 @@ public class WifiManagerRepo implements IWifiManagerRepo {
 
         WifiEntity wifiEntity = new WifiEntity();
 
-        wifiEntity.setSSID(mWifiManager.getSSID());
+        wifiEntity.setSSID(WifiUtils.removeDoubleQuotes(mWifiManager.getSSID()));
         wifiEntity.setLastUpdated(new Date());
 
         wifiEntity.setNetmask(mWifiManager.getNetmask());

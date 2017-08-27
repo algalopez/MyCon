@@ -6,6 +6,7 @@ import com.algalopez.mycon.common.BaseActor;
 import com.algalopez.mycon.common.Executor;
 import com.algalopez.mycon.wifi.data.IWifiDbRepo;
 import com.algalopez.mycon.wifi.domain.interactor.GetCurrentWifiActor;
+import com.algalopez.mycon.wifi.domain.model.WifiEntity;
 import com.algalopez.mycon.wifi.domain.response.WifiResponse;
 
 /**
@@ -21,9 +22,11 @@ public class DetailWifiPresenter {
     private Executor mExecutor;
     private IWifiDbRepo mWifiDbRepo;
 
-    IDetailWifiView mView;
+    private IDetailWifiView mView;
 
-    Long mWifiID;
+    private Long mWifiID;
+
+
 
     private GetCurrentWifiActor mGetWifiActor;
     private WifiResponse mWifiResponse;
@@ -63,8 +66,12 @@ public class DetailWifiPresenter {
      */
 
 
-    private void getDetailWifi(){
+    void getDetailWifi(){
+        //if (mGetWifiActor)
 
+        WifiEntity wifiEntity = new WifiEntity();
+        wifiEntity.setSSID("TESTING");
+        mView.showWifiInfo(wifiEntity);
     }
 
 
@@ -81,7 +88,10 @@ public class DetailWifiPresenter {
         public void onSuccess(String actorName, WifiResponse data) {
 
             Log.d(LOGTAG, "onSuccess: " + actorName);
+            mWifiResponse = data;
+            mView.showWifiInfo(mWifiResponse.getWifiInformation());
         }
+
 
         @Override
         public void onError(String actorName, WifiResponse data) {
@@ -89,10 +99,13 @@ public class DetailWifiPresenter {
             Log.d(LOGTAG, "onDataChanged: " + actorName + " [progress: " + data.getProgress() + "]");
         }
 
+
         @Override
         public void onDataChanged(String actorName, WifiResponse data) {
+
             Log.d(LOGTAG, "onError: " + actorName);
         }
+
     };
 
 

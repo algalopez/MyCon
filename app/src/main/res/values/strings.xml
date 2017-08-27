@@ -33,6 +33,13 @@
     <string name="wifi_update_message">Update</string>
 
 
+    <!-- ABOUT -->
+    <string name="about_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis fermentum id mi fermentum laoreet. Mauris eu purus vel mi elementum elementum ac vel ipsum. Nulla quis rutrum tellus.</string>
+    <string name="about_social">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
+    <string name="about_paypal">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
+
+
+    <!-- GENERIC -->
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>

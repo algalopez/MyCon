@@ -1,5 +1,6 @@
 package com.algalopez.mycon.wifi.presentation.detailwifi;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.algalopez.mycon.R;
+import com.algalopez.mycon.about.AboutActivity;
+import com.algalopez.mycon.wifi.presentation.allwifi.AllWifiActivity;
 
 public class DetailWifiActivity extends AppCompatActivity{
 
@@ -32,15 +35,18 @@ public class DetailWifiActivity extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_about) {
+
+            Intent intentAbout = new Intent(this, AboutActivity.class);
+            startActivity(intentAbout);
             return true;
         } else if (id == R.id.action_record) {
+
+            Intent intentRecord = new Intent(this, AllWifiActivity.class);
+            startActivity(intentRecord);
             return true;
         }
 

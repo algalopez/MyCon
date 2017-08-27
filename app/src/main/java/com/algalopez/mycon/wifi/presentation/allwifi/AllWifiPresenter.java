@@ -8,10 +8,12 @@ import com.algalopez.mycon.wifi.data.IWifiDbRepo;
 import com.algalopez.mycon.wifi.domain.interactor.GetAllWifiActor;
 import com.algalopez.mycon.wifi.domain.response.AllWifiResponse;
 
+
 /**
  * AUTHOR:  Alvaro Garcia Lopez (algalopez)
  * DATE:    8/12/17
  */
+
 
 class AllWifiPresenter {
 

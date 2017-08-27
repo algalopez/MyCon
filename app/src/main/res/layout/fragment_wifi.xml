@@ -10,8 +10,8 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/listPreferredItemHeight"
-        android:background="@color/light_blue_200"
+        android:layout_height="wrap_content"
+        android:background="@color/light_blue_500"
         android:padding="@dimen/fragment_margin">
 
         <TextView
@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/wifi_ssid"
-            android:textColor="@color/light_blue_900"
+            android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -29,15 +29,53 @@
             android:id="@+id/fragment_wifi_lastupdated_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:text="@string/wifi_lastupdate"
-            android:textColor="@color/light_blue_900"
+            android:textColor="@android:color/white"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_wifi_ssid_tv" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_wifi_ssid_tv" />
+
+        <ImageButton
+            android:id="@+id/fragment_wifi_refresh_ib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/image_description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_refresh_white_24dp" />
+
+        <ImageButton
+            android:id="@+id/fragment_wifi_details_ib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/image_description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/fragment_wifi_refresh_ib"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_visibility_white_24dp" />
+
+
 
     </android.support.constraint.ConstraintLayout>
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:progress="50"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/wifi_connected_devices_rv"
