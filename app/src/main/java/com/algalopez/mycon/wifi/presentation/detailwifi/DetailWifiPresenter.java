@@ -6,6 +6,7 @@ import com.algalopez.mycon.common.BaseActor;
 import com.algalopez.mycon.common.Executor;
 import com.algalopez.mycon.wifi.data.IWifiDbRepo;
 import com.algalopez.mycon.wifi.domain.interactor.GetCurrentWifiActor;
+import com.algalopez.mycon.wifi.domain.interactor.GetSpecificWifiActor;
 import com.algalopez.mycon.wifi.domain.model.WifiEntity;
 import com.algalopez.mycon.wifi.domain.response.WifiResponse;
 
@@ -28,7 +29,7 @@ public class DetailWifiPresenter {
 
 
 
-    private GetCurrentWifiActor mGetWifiActor;
+    private GetSpecificWifiActor mGetSpecificWifiActor;
     private WifiResponse mWifiResponse;
 
 
@@ -41,12 +42,14 @@ public class DetailWifiPresenter {
 
 
     void attachView(IDetailWifiView view){
+
         this.mView = view;
     }
 
 
     void detachView(){
 
+        this.mView = null;
     }
 
 
@@ -67,11 +70,21 @@ public class DetailWifiPresenter {
 
 
     void getDetailWifi(){
-        //if (mGetWifiActor)
 
-        WifiEntity wifiEntity = new WifiEntity();
-        wifiEntity.setSSID("TESTING");
-        mView.showWifiInfo(wifiEntity);
+        if (mGetSpecificWifiActor == null){
+            mGetSpecificWifiActor = new GetSpecificWifiActor(mWifiID, mExecutor, mWifiDbRepo);
+        }
+
+        if (mGetSpecificWifiActor.isRunning()){
+            mView.showError("asdasd");
+            return;
+        }
+
+        Log.d(LOGTAG, "Executing");
+        // Subscribe and execute
+        mGetSpecificWifiActor.subscribe(getClass().getSimpleName(), wifiResponseCallback);
+        mExecutor.executeInSingleThread(mGetSpecificWifiActor);
+
     }
 
 
