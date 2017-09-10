@@ -15,6 +15,8 @@ import com.algalopez.mycon.about.AboutActivity;
 import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
 import com.algalopez.mycon.wifi.domain.model.WifiEntity;
 import com.algalopez.mycon.wifi.presentation.allwifi.AllWifiActivity;
+import com.algalopez.mycon.wifi.presentation.detaildevice.DetailDeviceActivity;
+import com.algalopez.mycon.wifi.presentation.detaildevice.DetailDeviceFragment;
 import com.algalopez.mycon.wifi.presentation.detailwifi.DetailWifiActivity;
 import com.algalopez.mycon.wifi.presentation.detailwifi.DetailWifiFragment;
 
@@ -82,5 +84,9 @@ public class WifiActivity extends AppCompatActivity implements WifiFragment.OnFr
     public void onDeviceSelected(DeviceEntity deviceEntity) {
 
         Log.d(LOGTAG, "onDeviceSelected ");
+
+        Intent intent = new Intent(this, DetailDeviceActivity.class);
+        intent.putExtra(DetailDeviceFragment.ARG_DEVICEID, deviceEntity.getID());
+        startActivity(intent);
     }
 }

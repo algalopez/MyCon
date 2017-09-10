@@ -3,19 +3,36 @@ package com.algalopez.mycon.wifi.presentation.detaildevice;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.algalopez.mycon.R;
+import com.algalopez.mycon.common.Executor;
+import com.algalopez.mycon.wifi.data.IWifiDbRepo;
+import com.algalopez.mycon.wifi.data.WifiDbRepo;
 import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
 
 
 public class DetailDeviceFragment extends Fragment implements IDetailDeviceView {
 
 
+    private static final String LOGTAG = "DetailDeviceFragment";
+
     private View mRootView;
+
+    public static final String ARG_DEVICEID = "deviceID";
+
+    private Long mDeviceID;
+
+    private DetailDevicePresenter mPresenter;
+
+    private IWifiDbRepo mWifiDbRepo;
+
+    private Executor mExecutor;
 
 
     /* *********************************************************************************************
@@ -23,8 +40,6 @@ public class DetailDeviceFragment extends Fragment implements IDetailDeviceView 
      * *********************************************************************************************
      */
 
-    private static final String ARG_DEVICEID = "deviceID";
-    private Long mDeviceID;
 
     public DetailDeviceFragment() { }
 
@@ -51,8 +66,18 @@ public class DetailDeviceFragment extends Fragment implements IDetailDeviceView 
 
         if (getArguments() != null) {
             mDeviceID = getArguments().getLong(ARG_DEVICEID);
+        } else {
+
+            Bundle bundle = getActivity().getIntent().getExtras();
+            if (bundle != null) {
+
+                mDeviceID = bundle.getLong(ARG_DEVICEID);
+            }
         }
+
+        Log.d(LOGTAG, "Device ID is " + mDeviceID);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,16 +85,27 @@ public class DetailDeviceFragment extends Fragment implements IDetailDeviceView 
 
         mRootView = inflater.inflate(R.layout.fragment_detail_device, container, false);
 
-        setHasOptionsMenu(true);
+        mExecutor = new Executor();
+        mWifiDbRepo = new WifiDbRepo(getContext());
+        mPresenter = new DetailDevicePresenter(mDeviceID, mExecutor, mWifiDbRepo);
 
         return mRootView;
     }
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public void onResume() {
+        super.onResume();
 
-        return super.onOptionsItemSelected(item);
+        mPresenter.attachView(this);
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        mPresenter.detachView();
     }
 
 
@@ -102,6 +138,23 @@ public class DetailDeviceFragment extends Fragment implements IDetailDeviceView 
     @Override
     public void showDeviceInfo(DeviceEntity deviceEntity) {
 
+        Log.d(LOGTAG, "Showing info");
+
+        // IP
+        TextView dev_ip = (TextView) mRootView.findViewById(R.id.detail_device_ip_res_tv);
+        dev_ip.setText(deviceEntity.getIP());
+
+        // NAME
+        TextView dev_name = (TextView) mRootView.findViewById(R.id.detail_device_name_res_tv);
+        dev_name.setText(deviceEntity.getName());
+
+        // BRAND
+        TextView dev_brand = (TextView) mRootView.findViewById(R.id.detail_device_brand_res_tv);
+        dev_brand.setText(deviceEntity.getBrand());
+
+        // MAC
+        TextView dev_mac = (TextView) mRootView.findViewById(R.id.detail_device_mac_res_tv);
+        dev_mac.setText(deviceEntity.getMAC());
     }
 
 

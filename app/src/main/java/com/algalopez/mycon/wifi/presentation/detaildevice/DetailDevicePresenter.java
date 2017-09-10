@@ -1,31 +1,50 @@
 package com.algalopez.mycon.wifi.presentation.detaildevice;
 
+import android.util.Log;
+
+import com.algalopez.mycon.common.BaseActor;
 import com.algalopez.mycon.common.Executor;
 import com.algalopez.mycon.wifi.data.IWifiDbRepo;
-import com.algalopez.mycon.wifi.presentation.detailwifi.DetailWifiPresenter;
+import com.algalopez.mycon.wifi.domain.interactor.GetDeviceActor;
+import com.algalopez.mycon.wifi.domain.response.DeviceResponse;
+
 
 /**
  * AUTHOR:  Alvaro Garcia Lopez (algalopez)
  * DATE:    8/12/17
  */
 
-public class DetailDevicePresenter {
 
+class DetailDevicePresenter {
+
+    private static final String LOGTAG = "DetailDevicePresenter";
 
     private IDetailDeviceView mView;
     private Executor mExecutor;
+
     private IWifiDbRepo mWifiDbRepo;
 
-    DetailDevicePresenter(Executor executor, IWifiDbRepo wifiDbRepo){
+    private Long mDeviceID;
+
+    private GetDeviceActor mGetDeviceActor;
+
+    private DeviceResponse mDeviceResponse;
+
+
+    DetailDevicePresenter(Long deviceID, Executor executor, IWifiDbRepo wifiDbRepo){
 
         this.mExecutor = executor;
         this.mWifiDbRepo = wifiDbRepo;
+        this.mDeviceID = deviceID;
     }
 
 
     void attachView(IDetailDeviceView view){
 
         this.mView = view;
+        if (mDeviceResponse == null) {
+            getDevice();
+        }
     }
 
 
@@ -37,12 +56,13 @@ public class DetailDevicePresenter {
 
     String getState(){
 
-        return "";
+        return mDeviceResponse.storeInString();
     }
 
 
     void setState(String state){
 
+        mDeviceResponse.restoreFromString(state);
     }
 
 
@@ -52,6 +72,24 @@ public class DetailDevicePresenter {
      */
 
 
+    private void getDevice(){
+
+        if (mGetDeviceActor == null) {
+            mGetDeviceActor = new GetDeviceActor(mDeviceID, mExecutor, mWifiDbRepo);
+        }
+
+        if (mGetDeviceActor.isRunning()){
+            Log.d(LOGTAG, "GetDeviceActor is already running");
+            mView.showError("Already running");
+            return;
+        }
+
+
+        // Subscribe and execute interactor
+        mGetDeviceActor.subscribe(getClass().getSimpleName(), deviceResponseCallback);
+        mExecutor.executeInSingleThread(mGetDeviceActor);
+    }
+
 
     /* *********************************************************************************************
      * VIEW ACTIONS
@@ -60,10 +98,38 @@ public class DetailDevicePresenter {
 
 
 
+
     /* *********************************************************************************************
      * CALLBACKS
      * *********************************************************************************************
      */
+
+
+    private BaseActor.BaseCallback<DeviceResponse> deviceResponseCallback = new BaseActor.BaseCallback<DeviceResponse>() {
+
+
+        @Override
+        public void onSuccess(String actorName, DeviceResponse data) {
+            Log.d(LOGTAG, "onSuccess: " + actorName);
+
+            mDeviceResponse = data;
+            mView.showDeviceInfo(data.getDeviceInformation());
+        }
+
+
+        @Override
+        public void onError(String actorName, DeviceResponse data) {
+            Log.d(LOGTAG, "onError: " + actorName);
+
+        }
+
+
+        @Override
+        public void onDataChanged(String actorName, DeviceResponse data) {
+            Log.d(LOGTAG, "onDataChanged: " + actorName + " [progress: " + data.getProgress() + "]");
+
+        }
+    };
 
 
 }
