@@ -64,6 +64,8 @@ public class GetCurrentWifiActor extends BaseActor<WifiResponse> {
         Long wifiID = mWifiDbRepo.getWifiIDBySSID(wifiEntity.getSSID());
         Log.d(LOGTAG, "wifiID is " + wifiID);
 
+        Log.d(LOGTAG, "[netmask:"+ wifiEntity.getNetmask() +", serverAddress:"+ wifiEntity.getServerAddress() +"]");
+
         // If wifi doesn't exist in database, then add it
         if (wifiID < 0) {
             mWifiDbRepo.storeWifi(wifiEntity);

@@ -134,14 +134,24 @@ public class WifiManager implements IWifiManager{
     @Override
     public String getNetmask(){
 
-        return String.valueOf(mDhcpInfo.netmask);
+        int mask = mDhcpInfo.netmask;
+        return String.format(Locale.UK, "%d.%d.%d.%d",
+                (mask & 0xff),
+                (mask >> 8 & 0xff),
+                (mask >> 16 & 0xff),
+                (mask >> 24 & 0xff));
     }
 
 
     @Override
     public String getServerAddress(){
 
-        return "";
+        int sa = mDhcpInfo.serverAddress;
+        return String.format(Locale.UK, "%d.%d.%d.%d",
+                (sa & 0xff),
+                (sa >> 8 & 0xff),
+                (sa >> 16 & 0xff),
+                (sa >> 24 & 0xff));
     }
 
 
