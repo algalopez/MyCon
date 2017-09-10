@@ -1,8 +1,11 @@
 package com.algalopez.mycon.wifi.presentation.wifi;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -38,12 +41,13 @@ public class WifiFragment extends Fragment implements IWifiView {
     // Stored data
     private IWifiDbRepo mWifiDbRepo;
 
-    // new data
+    // New data
     private IWifiManagerRepo mWifiManagerRepo;
 
     // Executor
     Executor mExecutor;
 
+    // Activity callbacks
     OnFragmentInteractionListener mFragmentListener;
 
 
@@ -75,10 +79,11 @@ public class WifiFragment extends Fragment implements IWifiView {
         mWifiManagerRepo = new WifiManagerRepo(getContext());
         mPresenter = new WifiPresenter(mExecutor, mWifiDbRepo, mWifiManagerRepo);
 
-//        ImageButton refreshButton = (ImageButton) mRootView.findViewById(R.id.fragment_wifi_refresh_ib);
-//        refreshButton.setOnClickListener(onRefreshListener);
-//        ImageButton wifiDetailsButton = (ImageButton) mRootView.findViewById(R.id.fragment_wifi_details_ib);
-//        wifiDetailsButton.setOnClickListener(onWifiClickListener);
+
+        WifiAdapter connectedDevicesAdapter = new WifiAdapter(null, null);
+
+        RecyclerView connectedDevicesList = (RecyclerView) mRootView.findViewById(R.id.wifi_connected_devices_rv);
+        connectedDevicesList.setAdapter(connectedDevicesAdapter);
 
         return mRootView;
     }
@@ -88,7 +93,6 @@ public class WifiFragment extends Fragment implements IWifiView {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        //outState.putString(SAVEDINSTANCE_KEY, mPresenter.getState());
     }
 
 
@@ -140,6 +144,14 @@ public class WifiFragment extends Fragment implements IWifiView {
             @Override
             public void onClick(View view) {
                 Log.d(LOGTAG, "Refresh clicked");
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle(getContext().getResources().getString(R.string.dialog_update_title));
+                builder.setMessage(getResources().getString(R.string.dialog_update_message));
+                builder.setPositiveButton(getResources().getText(R.string.ok), getOnRefreshOkListener());
+                builder.setNegativeButton(getResources().getString(R.string.cancel), null);
+                Dialog dialog = builder.create();
+                dialog.show();
             }
         };
     }
@@ -156,6 +168,7 @@ public class WifiFragment extends Fragment implements IWifiView {
     }
 
 
+    //
     private WifiAdapter.RecyclerListener getOnDeviceDetailListener() {
 
         return new WifiAdapter.RecyclerListener() {
@@ -166,6 +179,19 @@ public class WifiFragment extends Fragment implements IWifiView {
             }
         };
     }
+
+
+    // Clicked OK in refresh dialog
+    private DialogInterface.OnClickListener getOnRefreshOkListener() {
+
+        return new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                mPresenter.updateWifi();
+            }
+        };
+    }
+
 
     /* *********************************************************************************************
      * VIEW INTERFACE
@@ -188,7 +214,7 @@ public class WifiFragment extends Fragment implements IWifiView {
     @Override
     public void showConnectedDevices(ArrayList<DeviceEntity> connectedDevices) {
 
-        // Set ietm listeners
+        // Set item listeners
         WifiAdapter connectedDevicesAdapter = new WifiAdapter(connectedDevices, getOnDeviceDetailListener());
 
         RecyclerView connectedDevicesList = (RecyclerView) mRootView.findViewById(R.id.wifi_connected_devices_rv);
@@ -236,11 +262,18 @@ public class WifiFragment extends Fragment implements IWifiView {
         protected WifiEntity mWifiEntity;
 
         private OnClickWifiListener(WifiEntity wifiEntity){
+
             this.mWifiEntity = wifiEntity;
         }
 
         abstract public void onClick(View view);
     }
+
+
+
+
+
+
 }
 
 

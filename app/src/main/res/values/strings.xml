@@ -33,6 +33,11 @@
     <string name="wifi_update_message">Update</string>
 
 
+    <!-- DIALOGS -->
+    <string name="dialog_update_title">Update</string>
+    <string name="dialog_update_message">Update connected devices</string>
+
+
     <!-- ABOUT -->
     <string name="about_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis fermentum id mi fermentum laoreet. Mauris eu purus vel mi elementum elementum ac vel ipsum. Nulla quis rutrum tellus.</string>
     <string name="about_social">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>

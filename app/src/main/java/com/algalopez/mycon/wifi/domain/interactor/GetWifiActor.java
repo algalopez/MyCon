@@ -21,7 +21,7 @@ public class GetWifiActor extends BaseActor<WifiResponse> {
 
     private final String mActorName;
     private IWifiDbRepo mWifiDbRepo;
-    private WifiResponse mData;
+    //private WifiResponse mData;
     private Long mWifiID;
 
 

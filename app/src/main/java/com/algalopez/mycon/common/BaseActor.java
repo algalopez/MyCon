@@ -12,11 +12,19 @@ public abstract class BaseActor<R> implements Runnable{
 
     private HashMap<String, BaseCallback<R>> bSubscriptions;
     private Executor mExecutor;
+    protected R mData;
 
     private boolean mRunning = false;
 
     public BaseActor(Executor executor) {
+
         this.mExecutor = executor;
+    }
+
+
+    public void setResponse(R data) {
+
+        this.mData = data;
     }
 
 
