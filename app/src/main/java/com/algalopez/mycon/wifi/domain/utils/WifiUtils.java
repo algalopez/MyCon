@@ -1,6 +1,9 @@
 package com.algalopez.mycon.wifi.domain.utils;
 
+import android.util.Log;
+
 import com.algalopez.mycon.wifi.domain.model.WifiEntity;
+
 
 /**
  * AUTHOR:  Alvaro Garcia Lopez (algalopez)
@@ -24,4 +27,17 @@ public class WifiUtils {
         return s;
     }
 
+
+    public static String getNetworkPrefix(WifiEntity wifiEntity){
+
+        String sa = wifiEntity.getServerAddress();
+        String[] parts = sa.split("\\.");
+
+        if (parts.length != 4){
+
+            return "";
+        }
+
+        return parts[0] + "." + parts[1] + "." + parts[2] + ".";
+    }
 }

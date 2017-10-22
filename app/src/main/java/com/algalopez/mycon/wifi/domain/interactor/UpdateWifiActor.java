@@ -77,13 +77,22 @@ public class UpdateWifiActor extends BaseActor<WifiResponse> {
             mWifiDbRepo.updateWifi(wifiEntity);
         }
 
+        // Get network prefix
+        String prefix = WifiUtils.getNetworkPrefix(wifiEntity);
+        if (prefix.equals("")){
+            mData.setState(WifiResponse.ERROR_INVALID_WIFI);
+            notifyError(mActorName, mData);
+            setRunning(false);
+            return;
+        }
+
+
         // Look for connected devices
-        String prefixIPStr = "192.168.1.";
         DeviceEntity deviceEntity;
         for (int j = 1; j < 30; j++) {
-            mData.setProgress(j*100/255);
+            mData.setProgress(j*100/30);
             notifyDataChange(mActorName, mData);
-            deviceEntity = mWifiManagerRepo.getDevice(prefixIPStr + j);
+            deviceEntity = mWifiManagerRepo.getDevice(prefix + j);
             if (deviceEntity != null){
                 mData.addConnectedDevice(deviceEntity);
             }
