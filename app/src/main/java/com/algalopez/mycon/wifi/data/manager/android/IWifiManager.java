@@ -1,4 +1,4 @@
-package com.algalopez.mycon.wifi.data.manager;
+package com.algalopez.mycon.wifi.data.manager.android;
 
 import java.net.InetAddress;
 

@@ -1,26 +1,26 @@
-package com.algalopez.mycon.wifi.data.storage.database;
+package com.algalopez.mycon.wifi.data.storage.database.helper;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.algalopez.mycon.wifi.data.storage.database.WifiContract.WifiEntry;
-import com.algalopez.mycon.wifi.data.storage.database.WifiContract.DeviceEntry;
-import com.algalopez.mycon.wifi.data.storage.database.WifiContract.WifiConnectDeviceEntry;
+import com.algalopez.mycon.wifi.data.storage.database.contract.WifiContract.WifiEntry;
+import com.algalopez.mycon.wifi.data.storage.database.contract.WifiContract.DeviceEntry;
+import com.algalopez.mycon.wifi.data.storage.database.contract.WifiContract.WifiConnectDeviceEntry;
 
 /**
  * AUTHOR:  Alvaro Garcia Lopez (algalopez)
  * DATE:    7/23/17
  */
 
-class WifiDbHelper extends SQLiteOpenHelper {
+public class WifiDbHelper extends SQLiteOpenHelper {
 
 
     private final static int DATABASE_VERSION = 3;
     private final static String DATABASE_NAME = "wifi.db";
 
 
-    WifiDbHelper(Context context) {
+    public WifiDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

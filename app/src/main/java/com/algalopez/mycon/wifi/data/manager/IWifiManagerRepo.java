@@ -1,10 +1,7 @@
-package com.algalopez.mycon.wifi.data;
+package com.algalopez.mycon.wifi.data.manager;
 
-import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
-import com.algalopez.mycon.wifi.domain.model.WifiEntity;
-
-import java.net.InetAddress;
-import java.util.ArrayList;
+import com.algalopez.mycon.wifi.model.DeviceEntity;
+import com.algalopez.mycon.wifi.model.WifiEntity;
 
 /**
  * AUTHOR:  Alvaro Garcia Lopez (algalopez)

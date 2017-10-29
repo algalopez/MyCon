@@ -1,15 +1,20 @@
-package com.algalopez.mycon.wifi.data;
+package com.algalopez.mycon.wifi.data.storage;
 
 import android.content.ContentValues;
 import android.content.Context;
 
-import com.algalopez.mycon.wifi.data.storage.IWifiStorage;
-import com.algalopez.mycon.wifi.data.storage.database.WifiContract.WifiEntry;
-import com.algalopez.mycon.wifi.data.storage.database.WifiContract.DeviceEntry;
-import com.algalopez.mycon.wifi.data.storage.database.WifiContract.WifiConnectDeviceEntry;
+import com.algalopez.mycon.wifi.data.storage.database.ConnectedDatabase;
+import com.algalopez.mycon.wifi.data.storage.database.DeviceDatabase;
+import com.algalopez.mycon.wifi.data.storage.database.IConnectedDatabase;
+import com.algalopez.mycon.wifi.data.storage.database.IDeviceDatabase;
+import com.algalopez.mycon.wifi.data.storage.database.IWifiDatabase;
+import com.algalopez.mycon.wifi.data.storage.database.contract.WifiContract.WifiEntry;
+import com.algalopez.mycon.wifi.data.storage.database.contract.WifiContract.DeviceEntry;
+import com.algalopez.mycon.wifi.data.storage.database.contract.WifiContract.WifiConnectDeviceEntry;
 import com.algalopez.mycon.wifi.data.storage.database.WifiDatabase;
-import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
-import com.algalopez.mycon.wifi.domain.model.WifiEntity;
+import com.algalopez.mycon.wifi.model.ConnectionEntity;
+import com.algalopez.mycon.wifi.model.DeviceEntity;
+import com.algalopez.mycon.wifi.model.WifiEntity;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,12 +30,18 @@ public class WifiDbRepo implements IWifiDbRepo {
 
     //private static final String LOGTAG = "WifiDbRepo";
 
-    private IWifiStorage mDatabase;
+    //Context mContext;
+
+    private IWifiDatabase mWifiDatabase;
+    private IDeviceDatabase mDeviceDatabase;
+    private IConnectedDatabase mConnectedDatabase;
 
 
     public WifiDbRepo(Context context){
 
-        this.mDatabase = new WifiDatabase(context);
+        this.mWifiDatabase = new WifiDatabase(context);
+        this.mDeviceDatabase = new DeviceDatabase(context);
+        this.mConnectedDatabase = new ConnectedDatabase(context);
     }
 
 
@@ -44,7 +55,7 @@ public class WifiDbRepo implements IWifiDbRepo {
     public WifiEntity getWifi(Long wifiID) {
 
         WifiEntity newEntity;
-        ContentValues values = mDatabase.queryWifi(wifiID);
+        ContentValues values = mWifiDatabase.queryWifi(wifiID);
 
         if (values == null || values.size() == 0){
             return null;
@@ -79,14 +90,14 @@ public class WifiDbRepo implements IWifiDbRepo {
         values.put(WifiEntry.COLUMN_PASSWORD, newWifiEntity.getPassword());
         values.put(WifiEntry.COLUMN_LASTUPDATED, newWifiEntity.getLastUpdated().getTime());
 
-        return mDatabase.insertWifi(values);
+        return mWifiDatabase.insertWifi(values);
     }
 
 
     @Override
     public int removeWifi(Long wifiID) {
 
-        return mDatabase.deleteWifi(wifiID);
+        return mWifiDatabase.deleteWifi(wifiID);
     }
 
 
@@ -109,14 +120,14 @@ public class WifiDbRepo implements IWifiDbRepo {
         values.put(WifiEntry.COLUMN_DNS1, newWifiEntity.getDns1());
         values.put(WifiEntry.COLUMN_DNS2, newWifiEntity.getDns2());
 
-        return mDatabase.updateWifi(values);
+        return mWifiDatabase.updateWifi(values);
     }
 
 
     @Override
     public ArrayList<WifiEntity> getAllWifi() {
 
-        ArrayList<ContentValues> valuesList= mDatabase.queryAllWifi();
+        ArrayList<ContentValues> valuesList= mWifiDatabase.queryAllWifi();
         ArrayList<WifiEntity> wifiEntityList = new ArrayList<>();
         WifiEntity wifiEntity;
 
@@ -145,15 +156,16 @@ public class WifiDbRepo implements IWifiDbRepo {
 
 
     @Override
-    public int removeAll() {
+    public int removeAllWifi() {
 
-        return mDatabase.deleteAll();
+        return mWifiDatabase.deleteAllWifi();
     }
+
 
     @Override
     public Long getWifiIDBySSID(String SSID) {
 
-        return mDatabase.getWifiIDBySSID(SSID);
+        return mWifiDatabase.getWifiIDBySSID(SSID);
     }
 
 
@@ -167,7 +179,7 @@ public class WifiDbRepo implements IWifiDbRepo {
     public DeviceEntity getDevice(Long deviceID) {
 
         DeviceEntity newEntity;
-        ContentValues values = mDatabase.queryDevice(deviceID);
+        ContentValues values = mDeviceDatabase.queryDevice(deviceID);
 
         if (values == null || values.size() == 0){
             return null;
@@ -192,14 +204,14 @@ public class WifiDbRepo implements IWifiDbRepo {
         values.put(DeviceEntry.COLUMN_NAME, newDeviceEntity.getName());
         values.put(DeviceEntry.COLUMN_BRAND, newDeviceEntity.getBrand());
 
-        return mDatabase.insertDevice(values);
+        return mDeviceDatabase.insertDevice(values);
     }
 
 
     @Override
     public int removeDevice(Long deviceID) {
 
-        return mDatabase.deleteDevice(deviceID);
+        return mDeviceDatabase.deleteDevice(deviceID);
     }
 
 
@@ -212,14 +224,14 @@ public class WifiDbRepo implements IWifiDbRepo {
         values.put(DeviceEntry.COLUMN_NAME, newDeviceEntity.getName());
         values.put(DeviceEntry.COLUMN_BRAND, newDeviceEntity.getBrand());
 
-        return mDatabase.updateDevice(values);
+        return mDeviceDatabase.updateDevice(values);
     }
 
 
     @Override
     public ArrayList<DeviceEntity> getAllDevices() {
 
-        ArrayList<ContentValues> valuesList= mDatabase.queryAllDevice();
+        ArrayList<ContentValues> valuesList= mDeviceDatabase.queryAllDevice();
         ArrayList<DeviceEntity> deviceEntityList = new ArrayList<>();
         DeviceEntity deviceEntity;
 
@@ -239,14 +251,14 @@ public class WifiDbRepo implements IWifiDbRepo {
     @Override
     public int removeAllDevices() {
 
-        return mDatabase.deleteAllDevice();
+        return mDeviceDatabase.deleteAllDevice();
     }
 
 
     @Override
     public Long getDeviceIDByMAC(String Mac) {
 
-        return mDatabase.getDeviceIDByMAC(Mac);
+        return mDeviceDatabase.getDeviceIDByMAC(Mac);
     }
 
 
@@ -257,26 +269,18 @@ public class WifiDbRepo implements IWifiDbRepo {
 
 
     @Override
-    public ArrayList<DeviceEntity> getConnectedDevices(Long wifiID) {
+    public ArrayList<ConnectionEntity> getConnectedDevices(Long wifiID) {
 
-        DeviceEntity newEntity;
-        ArrayList<DeviceEntity> connectedDevices = new ArrayList<>();
+        ConnectionEntity newEntity;
+        ArrayList<ConnectionEntity> connectedDevices = new ArrayList<>();
 
-        ArrayList<ContentValues> valuesList = mDatabase.queryWifiConnections(wifiID);
+        ArrayList<ContentValues> valuesList = mConnectedDatabase.queryWifiConnections(wifiID);
         for (ContentValues values: valuesList){
-            newEntity = new DeviceEntity();
+            newEntity = new ConnectionEntity();
+            newEntity.setWifiID(wifiID);
+            newEntity.setDeviceID(values.getAsLong(WifiConnectDeviceEntry.COLUMN_DEVICE));
             newEntity.setIP(values.getAsString(WifiConnectDeviceEntry.COLUMN_IP));
-            newEntity.setID(values.getAsLong(WifiConnectDeviceEntry.COLUMN_DEVICE));
             connectedDevices.add(newEntity);
-        }
-
-
-        for (DeviceEntity deviceEntity: connectedDevices){
-
-            ContentValues values = mDatabase.queryDevice(deviceEntity.getID());
-            deviceEntity.setMAC(values.getAsString(DeviceEntry.COLUMN_MAC));
-            deviceEntity.setName(values.getAsString(DeviceEntry.COLUMN_NAME));
-            deviceEntity.setBrand(values.getAsString(DeviceEntry.COLUMN_BRAND));
         }
 
         return connectedDevices;
@@ -286,20 +290,20 @@ public class WifiDbRepo implements IWifiDbRepo {
     @Override
     public int removeConnectedDevices(Long wifiID) {
 
-        return mDatabase.deleteAllConnectedDevices(wifiID);
+        return mConnectedDatabase.deleteAllConnectedDevices(wifiID);
     }
 
 
     @Override
-    public int storeConnectedDevices(Long wifiID, ArrayList<DeviceEntity> deviceEntities) {
+    public int storeConnectedDevices(Long wifiID, ArrayList<ConnectionEntity> connectionEntities) {
 
         ContentValues values;
-        for (DeviceEntity deviceEntity: deviceEntities){
+        for (ConnectionEntity connectionEntity: connectionEntities){
             values = new ContentValues();
             values.put(WifiConnectDeviceEntry.COLUMN_WIFI, wifiID);
-            values.put(WifiConnectDeviceEntry.COLUMN_DEVICE, deviceEntity.getID());
-            values.put(WifiConnectDeviceEntry.COLUMN_IP, deviceEntity.getIP());
-            mDatabase.insertConnection(values);
+            values.put(WifiConnectDeviceEntry.COLUMN_DEVICE, connectionEntity.getDeviceID());
+            values.put(WifiConnectDeviceEntry.COLUMN_IP, connectionEntity.getIP());
+            mConnectedDatabase.insertConnection(values);
         }
 
         return 0;

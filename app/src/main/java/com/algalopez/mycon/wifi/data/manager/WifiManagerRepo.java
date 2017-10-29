@@ -1,12 +1,12 @@
-package com.algalopez.mycon.wifi.data;
+package com.algalopez.mycon.wifi.data.manager;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.algalopez.mycon.wifi.data.manager.IWifiManager;
-import com.algalopez.mycon.wifi.data.manager.WifiManager;
-import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
-import com.algalopez.mycon.wifi.domain.model.WifiEntity;
+import com.algalopez.mycon.wifi.data.manager.android.IWifiManager;
+import com.algalopez.mycon.wifi.data.manager.android.WifiManager;
+import com.algalopez.mycon.wifi.model.DeviceEntity;
+import com.algalopez.mycon.wifi.model.WifiEntity;
 import com.algalopez.mycon.wifi.domain.utils.WifiUtils;
 
 import java.net.InetAddress;
@@ -81,7 +81,6 @@ public class WifiManagerRepo implements IWifiManagerRepo {
         if (mWifiManager.isReachable(addr)) {
 
             deviceEntity = new DeviceEntity();
-            deviceEntity.setIP(addrStr);
             deviceEntity.setMAC(mWifiManager.getMAC(addr));
             deviceEntity.setName(mWifiManager.getName(addr));
             deviceEntity.setBrand(mWifiManager.getBrand(addr));

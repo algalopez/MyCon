@@ -1,9 +1,10 @@
-package com.algalopez.mycon.wifi.data;
+package com.algalopez.mycon.wifi.data.storage;
 
 
 
-import com.algalopez.mycon.wifi.domain.model.DeviceEntity;
-import com.algalopez.mycon.wifi.domain.model.WifiEntity;
+import com.algalopez.mycon.wifi.model.ConnectionEntity;
+import com.algalopez.mycon.wifi.model.DeviceEntity;
+import com.algalopez.mycon.wifi.model.WifiEntity;
 
 import java.util.ArrayList;
 
@@ -31,7 +32,7 @@ public interface IWifiDbRepo {
 
     ArrayList<WifiEntity> getAllWifi();
 
-    int removeAll();
+    int removeAllWifi();
 
     Long getWifiIDBySSID(String SSID);
 
@@ -63,10 +64,10 @@ public interface IWifiDbRepo {
      */
 
 
-    ArrayList<DeviceEntity> getConnectedDevices(Long wifiID);
+    ArrayList<ConnectionEntity> getConnectedDevices(Long wifiID);
 
     int removeConnectedDevices(Long wifiID);
 
-    int storeConnectedDevices(Long wifiID, ArrayList<DeviceEntity> deviceEntities);
+    int storeConnectedDevices(Long wifiID, ArrayList<ConnectionEntity> connectionEntities);
 
 }
