@@ -45,6 +45,7 @@ public class GetCurrentWifiActor extends BaseActor<WifiResponse> {
     public void run() {
 
         setRunning(true);
+        notifyDataChange(mActorName, mData);
 
         Log.d(LOGTAG, "GetCurrentWifiActor running");
 
@@ -58,24 +59,23 @@ public class GetCurrentWifiActor extends BaseActor<WifiResponse> {
 
         // Get Wifi information
         WifiEntity wifiEntity = mWifiManagerRepo.getWifi();
-        mData.setWifiInformation(wifiEntity);
 
         // Get wifi ID by SSID
         Long wifiID = mWifiDbRepo.getWifiIDBySSID(wifiEntity.getSSID());
-        Log.d(LOGTAG, "wifiID is " + wifiID);
+        wifiEntity.setID(wifiID);
 
-        Log.d(LOGTAG, "[netmask:"+ wifiEntity.getNetmask() +", serverAddress:"+ wifiEntity.getServerAddress() +"]");
+        // Update response
+        mData.setWifiInformation(wifiEntity);
+
+        // Log Wifi
+        Log.d(LOGTAG, wifiEntity.toString());
 
         // If wifi doesn't exist in database, then add it
         if (wifiID < 0) {
-            mWifiDbRepo.storeWifi(wifiEntity);
+            wifiID = mWifiDbRepo.storeWifi(wifiEntity);
+            wifiEntity.setID(wifiID);
             mData.setState(WifiResponse.ERROR_NEW_WIFI);
-            notifyError(mActorName, mData);
-            setRunning(false);
-            return;
         }
-
-        wifiEntity.setID(wifiID);
 
         // Get connected devices from database
         ArrayList<DeviceEntity> deviceEntities = mWifiDbRepo.getConnectedDevices(wifiID);
@@ -85,5 +85,11 @@ public class GetCurrentWifiActor extends BaseActor<WifiResponse> {
 
         setRunning(false);
     }
+
+
+
+
+
+
 
 }
