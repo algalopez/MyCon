@@ -1,4 +1,4 @@
-package com.algalopez.mycon.wifi.domain.model;
+package com.algalopez.mycon.wifi.model;
 
 /**
  * AUTHOR:  Alvaro Garcia Lopez (algalopez)
@@ -9,14 +9,12 @@ public class DeviceEntity {
 
 
     private Long ID;
-    private String IP;
     private String MAC;
     private String name;
     private String brand;
 
     public DeviceEntity(){
         this.ID = -1L;
-        this.IP = "";
         this.MAC = "";
         this.name = "";
         this.brand = "";
@@ -25,10 +23,6 @@ public class DeviceEntity {
     public Long getID() { return ID; }
 
     public void setID(Long ID) { this.ID = ID; }
-
-    public String getIP() { return IP; }
-
-    public void setIP(String IP) { this.IP = IP; }
 
     public String getMAC() { return MAC; }
 
@@ -41,4 +35,15 @@ public class DeviceEntity {
     public String getBrand() { return brand; }
 
     public void setBrand(String brand) { this.brand = brand; }
+
+
+    @Override
+    public String toString() {
+        return "DeviceEntity{" +
+                "ID=" + ID +
+                ", MAC='" + MAC + '\'' +
+                ", name='" + name + '\'' +
+                ", brand='" + brand + '\'' +
+                '}';
+    }
 }

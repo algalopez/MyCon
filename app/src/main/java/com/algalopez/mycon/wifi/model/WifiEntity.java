@@ -1,4 +1,4 @@
-package com.algalopez.mycon.wifi.domain.model;
+package com.algalopez.mycon.wifi.model;
 
 import java.util.Date;
 
@@ -29,7 +29,6 @@ public class WifiEntity {
     public WifiEntity(){
 
         this.ID = -1L;
-        this.lastUpdated = new Date();
     }
 
     public Long getID() { return ID; }
@@ -83,4 +82,24 @@ public class WifiEntity {
     public String getDns2() { return dns2; }
 
     public void setDns2(String dns2) { this.dns2 = dns2; }
+
+
+    @Override
+    public String toString() {
+        return "WifiEntity{" +
+                "ID=" + ID +
+                ", SSID='" + SSID + '\'' +
+                ", lastUpdated=" + lastUpdated +
+                ", password='" + password + '\'' +
+                ", netmask='" + netmask + '\'' +
+                ", BSSID='" + BSSID + '\'' +
+                ", RSSI=" + RSSI +
+                ", frequency=" + frequency +
+                ", linkSpeed=" + linkSpeed +
+                ", networkID=" + networkID +
+                ", serverAddress='" + serverAddress + '\'' +
+                ", dns1='" + dns1 + '\'' +
+                ", dns2='" + dns2 + '\'' +
+                '}';
+    }
 }
